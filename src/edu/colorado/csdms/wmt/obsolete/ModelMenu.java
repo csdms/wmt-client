@@ -1,7 +1,27 @@
 /**
- * <License>
+ * The MIT License (MIT)
+ * 
+ * Copyright (c) 2014 mcflugen
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui;
+package edu.colorado.csdms.wmt.obsolete;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -10,7 +30,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -18,12 +37,14 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
 import edu.colorado.csdms.wmt.client.control.DataURL;
+import edu.colorado.csdms.wmt.client.ui.Perspective;
 import edu.colorado.csdms.wmt.client.ui.handler.DeleteModelHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.OpenModelHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.SaveModelHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.SetupRunModelHandler;
 import edu.colorado.csdms.wmt.client.ui.widgets.DroplistDialogBox;
+import edu.colorado.csdms.wmt.client.ui.widgets.OpenDialogBox;
 import edu.colorado.csdms.wmt.client.ui.widgets.SaveDialogBox;
 
 /**
@@ -37,12 +58,13 @@ import edu.colorado.csdms.wmt.client.ui.widgets.SaveDialogBox;
  * @see http://fortawesome.github.io/Font-Awesome/
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class ModelMenu extends DecoratedPopupPanel {
+@Deprecated
+public class ModelMenu extends PopupPanel {
 
   private DataManager data;
   private HTML menuButton;
   private SaveDialogBox saveDialog;
-  private DroplistDialogBox openDialog;
+  private OpenDialogBox openDialog;
   private DroplistDialogBox deleteDialog;
 
   /**
@@ -54,9 +76,9 @@ public class ModelMenu extends DecoratedPopupPanel {
   public ModelMenu(DataManager data) {
 
     super(true); // autohide
-    this.setWidth("25ch"); // ch = character width // XXX Remove hard code?
     this.getElement().getStyle().setCursor(Cursor.POINTER); // use pointer
     this.data = data;
+    this.setStyleName("wmt-ModelMenu");
 
     // A FlexTable for the menu items. (PopupPanels can have only one child.)
     FlexTable menu = new FlexTable();
@@ -66,17 +88,14 @@ public class ModelMenu extends DecoratedPopupPanel {
     ModelMenuItem newModel = new ModelMenuItem("New Model");
     ModelMenuItem openModel =
         new ModelMenuItem("Open Model...", "fa-folder-open-o");
-    ModelMenuItem closeModel =
-        new ModelMenuItem("Close Model", "fa-folder-o");
-    ModelMenuItem saveModel =
-        new ModelMenuItem("Save Model", "fa-floppy-o");
+    ModelMenuItem closeModel = new ModelMenuItem("Close Model", "fa-folder-o");
+    ModelMenuItem saveModel = new ModelMenuItem("Save Model", "fa-floppy-o");
     ModelMenuItem saveModelAs =
         new ModelMenuItem("Save Model As...", "fa-floppy-o");
     ModelMenuItem deleteModel =
         new ModelMenuItem("Delete Model...", "fa-trash-o");
-    ModelMenuItem runModel =
-        new ModelMenuItem("Run Model...", "fa-play");
-    ModelMenuItem runStatus = new ModelMenuItem("View Run Status...");    
+    ModelMenuItem runModel = new ModelMenuItem("Run Model...", "fa-play");
+    ModelMenuItem runStatus = new ModelMenuItem("View Run Status...");
     ModelMenuItem helpButton = new ModelMenuItem("Help");
     ModelMenuItem aboutButton = new ModelMenuItem("About");
 
@@ -111,7 +130,8 @@ public class ModelMenu extends DecoratedPopupPanel {
     // Set up, but don't display, the "hamburger" icon for the Model menu.
     menuButton = new HTML("<i class='fa fa-bars fa-2x'></i>");
     menuButton.setStyleName("wmt-ModelMenuButton");
-    menuButton.setTitle("Model menu");
+    menuButton
+        .setTitle("Use this menu to open, close, save, delete or run a model.");
 
     /*
      * Toggle the visibility of the Model menu on a click (MouseDownEvent) of
@@ -124,11 +144,13 @@ public class ModelMenu extends DecoratedPopupPanel {
       public void onMouseDown(MouseDownEvent event) {
         final Integer x = menuButton.getElement().getAbsoluteRight();
         final Integer y = menuButton.getElement().getAbsoluteBottom();
+        final Integer iconHalfWidth = 11; // by inspection
         ModelMenu.this
             .setPopupPositionAndShow(new PopupPanel.PositionCallback() {
               @Override
               public void setPosition(int offsetWidth, int offsetHeight) {
-                ModelMenu.this.setPopupPosition(x - offsetWidth, y);
+                ModelMenu.this.setPopupPosition(
+                    x - offsetWidth - iconHalfWidth, y);
               }
             });
       }
@@ -175,10 +197,7 @@ public class ModelMenu extends DecoratedPopupPanel {
     @Override
     public void onClick(ClickEvent event) {
 
-      openDialog = new DroplistDialogBox();
-      openDialog.setText("Open Model...");
-      openDialog.getChoicePanel().getOkButton().setHTML(
-          "<i class='fa fa-folder-open-o'></i> Open");      
+      openDialog = new OpenDialogBox(data);
 
       // Populate the ModelDroplist with the available models on the server.
       for (int i = 0; i < data.modelNameList.size(); i++) {
@@ -253,8 +272,8 @@ public class ModelMenu extends DecoratedPopupPanel {
    * {@link GenericCancelHandler}.
    */
   private void showSaveDialogBox() {
-    saveDialog = new SaveDialogBox(data.getModel().getName());
-    saveDialog.getFilePanel().setTitle(
+    saveDialog = new SaveDialogBox(data, data.getModel().getName());
+    saveDialog.getNamePanel().setTitle(
         "Enter a name for the model. No file extension is needed.");
     saveDialog.getChoicePanel().getOkButton().addClickHandler(
         new SaveModelHandler(data, saveDialog));
@@ -301,7 +320,7 @@ public class ModelMenu extends DecoratedPopupPanel {
     @Override
     public void onClick(ClickEvent event) {
       ModelMenu.this.hide();
-      Window.open(DataURL.showModelRun(), "runInfoDialog", null);
+      Window.open(DataURL.showModelRun(data), "runInfoDialog", null);
     }
   }
 
