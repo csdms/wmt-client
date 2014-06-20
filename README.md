@@ -4,13 +4,13 @@ WMT
 The CSDMS Web Modeling Tool
 ---------------------------
 
-WMT is a RESTful web application that succeeds the desktop CSDMS
-Modeling Tool, [CMT](http://csdms.colorado.edu/wiki/CMT_information).
-WMT allows users to build and run coupled surface dynamics models on a
-high-performance computing cluster (HPCC) from a web browser on a
-desktop, laptop or tablet computer.
+WMT is a RESTful web application that allows users to build and run
+coupled surface dynamics models on a high-performance computing
+cluster (HPCC) from a web browser on a desktop, laptop or tablet
+computer.
 
 With WMT, a user can:
+
 * select a Common Component Architecture (CCA) component model from a
   list to run in standalone mode,
 * build a coupled model from multiple components organized as nodes of
