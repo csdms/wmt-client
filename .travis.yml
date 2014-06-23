@@ -1,0 +1,9 @@
+language: java
+
+jdk:
+  - oraclejdk7
+
+before_script:
+  - wget http://google-web-toolkit.googlecode.com/files/gwt-2.5.1.zip -O /tmp/gwt-2.5.1.zip
+  - unzip -qq /tmp/gwt-2.5.1.zip
+  - export PATH=$PATH:$PWD/gwt-2.5.1/

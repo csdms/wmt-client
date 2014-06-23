@@ -112,14 +112,29 @@ public class ValueJSOFloatTest extends GWTTestCase {
   }
 
   /*
-   * Test setting default.
+   * Test setting default as a float value. Compare result as a float with a 
+   * tolerance of 1e-3, since this is the number of digits kept in the WMT
+   * client.
+   * 
+   * I tried to test the effects of floating point precision by using a number 
+   * near the value of the tolerance and a number that has more significant
+   * digits than a float can hold. There's likely a better way to test this.
    */
   @Test
   public void testSetDefault() {
-    float newDefault = (float) 42.0;
-    String newDefaultString = Float.toString(newDefault);
-    jso.setDefault(newDefault);
-    assertEquals(newDefaultString, jso.getDefault());
+    float tolerance = (float) 0.001;
+    
+    float newDefault0 = (float) 42.3; // arbitrary
+    jso.setDefault(newDefault0);
+    assertEquals(newDefault0, Float.valueOf(jso.getDefault()), tolerance);
+
+    float newDefault1 = (float) 0.001; // arbitrary, near tolerance
+    jso.setDefault(newDefault1);
+    assertEquals(newDefault1, Float.valueOf(jso.getDefault()), tolerance);
+
+    float newDefault2 = (float) 12345678.9; // arbitrary, lotsa digits
+    jso.setDefault(newDefault2);
+    assertEquals(newDefault2, Float.valueOf(jso.getDefault()), tolerance);
   }
 
   /*
