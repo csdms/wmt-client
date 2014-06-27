@@ -53,8 +53,6 @@ public class DataManager {
   
   private Boolean developmentMode;
   private Boolean apiDevelopmentMode;
-  
-  public Constants constants;
 
   // Get the state of UI elements through the Perspective. 
   private Perspective perspective;
