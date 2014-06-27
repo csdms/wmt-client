@@ -49,8 +49,6 @@ import edu.colorado.csdms.wmt.client.ui.Perspective;
  */
 public class DataManager {
   
-  public static String VERSION = "2014-06-20";
-  
   private Boolean developmentMode;
   private Boolean apiDevelopmentMode;
 

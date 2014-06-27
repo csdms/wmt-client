@@ -25,8 +25,6 @@ package edu.colorado.csdms.wmt.client;
 
 import com.google.gwt.core.client.GWT;
 
-import edu.colorado.csdms.wmt.client.control.DataManager;
-
 /**
  * A class that defines, as public static members, constants used in the WMT
  * client.
@@ -35,13 +33,15 @@ import edu.colorado.csdms.wmt.client.control.DataManager;
  */
 public class Constants {
 
+  public static String VERSION = "2014-06-20";
+  
   // The CSDMS website, email, and wiki articles.
   public static final String CSDMS_HOME = "http://csdms.colorado.edu/";
   public static final String WMT_HELP = CSDMS_HOME + "wiki/WMT_help";
   public static final String WMT_TUTORIAL = CSDMS_HOME + "wiki/WMT_tutorial";
   public static final String CSDMS_EMAIL = "CSDMSsupport@colorado.edu";
   public static final String WMT_TITLE = "<h2>WMT</h2><p><b>The CSDMS Web"
-      + " Modeling Tool</b></br>Version: " + DataManager.VERSION + "</p>";
+      + " Modeling Tool</b></br>Version: " + VERSION + "</p>";
 
   // This switch toggles API development and public mode.
   public static final Boolean USE_API_DEV_MODE = true;
