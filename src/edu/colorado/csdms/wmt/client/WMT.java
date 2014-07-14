@@ -32,6 +32,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
 import edu.colorado.csdms.wmt.client.ui.Perspective;
+import edu.colorado.csdms.wmt.client.ui.SignInScreen;
 
 /**
  * WMT is the CSDMS Web Modeling Tool.
@@ -63,22 +64,26 @@ public class WMT implements EntryPoint {
     // (See http://www.gwtproject.org/doc/latest/DevGuideUiCss.html#cssfiles)
     Resources.INSTANCE.css().ensureInjected();
 
+    // Show the sign-in screen.
+    SignInScreen signIn = new SignInScreen();
+    RootLayoutPanel.get().add(signIn);
+    
     // Set up the basic framework of views for the GUI.
-    perspective = new Perspective(data);
-    RootLayoutPanel.get().add(perspective);
-    perspective.initializeModel();
-    perspective.initializeParameterTable();
+//    perspective = new Perspective(data);
+//    RootLayoutPanel.get().add(perspective);
+//    perspective.initializeModel();
+//    perspective.initializeParameterTable();
     
     // Check whether the user is already logged in.
-    DataTransfer.getLoginState(data);
+//    DataTransfer.getLoginState(data);
 
     // Retrieve (asynchronously) and store the list of available components
     // and models. Note that when DataTransfer#getComponentList completes,
     // it immediately starts pulling component data from the server with calls
     // to DataTransfer#getComponent. Asynchronous requests are cool!
-    data.showWaitCursor();
-    DataTransfer.getComponentList(data);
-    DataTransfer.getModelList(data);
+//    data.showWaitCursor();
+//    DataTransfer.getComponentList(data);
+//    DataTransfer.getModelList(data);
 
     // Trap browser reload and close events (they're indistinguishable), and
     // present a message to the user.

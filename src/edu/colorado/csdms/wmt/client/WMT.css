@@ -40,10 +40,53 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 @def fontSmall 13px;
 @def fontMedium 14px;
 @def fontLarge 18px;
+@def fontExtraLarge 24px;
 
 body, table td, select, button {
   font-family: fontFamily;
   font-size: fontSmall;
+}
+
+/* The sign in screen is shown on startup. */
+.wmt-SignInScreen {
+  width: 100%;
+  height: 100%;
+  background-color: colorAbisso;
+}
+.wmt-SignInScreenTitle {
+  color: white;
+  padding: 14px;
+  font-size: fontExtraLarge;
+  cursor: default;
+}
+.wmt-SignInScreenBox {
+  color: colorAcquaProfonda;
+  width: 80%;
+  font-size: fontMedium;
+  line-height: 1.25;
+  padding: 6px 12px;
+}
+.wmt-SignInScreenButton {
+  color: white;
+  background-color: colorAcqua;
+  font-size: fontMedium;
+  line-height: 1.25;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-top: 14px;
+  border: 2px solid colorAcqua;
+}
+.wmt-SignInScreenLinks {
+  color: white;
+  font-size: fontMedium;
+  cursor: pointer;
+}
+.wmt-SignInScreenLinks:hover {
+  color: colorTerra;
+}
+.wmt-SignInScreenLinksPanel {
+  margin-top: 24px;
+  margin-bottom: 100px;
 }
 
 /* The primary structuring element of the WMT client. */
