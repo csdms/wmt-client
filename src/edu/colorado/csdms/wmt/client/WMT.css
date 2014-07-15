@@ -121,7 +121,7 @@ body, table td, select, button {
   line-height: 20px;
   cursor: pointer;
 }
-.wmt-LoginPanel {
+.wmt-UserPanel {
   float: right;
   margin: 8px 10px 8px 0px;
 }
