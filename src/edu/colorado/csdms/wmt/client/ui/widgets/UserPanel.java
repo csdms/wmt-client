@@ -66,4 +66,12 @@ public class UserPanel extends HorizontalPanel {
   public void setLoginName(HTML loginName) {
     this.loginName = loginName;
   }
+
+  public Button getSignOutButton() {
+    return signOutButton;
+  }
+
+  public void setSignOutButton(Button signOutButton) {
+    this.signOutButton = signOutButton;
+  }
 }
