@@ -32,7 +32,6 @@ import com.google.gwt.user.client.Window;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
-import edu.colorado.csdms.wmt.client.ui.widgets.LoginPanel;
 import edu.colorado.csdms.wmt.client.ui.widgets.QuestionDialogBox;
 
 /**
@@ -43,19 +42,44 @@ import edu.colorado.csdms.wmt.client.ui.widgets.QuestionDialogBox;
 public class AuthenticationHandler implements ClickHandler {
 
   private DataManager data;
-  private LoginPanel panel;
 
   /**
    * Creates a new {@link AuthenticationHandler}.
    * 
    * @param data the DataManager object for the WMT session
-   * @param panel the {@link LoginPanel} object for the WMT session
    */
-  public AuthenticationHandler(DataManager data, LoginPanel panel) {
+  public AuthenticationHandler(DataManager data) {
     this.data = data;
-    this.panel = panel;
   }
 
+  /**
+   * Prepares and performs the sign-in action.
+   */
+  public void signIn() {
+
+    // Get WMT username and password from the SignInScreen.
+    String username = data.getSignInScreen().getEmailBox().getText();
+    data.security.setWmtUsername(username);
+    GWT.log("Email: " + data.security.getWmtUsername());
+    String password = data.getSignInScreen().getPasswordBox().getText();
+    data.security.setWmtPassword(password);
+    GWT.log("Password: " + data.security.getWmtPassword());
+
+    // A very basic input check.
+    if (username.isEmpty() || password.isEmpty() || !username.contains("@")
+        || !username.contains(".")) {
+          Window.alert(Constants.LOGIN_ERR);
+          return;
+    }
+
+    // Authenticate the user with the server.
+    DataTransfer.login(data);
+  }
+  
+  public void signOut() {
+    ;
+  }
+  
   @Override
   public void onClick(ClickEvent event) {
 
@@ -89,27 +113,6 @@ public class AuthenticationHandler implements ClickHandler {
       questionDialog.center();
       questionDialog.getChoicePanel().getOkButton().setFocus(true);
 
-    } else {
-
-      // Get WMT username.
-      String username = panel.getEmailBox().getText();
-      data.security.setWmtUsername(username);
-      GWT.log("Email: " + data.security.getWmtUsername());
-
-      // Get WMT password.
-      String password = panel.getPasswordBox().getText();
-      data.security.setWmtPassword(password);
-      GWT.log("Password: " + data.security.getWmtPassword());
-
-      // Very basic input check.
-      if (username.isEmpty() || password.isEmpty() || !username.contains("@")
-          || !username.contains(".")) {
-        Window.alert(Constants.LOGIN_ERR);
-        return;
-      }
-
-      // Authenticate the user.
-      DataTransfer.login(data);
     }
   }
 }

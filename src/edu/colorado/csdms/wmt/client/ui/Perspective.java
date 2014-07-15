@@ -140,7 +140,7 @@ public class Perspective extends DockLayoutPanel {
       loginPanel = new LoginPanel();
       this.add(loginPanel);
       final AuthenticationHandler authHandler =
-          new AuthenticationHandler(data, loginPanel);
+          new AuthenticationHandler(data);
       loginPanel.getSignInButton().addClickHandler(authHandler);
       loginPanel.getPasswordBox().addKeyUpHandler(new KeyUpHandler() {
         @Override
