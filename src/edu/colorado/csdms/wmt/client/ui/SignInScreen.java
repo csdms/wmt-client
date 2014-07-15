@@ -36,11 +36,12 @@ public class SignInScreen extends HorizontalPanel {
    */
   public SignInScreen() {
 
-    // Determine offset from top of browser window.
+    // Determine offset of contents from top of browser window.
     Integer browserHeight = Window.getClientHeight();
     Double offset = 0.20; // arbitrary, aesthetic
     Double contentOffset = offset * browserHeight;
 
+    // Set width of contents based on browser window width.
     Integer browserWidth = Window.getClientWidth();
     Double widthFraction = 0.40; // arbitrary, aesthetic
     Integer contentWidth = (int) Math.round(widthFraction * browserWidth);
@@ -49,7 +50,7 @@ public class SignInScreen extends HorizontalPanel {
     this.setStyleName("wmt-SignInScreen");
     this.setHorizontalAlignment(ALIGN_CENTER);
 
-    // Organizer for the contents of the SignInScreen.
+    // Organizer panel for the contents of the SignInScreen.
     contents = new VerticalPanel();
     contents.setHorizontalAlignment(ALIGN_CENTER);
     contents.setWidth(contentWidth.toString() + "px");
@@ -80,32 +81,27 @@ public class SignInScreen extends HorizontalPanel {
     signInButton = new Button(Constants.SIGN_IN);
     signInButton.setStyleName("wmt-SignInScreenButton");
 
-    // Question links.
-    HTML newUser = new HTML("<i class='fa fa-arrow-right'></i> New User?");
+    // Is this a new user?
+    HTML newUser = new HTML(Constants.FA_RARROW + "New User?");
     newUser.setStyleName("wmt-SignInScreenLinks");
-    String newUserText =
-        "Create a new sign-in to WMT with a preferred email"
-            + " address and password. To authenticate your sign-in, you'll be"
-            + " asked to repeat your password.";
-    HTML newUserInfo = new HTML(newUserText);
+    HTML newUserInfo = new HTML(Constants.NEW_USER_INFO);
     newUserInfo.setStyleName("wmt-SignInScreenLinksInfo");
     final HorizontalPanel newUserInfoPanel = new HorizontalPanel();
     newUserInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
     newUserInfoPanel.add(newUserInfo);
     newUserInfoPanel.setVisible(false);
 
-    HTML forgotPassword =
-        new HTML("<i class='fa fa-arrow-right'></i> Forgot Password?");
+    // Has the user forgotten their password?
+    HTML forgotPassword = new HTML(Constants.FA_RARROW + "Forgot Password?");
     forgotPassword.setStyleName("wmt-SignInScreenLinks");
-    String forgotPasswordText =
-        "Please contact <a href='mailto:CSDMSSupport@colorado.edu'>CSDMS Support</a> for assistance.";
-    HTML forgotPasswordInfo = new HTML(forgotPasswordText);
+    HTML forgotPasswordInfo = new HTML(Constants.FORGOT_PASSWORD_INFO);
     forgotPasswordInfo.setStyleName("wmt-SignInScreenLinksInfo");
     final HorizontalPanel forgotPasswordInfoPanel = new HorizontalPanel();
     forgotPasswordInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
     forgotPasswordInfoPanel.add(forgotPasswordInfo);
     forgotPasswordInfoPanel.setVisible(false);
 
+    // Add the question links above to a panel.
     VerticalPanel linksPanel = new VerticalPanel();
     linksPanel.setHorizontalAlignment(ALIGN_CENTER);
     linksPanel.setStyleName("wmt-SignInScreenLinksPanel");
@@ -121,6 +117,9 @@ public class SignInScreen extends HorizontalPanel {
     contents.add(signInButton);
     contents.add(linksPanel);
 
+    /*
+     * Handler to display answer to "New User?" link.
+     */
     newUser.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
@@ -128,6 +127,9 @@ public class SignInScreen extends HorizontalPanel {
       }
     });
 
+    /*
+     * Handler to display answer to "Forgot Password?" link.
+     */
     forgotPassword.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
