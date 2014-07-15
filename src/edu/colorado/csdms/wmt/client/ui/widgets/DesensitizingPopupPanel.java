@@ -38,6 +38,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
+@Deprecated
 public class DesensitizingPopupPanel extends PopupPanel {
 
   private String message;
