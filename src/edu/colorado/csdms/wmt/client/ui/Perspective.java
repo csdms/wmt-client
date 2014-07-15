@@ -41,10 +41,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
-import edu.colorado.csdms.wmt.client.ui.handler.AuthenticationHandler;
 import edu.colorado.csdms.wmt.client.ui.widgets.ComponentInfoDialogBox;
-import edu.colorado.csdms.wmt.client.ui.widgets.UserPanel;
 import edu.colorado.csdms.wmt.client.ui.widgets.OpenDialogBox;
+import edu.colorado.csdms.wmt.client.ui.widgets.UserPanel;
 
 /**
  * Defines the initial layout of views (a perspective, in Eclipse parlance)
@@ -82,6 +81,8 @@ public class Perspective extends DockLayoutPanel {
 
   /**
    * Draws the panels and their children that compose the basic WMT GUI.
+   * 
+   * @param data the DataManager object for the WMT session
    */
   public Perspective(DataManager data) {
 
@@ -139,11 +140,10 @@ public class Perspective extends DockLayoutPanel {
       this.add(userPanel);
     
       // Handle sign out event.
-      final AuthenticationHandler authHandler = new AuthenticationHandler(data);
       userPanel.getSignOutButton().addClickHandler(new ClickHandler() {
         @Override
         public void onClick(ClickEvent event) {
-          authHandler.signOut();
+          data.security.getAuthenticationHandler().signOut();
         }
       });
     }

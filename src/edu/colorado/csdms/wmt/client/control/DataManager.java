@@ -90,7 +90,7 @@ public class DataManager {
    * Initializes the DataManager object used in a WMT session.
    */
   public DataManager() {
-    security = new Security();
+    security = new Security(this);
     componentIdList = new ArrayList<String>();
     retryComponentLoad = new HashMap<String, Integer>();
     components = new ArrayList<ComponentJSO>();

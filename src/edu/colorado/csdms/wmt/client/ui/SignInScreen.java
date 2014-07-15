@@ -19,7 +19,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.handler.AuthenticationHandler;
 
 /**
  * The {@link SignInScreen} is the first thing a user sees on loading WMT. It
@@ -36,16 +35,16 @@ public class SignInScreen extends HorizontalPanel {
   private SuggestBox emailBox;
   private PasswordTextBox passwordBox;
   private Button signInButton;
-  private AuthenticationHandler authHandler;
 
   /**
    * Makes a new {@link SignInScreen} for a user to sign in to WMT.
+   * 
+   * @param data the DataManager object for the WMT session
    */
   public SignInScreen(DataManager data) {
 
     this.data = data;
     this.data.setSignInScreen(this);
-    this.authHandler = new AuthenticationHandler(data);
     
     // Determine offset of contents from top of browser window.
     Integer browserHeight = Window.getClientHeight();
@@ -157,7 +156,7 @@ public class SignInScreen extends HorizontalPanel {
       public void onKeyUp(KeyUpEvent event) {
         Integer keyCode = event.getNativeKeyCode();
           if (keyCode == KeyCodes.KEY_ENTER) {
-            authHandler.signIn();
+            SignInScreen.this.data.security.getAuthenticationHandler().signIn();
           }
       }
     });
@@ -168,7 +167,7 @@ public class SignInScreen extends HorizontalPanel {
     signInButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
-        authHandler.signIn();
+        SignInScreen.this.data.security.getAuthenticationHandler().signIn();
       }
     });
     
