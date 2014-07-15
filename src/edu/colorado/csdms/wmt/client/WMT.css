@@ -92,7 +92,6 @@ body, table td, select, button {
 }
 .wmt-SignInScreenLinksInfoPanel {
   margin: 6px;
-  width: 80%;
   max-width: 400px;
 }
 .wmt-SignInScreenLinksPanel {

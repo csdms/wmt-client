@@ -39,27 +39,27 @@ public class SignInScreen extends HorizontalPanel {
     // Determine offset from top of browser window.
     Integer browserHeight = Window.getClientHeight();
     Double offset = 0.20; // arbitrary, aesthetic
-    Double contentOffset = offset*browserHeight;
+    Double contentOffset = offset * browserHeight;
 
     Integer browserWidth = Window.getClientWidth();
     Double widthFraction = 0.40; // arbitrary, aesthetic
-    Integer contentWidth = (int) Math.round(widthFraction*browserWidth);
-    
+    Integer contentWidth = (int) Math.round(widthFraction * browserWidth);
+
     // Styles and alignments that apply to all widgets hereafter.
     this.setStyleName("wmt-SignInScreen");
     this.setHorizontalAlignment(ALIGN_CENTER);
-    
+
     // Organizer for the contents of the SignInScreen.
     contents = new VerticalPanel();
     contents.setHorizontalAlignment(ALIGN_CENTER);
     contents.setWidth(contentWidth.toString() + "px");
     this.add(contents);
-    
+
     // The title's margin is used to offset content from the top of the window.
     Label title = new Label("The CSDMS Web Modeling Tool");
     title.setStyleName("wmt-SignInScreenTitle");
     title.getElement().getStyle().setMarginTop(contentOffset, Unit.PX);
-    
+
     // Use a Cookie and a SuggestBox to help autocomplete the user's login.
     // TODO Replace with the browser's login autocomplete mechanism.
     oracle = new MultiWordSuggestOracle();
@@ -83,28 +83,29 @@ public class SignInScreen extends HorizontalPanel {
     // Question links.
     HTML newUser = new HTML("<i class='fa fa-arrow-right'></i> New User?");
     newUser.setStyleName("wmt-SignInScreenLinks");
-    String newUserText = "Create a new sign-in to WMT with a preferred email"
-        + " address and password. To authenticate your sign-in, you'll be"
-        + " asked to repeat your password.";
+    String newUserText =
+        "Create a new sign-in to WMT with a preferred email"
+            + " address and password. To authenticate your sign-in, you'll be"
+            + " asked to repeat your password.";
     HTML newUserInfo = new HTML(newUserText);
     newUserInfo.setStyleName("wmt-SignInScreenLinksInfo");
     final HorizontalPanel newUserInfoPanel = new HorizontalPanel();
     newUserInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
     newUserInfoPanel.add(newUserInfo);
     newUserInfoPanel.setVisible(false);
-    
-    HTML forgotPassword = new HTML("<i class='fa fa-arrow-right'></i> Forgot Password?");    
+
+    HTML forgotPassword =
+        new HTML("<i class='fa fa-arrow-right'></i> Forgot Password?");
     forgotPassword.setStyleName("wmt-SignInScreenLinks");
-    String forgotPasswordText = "Please contact CSDMS Support"
-        + " (CSDMSSupport@colorado.edu) for assistance.";
+    String forgotPasswordText =
+        "Please contact <a href='mailto:CSDMSSupport@colorado.edu'>CSDMS Support</a> for assistance.";
     HTML forgotPasswordInfo = new HTML(forgotPasswordText);
     forgotPasswordInfo.setStyleName("wmt-SignInScreenLinksInfo");
     final HorizontalPanel forgotPasswordInfoPanel = new HorizontalPanel();
     forgotPasswordInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
     forgotPasswordInfoPanel.add(forgotPasswordInfo);
     forgotPasswordInfoPanel.setVisible(false);
-    
-    
+
     VerticalPanel linksPanel = new VerticalPanel();
     linksPanel.setHorizontalAlignment(ALIGN_CENTER);
     linksPanel.setStyleName("wmt-SignInScreenLinksPanel");
@@ -112,26 +113,27 @@ public class SignInScreen extends HorizontalPanel {
     linksPanel.add(newUserInfoPanel);
     linksPanel.add(forgotPassword);
     linksPanel.add(forgotPasswordInfoPanel);
-    
+
     // Load the contents of the SignInScreen.
     contents.add(title);
     contents.add(emailBox);
     contents.add(passwordBox);
     contents.add(signInButton);
     contents.add(linksPanel);
-    
+
     newUser.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
         newUserInfoPanel.setVisible(!newUserInfoPanel.isVisible());
       }
     });
-    
+
     forgotPassword.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
-        forgotPasswordInfoPanel.setVisible(!forgotPasswordInfoPanel.isVisible());
+        forgotPasswordInfoPanel
+            .setVisible(!forgotPasswordInfoPanel.isVisible());
       }
-    });    
+    });
   }
 }
