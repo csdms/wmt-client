@@ -62,6 +62,7 @@ body, table td, select, button {
 .wmt-SignInScreenBox {
   color: colorAcquaProfonda;
   width: 80%;
+  max-width: 400px;
   font-size: fontMedium;
   line-height: 1.25;
   padding: 6px 12px;
@@ -84,10 +85,21 @@ body, table td, select, button {
 .wmt-SignInScreenLinks:hover {
   color: colorTerra;
 }
+.wmt-SignInScreenLinksInfo {
+  color: white;
+  font-size: fontSmall;
+  cursor: default;
+}
+.wmt-SignInScreenLinksInfoPanel {
+  margin: 6px;
+  width: 80%;
+  max-width: 400px;
+}
 .wmt-SignInScreenLinksPanel {
   margin-top: 24px;
-  margin-bottom: 100px;
 }
+
+
 
 /* The primary structuring element of the WMT client. */
 .wmt-DockLayoutPanel {
