@@ -39,7 +39,7 @@ import edu.colorado.csdms.wmt.client.ui.widgets.QuestionDialogBox;
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class AuthenticationHandler implements ClickHandler {
+public class AuthenticationHandler {
 
   private DataManager data;
 
@@ -106,41 +106,5 @@ public class AuthenticationHandler implements ClickHandler {
 
     questionDialog.center();
     questionDialog.getChoicePanel().getOkButton().setFocus(true);
-  }
-  
-  @Override
-  public void onClick(ClickEvent event) {
-
-    if (data.security.isLoggedIn()) {
-
-//      final QuestionDialogBox questionDialog =
-//          new QuestionDialogBox(Constants.QUESTION_SIGN_OUT);
-//      questionDialog.getChoicePanel().getOkButton().setHTML(Constants.SIGN_OUT);
-//
-//      // Define handlers.
-//      ClickHandler okHandler = new ClickHandler() {
-//        @Override
-//        public void onClick(ClickEvent event) {
-//          DataTransfer.logout(data);
-//          questionDialog.hide();
-//        }
-//      };
-//      DialogCancelHandler cancelHandler =
-//          new DialogCancelHandler(questionDialog);
-//
-//      // Apply handlers to OK and Cancel buttons.
-//      questionDialog.getChoicePanel().getOkButton().addClickHandler(okHandler);
-//      questionDialog.getChoicePanel().getCancelButton().addClickHandler(
-//          cancelHandler);
-//
-//      // Also apply handlers to "Enter" and "Esc" keys.
-//      questionDialog
-//          .addDomHandler(new ModalKeyHandler(okHandler, cancelHandler),
-//              KeyDownEvent.getType());
-//
-//      questionDialog.center();
-//      questionDialog.getChoicePanel().getOkButton().setFocus(true);
-
-    }
   }
 }
