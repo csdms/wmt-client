@@ -3,6 +3,9 @@ package edu.colorado.csdms.wmt.client.ui;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
@@ -11,12 +14,12 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.ui.handler.AuthenticationHandler;
 
 /**
  * The {@link SignInScreen} is the first thing a user sees on loading WMT. It
@@ -33,6 +36,7 @@ public class SignInScreen extends HorizontalPanel {
   private SuggestBox emailBox;
   private PasswordTextBox passwordBox;
   private Button signInButton;
+  private AuthenticationHandler authHandler;
 
   /**
    * Makes a new {@link SignInScreen} for a user to sign in to WMT.
@@ -40,6 +44,8 @@ public class SignInScreen extends HorizontalPanel {
   public SignInScreen(DataManager data) {
 
     this.data = data;
+    this.data.setSignInScreen(this);
+    this.authHandler = new AuthenticationHandler(data);
     
     // Determine offset of contents from top of browser window.
     Integer browserHeight = Window.getClientHeight();
@@ -144,15 +150,51 @@ public class SignInScreen extends HorizontalPanel {
     });
 
     /*
-     * XXX This is experimental and will be removed.
+     * Perform sign-in action if user hits <Enter> key in password box.
+     */
+    passwordBox.addKeyUpHandler(new KeyUpHandler() {
+      @Override
+      public void onKeyUp(KeyUpEvent event) {
+        Integer keyCode = event.getNativeKeyCode();
+          if (keyCode == KeyCodes.KEY_ENTER) {
+            authHandler.signIn();
+          }
+      }
+    });
+    
+    /*
+     * Perform sign-in action if user hits the "Sign In" button.
      */
     signInButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
-        RootLayoutPanel.get().remove(SignInScreen.this);
-        RootLayoutPanel.get().add(SignInScreen.this.data.getPerspective());
+        authHandler.signIn();
       }
     });
     
+  }
+
+  public SuggestBox getEmailBox() {
+    return emailBox;
+  }
+
+  public void setEmailBox(SuggestBox emailBox) {
+    this.emailBox = emailBox;
+  }
+
+  public PasswordTextBox getPasswordBox() {
+    return passwordBox;
+  }
+
+  public void setPasswordBox(PasswordTextBox passwordBox) {
+    this.passwordBox = passwordBox;
+  }
+
+  public Button getSignInButton() {
+    return signInButton;
+  }
+
+  public void setSignInButton(Button signInButton) {
+    this.signInButton = signInButton;
   }
 }
