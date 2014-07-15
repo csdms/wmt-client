@@ -40,6 +40,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
@@ -779,6 +780,9 @@ public class DataTransfer {
       data.getPerspective().getLoginPanel().showStatusPanel();
       data.getPerspective().getLoginPanel().getSignInButton().setFocus(false);
 
+      RootLayoutPanel.get().remove(data.getSignInScreen());
+      RootLayoutPanel.get().add(data.getPerspective());
+      
       // Get all labels belonging to the user, as well as all public labels.
       listLabels(data);
 
