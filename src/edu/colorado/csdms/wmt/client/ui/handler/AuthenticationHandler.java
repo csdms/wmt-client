@@ -53,7 +53,7 @@ public class AuthenticationHandler implements ClickHandler {
   }
 
   /**
-   * Prepares and performs the sign-in action.
+   * Prepares and performs the WMT sign-in action.
    */
   public void signIn() {
 
@@ -76,8 +76,36 @@ public class AuthenticationHandler implements ClickHandler {
     DataTransfer.login(data);
   }
   
+  /**
+   * Prepares and performs the WMT sign-out action.
+   */
   public void signOut() {
-    ;
+
+    final QuestionDialogBox questionDialog =
+        new QuestionDialogBox(Constants.QUESTION_SIGN_OUT);
+    questionDialog.getChoicePanel().getOkButton().setHTML(Constants.SIGN_OUT);
+
+    // Define handlers.
+    ClickHandler okHandler = new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent event) {
+        DataTransfer.logout(data);
+        questionDialog.hide();
+      }
+    };
+    DialogCancelHandler cancelHandler = new DialogCancelHandler(questionDialog);
+
+    // Apply handlers to OK and Cancel buttons.
+    questionDialog.getChoicePanel().getOkButton().addClickHandler(okHandler);
+    questionDialog.getChoicePanel().getCancelButton().addClickHandler(
+        cancelHandler);
+
+    // Also apply handlers to "Enter" and "Esc" keys.
+    questionDialog.addDomHandler(new ModalKeyHandler(okHandler, cancelHandler),
+        KeyDownEvent.getType());
+
+    questionDialog.center();
+    questionDialog.getChoicePanel().getOkButton().setFocus(true);
   }
   
   @Override
@@ -85,33 +113,33 @@ public class AuthenticationHandler implements ClickHandler {
 
     if (data.security.isLoggedIn()) {
 
-      final QuestionDialogBox questionDialog =
-          new QuestionDialogBox(Constants.QUESTION_SIGN_OUT);
-      questionDialog.getChoicePanel().getOkButton().setHTML(Constants.SIGN_OUT);
-
-      // Define handlers.
-      ClickHandler okHandler = new ClickHandler() {
-        @Override
-        public void onClick(ClickEvent event) {
-          DataTransfer.logout(data);
-          questionDialog.hide();
-        }
-      };
-      DialogCancelHandler cancelHandler =
-          new DialogCancelHandler(questionDialog);
-
-      // Apply handlers to OK and Cancel buttons.
-      questionDialog.getChoicePanel().getOkButton().addClickHandler(okHandler);
-      questionDialog.getChoicePanel().getCancelButton().addClickHandler(
-          cancelHandler);
-
-      // Also apply handlers to "Enter" and "Esc" keys.
-      questionDialog
-          .addDomHandler(new ModalKeyHandler(okHandler, cancelHandler),
-              KeyDownEvent.getType());
-
-      questionDialog.center();
-      questionDialog.getChoicePanel().getOkButton().setFocus(true);
+//      final QuestionDialogBox questionDialog =
+//          new QuestionDialogBox(Constants.QUESTION_SIGN_OUT);
+//      questionDialog.getChoicePanel().getOkButton().setHTML(Constants.SIGN_OUT);
+//
+//      // Define handlers.
+//      ClickHandler okHandler = new ClickHandler() {
+//        @Override
+//        public void onClick(ClickEvent event) {
+//          DataTransfer.logout(data);
+//          questionDialog.hide();
+//        }
+//      };
+//      DialogCancelHandler cancelHandler =
+//          new DialogCancelHandler(questionDialog);
+//
+//      // Apply handlers to OK and Cancel buttons.
+//      questionDialog.getChoicePanel().getOkButton().addClickHandler(okHandler);
+//      questionDialog.getChoicePanel().getCancelButton().addClickHandler(
+//          cancelHandler);
+//
+//      // Also apply handlers to "Enter" and "Esc" keys.
+//      questionDialog
+//          .addDomHandler(new ModalKeyHandler(okHandler, cancelHandler),
+//              KeyDownEvent.getType());
+//
+//      questionDialog.center();
+//      questionDialog.getChoicePanel().getOkButton().setFocus(true);
 
     }
   }

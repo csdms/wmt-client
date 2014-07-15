@@ -53,7 +53,6 @@ import edu.colorado.csdms.wmt.client.data.ModelMetadataJSO;
 import edu.colorado.csdms.wmt.client.ui.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.handler.AddNewUserHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
-import edu.colorado.csdms.wmt.client.ui.widgets.DesensitizingPopupPanel;
 import edu.colorado.csdms.wmt.client.ui.widgets.NewUserDialogBox;
 import edu.colorado.csdms.wmt.client.ui.widgets.RunInfoDialogBox;
 
@@ -775,10 +774,8 @@ public class DataTransfer {
      */
     private void loginActions() {
       data.security.isLoggedIn(true);
-      data.getPerspective().getLoginPanel().getLoginName().setText(
+      data.getPerspective().getUserPanel().getLoginName().setText(
           data.security.getWmtUsername());
-      data.getPerspective().getLoginPanel().showStatusPanel();
-      data.getPerspective().getLoginPanel().getSignInButton().setFocus(false);
 
       RootLayoutPanel.get().remove(data.getSignInScreen());
       RootLayoutPanel.get().add(data.getPerspective());
@@ -802,7 +799,8 @@ public class DataTransfer {
      */
     private void logoutActions() {
       data.security.isLoggedIn(false);
-      data.getPerspective().getLoginPanel().showInputPanel();
+      RootLayoutPanel.get().remove(data.getPerspective());
+      RootLayoutPanel.get().add(data.getSignInScreen());
       data.getPerspective().reset();
 
       // Clear any user-owned labels from list. Locate first, then remove.
@@ -815,12 +813,7 @@ public class DataTransfer {
       for (String key : toRemove) {
         GWT.log("Remove label: " + key);
         data.modelLabels.remove(key);
-      }      
-
-      // Remind the user to sign in to use WMT. (Grays out the entire window.)
-      DesensitizingPopupPanel signInPopup =
-          new DesensitizingPopupPanel(Constants.SIGN_IN_MSG);
-      signInPopup.center();
+      }
     }
 
     @Override
