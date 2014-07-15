@@ -11,10 +11,12 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
+import edu.colorado.csdms.wmt.client.control.DataManager;
 
 /**
  * The {@link SignInScreen} is the first thing a user sees on loading WMT. It
@@ -25,6 +27,7 @@ import edu.colorado.csdms.wmt.client.Constants;
  */
 public class SignInScreen extends HorizontalPanel {
 
+  private DataManager data;
   private VerticalPanel contents;
   private MultiWordSuggestOracle oracle;
   private SuggestBox emailBox;
@@ -34,8 +37,10 @@ public class SignInScreen extends HorizontalPanel {
   /**
    * Makes a new {@link SignInScreen} for a user to sign in to WMT.
    */
-  public SignInScreen() {
+  public SignInScreen(DataManager data) {
 
+    this.data = data;
+    
     // Determine offset of contents from top of browser window.
     Integer browserHeight = Window.getClientHeight();
     Double offset = 0.20; // arbitrary, aesthetic
@@ -137,5 +142,17 @@ public class SignInScreen extends HorizontalPanel {
             .setVisible(!forgotPasswordInfoPanel.isVisible());
       }
     });
+
+    /*
+     * XXX This is experimental and will be removed.
+     */
+    signInButton.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent event) {
+        RootLayoutPanel.get().remove(SignInScreen.this);
+        RootLayoutPanel.get().add(SignInScreen.this.data.getPerspective());
+      }
+    });
+    
   }
 }

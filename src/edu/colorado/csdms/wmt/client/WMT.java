@@ -45,9 +45,11 @@ public class WMT implements EntryPoint {
   private DataManager data;
 
   /**
-   * This is the entry point method. It draws the views that make up the WMT
-   * GUI. It loads information about component models from a set of JSON
-   * files on the server, then populates the GUI with this information.
+   * This is the entry point method. Initially, it displays a sign-in screen. In
+   * the background, it draws the views that make up the WMT GUI. It loads
+   * information about component models from a set of JSON files on the server,
+   * then populates the GUI with this information. After the user passes through
+   * the sign-in screen, the WMT GUI is displayed.
    */
   public void onModuleLoad() {
 
@@ -65,25 +67,24 @@ public class WMT implements EntryPoint {
     Resources.INSTANCE.css().ensureInjected();
 
     // Show the sign-in screen.
-    SignInScreen signIn = new SignInScreen();
+    SignInScreen signIn = new SignInScreen(data);
     RootLayoutPanel.get().add(signIn);
     
-    // Set up the basic framework of views for the GUI.
-//    perspective = new Perspective(data);
-//    RootLayoutPanel.get().add(perspective);
-//    perspective.initializeModel();
-//    perspective.initializeParameterTable();
+    // Set up the basic framework of views for the GUI. However, don't show the
+    // GUI until the user passes through the sign-in screen.
+    perspective = new Perspective(data);
+    perspective.initializeModel();
+    perspective.initializeParameterTable();
     
     // Check whether the user is already logged in.
-//    DataTransfer.getLoginState(data);
+    DataTransfer.getLoginState(data);
 
     // Retrieve (asynchronously) and store the list of available components
     // and models. Note that when DataTransfer#getComponentList completes,
     // it immediately starts pulling component data from the server with calls
     // to DataTransfer#getComponent. Asynchronous requests are cool!
-//    data.showWaitCursor();
-//    DataTransfer.getComponentList(data);
-//    DataTransfer.getModelList(data);
+    DataTransfer.getComponentList(data);
+    DataTransfer.getModelList(data);
 
     // Trap browser reload and close events (they're indistinguishable), and
     // present a message to the user.
