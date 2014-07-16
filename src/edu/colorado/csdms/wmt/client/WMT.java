@@ -43,11 +43,12 @@ public class WMT implements EntryPoint {
   private DataManager data;
 
   /**
-   * This is the entry point method. Initially, it displays a sign-in screen. In
-   * the background, it draws the views that make up the WMT GUI. It loads
-   * information about component models from a set of JSON files on the server,
-   * then populates the GUI with this information. After the user passes through
-   * the sign-in screen, the WMT GUI is displayed.
+   * This is the entry point method. Initially, it displays the
+   * {@link SignInScreen}. In the background, it draws the views that make up
+   * the WMT GUI in the {@link Perspective}. It loads information about
+   * component models from a set of JSON files on the server, then populates the
+   * GUI with this information. After the user passes through the sign-in
+   * screen, the WMT GUI is displayed.
    */
   public void onModuleLoad() {
 
@@ -75,6 +76,7 @@ public class WMT implements EntryPoint {
     perspective.initializeParameterTable();
     
     // Check whether the user is already logged in.
+    // XXX Consider permanently removing this?
 //    DataTransfer.getLoginState(data);
 
     // Retrieve (asynchronously) and store the list of available components
