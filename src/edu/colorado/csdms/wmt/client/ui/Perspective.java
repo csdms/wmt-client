@@ -27,9 +27,8 @@ import java.util.Map;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -38,14 +37,14 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
-import edu.colorado.csdms.wmt.client.ui.handler.AuthenticationHandler;
 import edu.colorado.csdms.wmt.client.ui.widgets.ComponentInfoDialogBox;
-import edu.colorado.csdms.wmt.client.ui.widgets.LoginPanel;
 import edu.colorado.csdms.wmt.client.ui.widgets.OpenDialogBox;
+import edu.colorado.csdms.wmt.client.ui.widgets.UserPanel;
 
 /**
  * Defines the initial layout of views (a perspective, in Eclipse parlance)
@@ -71,18 +70,21 @@ public class Perspective extends DockLayoutPanel {
   // Secondary UI panels/widgets.
   private ScrollPanel scrollModel;
   private ScrollPanel scrollParameters;
-  private LoginPanel loginPanel;
   private ModelActionPanel modelActionPanel;
   private ModelTree modelTree;
   private ParameterTable parameterTable;
   
   // Tertiary UI widgets!
+  private UserPanel userPanel;
   private ComponentInfoDialogBox componentInfoBox;
   private LabelsMenu labelsMenu;
   private OpenDialogBox openDialogBox;
+  private HandlerRegistration windowCloseHandler;
 
   /**
    * Draws the panels and their children that compose the basic WMT GUI.
+   * 
+   * @param data the DataManager object for the WMT session
    */
   public Perspective(DataManager data) {
 
@@ -133,25 +135,19 @@ public class Perspective extends DockLayoutPanel {
 
       HTML title = new HTML("The CSDMS Web Modeling Tool");
       title.setStyleName("wmt-NavBarTitle");
-      this.add(title);
 
-      // Set up LoginPanel. Send login event when user clicks "Sign In" button,
-      // or when user hits "Enter" key in the password box.
-      loginPanel = new LoginPanel();
-      this.add(loginPanel);
-      final AuthenticationHandler authHandler =
-          new AuthenticationHandler(data, loginPanel);
-      loginPanel.getSignInButton().addClickHandler(authHandler);
-      loginPanel.getPasswordBox().addKeyUpHandler(new KeyUpHandler() {
+      userPanel = new UserPanel();
+      
+      this.add(title);
+      this.add(userPanel);
+    
+      // Handle sign out event.
+      userPanel.getSignOutButton().addClickHandler(new ClickHandler() {
         @Override
-        public void onKeyUp(KeyUpEvent event) {
-          Integer keyCode = event.getNativeKeyCode();
-          if (keyCode == KeyCodes.KEY_ENTER) {
-            authHandler.onClick(null);
-          }
+        public void onClick(ClickEvent event) {
+          data.security.getAuthenticationHandler().signOut();
         }
       });
-
     }
   } // end ViewNorth
 
@@ -307,12 +303,12 @@ public class Perspective extends DockLayoutPanel {
     this.openDialogBox = openDialogBox;
   }
 
-  public LoginPanel getLoginPanel() {
-    return loginPanel;
+  public UserPanel getUserPanel() {
+    return userPanel;
   }
 
-  public void setLoginPanel(LoginPanel loginPanel) {
-    this.loginPanel = loginPanel;
+  public void setUserPanel(UserPanel userPanel) {
+    this.userPanel = userPanel;
   }
 
   /**
@@ -336,6 +332,14 @@ public class Perspective extends DockLayoutPanel {
   public void initializeParameterTable() {
     parameterTable = new ParameterTable(data);
     scrollParameters.add(parameterTable);
+  }
+
+  public HandlerRegistration getWindowCloseHandler() {
+    return windowCloseHandler;
+  }
+
+  public void setWindowCloseHandler(HandlerRegistration windowCloseHandler) {
+    this.windowCloseHandler = windowCloseHandler;
   }
 
   /**
