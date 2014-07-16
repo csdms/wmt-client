@@ -778,6 +778,7 @@ public class DataTransfer {
       data.security.isLoggedIn(true);
       data.getPerspective().getUserPanel().getLoginName().setText(
           data.security.getWmtUsername());
+      data.getSignInScreen().getErrorMessage().setText(null);
 
       // Replace the sign-in screen with the WMT GUI.
       RootLayoutPanel.get().remove(data.getSignInScreen());
@@ -879,7 +880,7 @@ public class DataTransfer {
       } else if (Response.SC_UNAUTHORIZED == response.getStatusCode()) {
 
         // Display message if email address is valid, but password is not.
-        Window.alert(Constants.PASSWORD_ERR);
+        data.getSignInScreen().getErrorMessage().setHTML(Constants.PASSWORD_ERR);
 
       } else {
         String msg =

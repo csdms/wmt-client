@@ -27,7 +27,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.user.client.Window;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
@@ -68,7 +67,7 @@ public class AuthenticationHandler {
     // A very basic input check.
     if (username.isEmpty() || password.isEmpty() || !username.contains("@")
         || !username.contains(".")) {
-          Window.alert(Constants.LOGIN_ERR);
+          data.getSignInScreen().getErrorMessage().setHTML(Constants.LOGIN_ERR);
           return;
     }
 

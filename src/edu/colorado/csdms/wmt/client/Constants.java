@@ -104,7 +104,7 @@ public class Constants {
   public static String LOGIN_ERR = "Please sign in with an email address"
       + " and a password.";
   public static String PASSWORD_ERR = "This email address is registered,"
-      + " but the password is not valid.\n\nIf you've forgotten your password,"
+      + " but the password is not valid. If you've forgotten your password,"
       + " please contact " + CSDMS_EMAIL_LINK + " for assistance.";
   public static String ADD_LABEL_ERR = "This label already exists."
       + " Please choose a different name.";

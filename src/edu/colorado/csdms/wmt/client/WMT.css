@@ -77,6 +77,13 @@ body, table td, select, button {
   margin-top: 14px;
   border: 2px solid colorAcqua;
 }
+.wmt-SignInScreenError {
+  color: colorWarning;
+  font-size: fontMedium;
+  cursor: default;
+  margin: 6px 6px 0px 6px;
+  max-width: 400px;
+}
 .wmt-SignInScreenLinks {
   color: white;
   font-size: fontMedium;
@@ -95,7 +102,7 @@ body, table td, select, button {
   max-width: 400px;
 }
 .wmt-SignInScreenLinksPanel {
-  margin-top: 24px;
+  margin-top: 12px;
 }
 
 

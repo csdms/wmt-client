@@ -35,6 +35,7 @@ public class SignInScreen extends HorizontalPanel {
   private SuggestBox emailBox;
   private PasswordTextBox passwordBox;
   private Button signInButton;
+  private HTML errorMessage;
 
   /**
    * Makes a new {@link SignInScreen} for a user to sign in to WMT.
@@ -90,6 +91,10 @@ public class SignInScreen extends HorizontalPanel {
     // Push the button. (Galvanize!)
     signInButton = new Button(Constants.SIGN_IN);
     signInButton.setStyleName("wmt-SignInScreenButton");
+    
+    // Display error messages here.
+    errorMessage = new HTML();
+    errorMessage.setStyleName("wmt-SignInScreenError");
 
     // Is this a new user?
     HTML newUser = new HTML(Constants.FA_RARROW + "New User?");
@@ -125,6 +130,7 @@ public class SignInScreen extends HorizontalPanel {
     contents.add(emailBox);
     contents.add(passwordBox);
     contents.add(signInButton);
+    contents.add(errorMessage);
     contents.add(linksPanel);
 
     /*
@@ -195,5 +201,13 @@ public class SignInScreen extends HorizontalPanel {
 
   public void setSignInButton(Button signInButton) {
     this.signInButton = signInButton;
+  }
+
+  public HTML getErrorMessage() {
+    return errorMessage;
+  }
+
+  public void setErrorMessage(HTML errorMessage) {
+    this.errorMessage = errorMessage;
   }
 }
