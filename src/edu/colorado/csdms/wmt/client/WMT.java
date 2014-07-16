@@ -25,8 +25,6 @@ package edu.colorado.csdms.wmt.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.ClosingEvent;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
@@ -85,16 +83,5 @@ public class WMT implements EntryPoint {
     // to DataTransfer#getComponent. Asynchronous requests are cool!
     DataTransfer.getComponentList(data);
     DataTransfer.getModelList(data);
-
-    // Trap browser reload and close events (they're indistinguishable), and
-    // present a message to the user.
-    Window.addWindowClosingHandler(new Window.ClosingHandler() {
-      @Override
-      public void onWindowClosing(ClosingEvent event) {
-        if (!data.isDevelopmentMode() && !data.modelIsSaved()) {
-          event.setMessage(Constants.CLOSE_MSG);
-        }
-      }
-    });
   }
 }

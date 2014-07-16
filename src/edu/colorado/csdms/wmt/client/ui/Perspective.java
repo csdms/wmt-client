@@ -37,6 +37,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
@@ -78,6 +79,7 @@ public class Perspective extends DockLayoutPanel {
   private ComponentInfoDialogBox componentInfoBox;
   private LabelsMenu labelsMenu;
   private OpenDialogBox openDialogBox;
+  private HandlerRegistration windowCloseHandler;
 
   /**
    * Draws the panels and their children that compose the basic WMT GUI.
@@ -330,6 +332,14 @@ public class Perspective extends DockLayoutPanel {
   public void initializeParameterTable() {
     parameterTable = new ParameterTable(data);
     scrollParameters.add(parameterTable);
+  }
+
+  public HandlerRegistration getWindowCloseHandler() {
+    return windowCloseHandler;
+  }
+
+  public void setWindowCloseHandler(HandlerRegistration windowCloseHandler) {
+    this.windowCloseHandler = windowCloseHandler;
   }
 
   /**

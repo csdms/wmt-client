@@ -40,7 +40,9 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.ClosingEvent;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
@@ -777,8 +779,22 @@ public class DataTransfer {
       data.getPerspective().getUserPanel().getLoginName().setText(
           data.security.getWmtUsername());
 
+      // Replace the sign-in screen with the WMT GUI.
       RootLayoutPanel.get().remove(data.getSignInScreen());
       RootLayoutPanel.get().add(data.getPerspective());
+      
+      // Trap browser reload and close events (they're indistinguishable), and
+      // present a message to the user. Store this handler in the Perspective.
+      HandlerRegistration handler;
+      handler = Window.addWindowClosingHandler(new Window.ClosingHandler() {
+        @Override
+        public void onWindowClosing(ClosingEvent event) {
+          if (!data.isDevelopmentMode() && !data.modelIsSaved()) {
+            event.setMessage(Constants.CLOSE_MSG);
+          }
+        }
+      });
+      data.getPerspective().setWindowCloseHandler(handler);
       
       // Get all labels belonging to the user, as well as all public labels.
       listLabels(data);
@@ -799,8 +815,13 @@ public class DataTransfer {
      */
     private void logoutActions() {
       data.security.isLoggedIn(false);
+
+      // Replace the WMT GUI with the sign-in screen.
       RootLayoutPanel.get().remove(data.getPerspective());
       RootLayoutPanel.get().add(data.getSignInScreen());
+
+      // Remove window close handler; reset the Perspective.
+      data.getPerspective().getWindowCloseHandler().removeHandler();      
       data.getPerspective().reset();
 
       // Clear any user-owned labels from list. Locate first, then remove.
