@@ -40,6 +40,8 @@ public class Constants {
   public static final String WMT_HELP = CSDMS_HOME + "wiki/WMT_help";
   public static final String WMT_TUTORIAL = CSDMS_HOME + "wiki/WMT_tutorial";
   public static final String CSDMS_EMAIL = "CSDMSsupport@colorado.edu";
+  public static final String CSDMS_EMAIL_LINK = "<a href='mailto:" 
+      + CSDMS_EMAIL + "'>CSDMS Support</a>";
   public static final String WMT_TITLE = "<h2>WMT</h2><p><b>The CSDMS Web"
       + " Modeling Tool</b></br>Version: " + DataManager.VERSION + "</p>";
 
@@ -98,24 +100,17 @@ public class Constants {
           + " address and password. To authenticate your sign-in, you'll be"
           + " asked to repeat your password.";
   public static String FORGOT_PASSWORD_INFO =
-      "Please contact <a href='mailto:CSDMSSupport@colorado.edu'>CSDMS Support</a> for assistance.";
+      "Please contact " + CSDMS_EMAIL_LINK + " for assistance.";
   public static String LOGIN_ERR = "Please sign in with an email address"
       + " and a password.";
   public static String PASSWORD_ERR = "This email address is registered,"
       + " but the password is not valid.\n\nIf you've forgotten your password,"
-      + " please contact CSDMS support (CSDMSsupport@colorado.edu)"
-      + " for assistance.";
+      + " please contact " + CSDMS_EMAIL_LINK + " for assistance.";
   public static String ADD_LABEL_ERR = "This label already exists."
       + " Please choose a different name.";
   public static String DELETE_LABEL_ERR =
       "This label cannot be deleted because"
           + " it is not owned by the current user.";
-  public static String SIGN_IN_MSG = WMT_TITLE
-      + "<p>Please sign in to use WMT.</p>"
-      + "<p>If this is your first time using WMT, create a<br>"
-      + "sign in with an email address and a password.</p>"
-      + "<p>For assistance, email <a href='mailto:" + Constants.CSDMS_EMAIL
-      + "'>" + Constants.CSDMS_EMAIL + "</a>.</p>";
 
   // Questions
   public static final String QUESTION_START = "Are you sure you want to ";
