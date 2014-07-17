@@ -25,13 +25,12 @@ package edu.colorado.csdms.wmt.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.ClosingEvent;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
 import edu.colorado.csdms.wmt.client.ui.Perspective;
+import edu.colorado.csdms.wmt.client.ui.SignInScreen;
 
 /**
  * WMT is the CSDMS Web Modeling Tool.
@@ -44,9 +43,12 @@ public class WMT implements EntryPoint {
   private DataManager data;
 
   /**
-   * This is the entry point method. It draws the views that make up the WMT
-   * GUI. It loads information about component models from a set of JSON
-   * files on the server, then populates the GUI with this information.
+   * This is the entry point method. Initially, it displays the
+   * {@link SignInScreen}. In the background, it draws the views that make up
+   * the WMT GUI in the {@link Perspective}. It loads information about
+   * component models from a set of JSON files on the server, then populates the
+   * GUI with this information. After the user passes through the sign-in
+   * screen, the WMT GUI is displayed.
    */
   public void onModuleLoad() {
 
@@ -63,32 +65,25 @@ public class WMT implements EntryPoint {
     // (See http://www.gwtproject.org/doc/latest/DevGuideUiCss.html#cssfiles)
     Resources.INSTANCE.css().ensureInjected();
 
-    // Set up the basic framework of views for the GUI.
+    // Show the sign-in screen.
+    SignInScreen signIn = new SignInScreen(data);
+    RootLayoutPanel.get().add(signIn);
+    
+    // Set up the basic framework of views for the GUI. However, don't show the
+    // GUI until the user passes through the sign-in screen.
     perspective = new Perspective(data);
-    RootLayoutPanel.get().add(perspective);
     perspective.initializeModel();
     perspective.initializeParameterTable();
     
     // Check whether the user is already logged in.
-    DataTransfer.getLoginState(data);
+    // XXX Consider permanently removing this?
+//    DataTransfer.getLoginState(data);
 
     // Retrieve (asynchronously) and store the list of available components
     // and models. Note that when DataTransfer#getComponentList completes,
     // it immediately starts pulling component data from the server with calls
     // to DataTransfer#getComponent. Asynchronous requests are cool!
-    data.showWaitCursor();
     DataTransfer.getComponentList(data);
     DataTransfer.getModelList(data);
-
-    // Trap browser reload and close events (they're indistinguishable), and
-    // present a message to the user.
-    Window.addWindowClosingHandler(new Window.ClosingHandler() {
-      @Override
-      public void onWindowClosing(ClosingEvent event) {
-        if (!data.isDevelopmentMode() && !data.modelIsSaved()) {
-          event.setMessage(Constants.CLOSE_MSG);
-        }
-      }
-    });
   }
 }

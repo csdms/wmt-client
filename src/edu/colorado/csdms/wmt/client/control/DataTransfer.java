@@ -40,6 +40,9 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.ClosingEvent;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
@@ -52,7 +55,6 @@ import edu.colorado.csdms.wmt.client.data.ModelMetadataJSO;
 import edu.colorado.csdms.wmt.client.ui.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.handler.AddNewUserHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
-import edu.colorado.csdms.wmt.client.ui.widgets.DesensitizingPopupPanel;
 import edu.colorado.csdms.wmt.client.ui.widgets.NewUserDialogBox;
 import edu.colorado.csdms.wmt.client.ui.widgets.RunInfoDialogBox;
 
@@ -774,11 +776,27 @@ public class DataTransfer {
      */
     private void loginActions() {
       data.security.isLoggedIn(true);
-      data.getPerspective().getLoginPanel().getLoginName().setText(
+      data.getPerspective().getUserPanel().getLoginName().setText(
           data.security.getWmtUsername());
-      data.getPerspective().getLoginPanel().showStatusPanel();
-      data.getPerspective().getLoginPanel().getSignInButton().setFocus(false);
+      data.getSignInScreen().getErrorMessage().setText(null);
 
+      // Replace the sign-in screen with the WMT GUI.
+      RootLayoutPanel.get().remove(data.getSignInScreen());
+      RootLayoutPanel.get().add(data.getPerspective());
+      
+      // Trap browser reload and close events (they're indistinguishable), and
+      // present a message to the user. Store this handler in the Perspective.
+      HandlerRegistration handler;
+      handler = Window.addWindowClosingHandler(new Window.ClosingHandler() {
+        @Override
+        public void onWindowClosing(ClosingEvent event) {
+          if (!data.isDevelopmentMode() && !data.modelIsSaved()) {
+            event.setMessage(Constants.CLOSE_MSG);
+          }
+        }
+      });
+      data.getPerspective().setWindowCloseHandler(handler);
+      
       // Get all labels belonging to the user, as well as all public labels.
       listLabels(data);
 
@@ -798,7 +816,14 @@ public class DataTransfer {
      */
     private void logoutActions() {
       data.security.isLoggedIn(false);
-      data.getPerspective().getLoginPanel().showInputPanel();
+      data.getSignInScreen().getPasswordBox().setText(null);
+
+      // Replace the WMT GUI with the sign-in screen.
+      RootLayoutPanel.get().remove(data.getPerspective());
+      RootLayoutPanel.get().add(data.getSignInScreen());
+
+      // Remove window close handler; reset the Perspective.
+      data.getPerspective().getWindowCloseHandler().removeHandler();      
       data.getPerspective().reset();
 
       // Clear any user-owned labels from list. Locate first, then remove.
@@ -811,12 +836,7 @@ public class DataTransfer {
       for (String key : toRemove) {
         GWT.log("Remove label: " + key);
         data.modelLabels.remove(key);
-      }      
-
-      // Remind the user to sign in to use WMT. (Grays out the entire window.)
-      DesensitizingPopupPanel signInPopup =
-          new DesensitizingPopupPanel(Constants.SIGN_IN_MSG);
-      signInPopup.center();
+      }
     }
 
     @Override
@@ -861,7 +881,7 @@ public class DataTransfer {
       } else if (Response.SC_UNAUTHORIZED == response.getStatusCode()) {
 
         // Display message if email address is valid, but password is not.
-        Window.alert(Constants.PASSWORD_ERR);
+        data.getSignInScreen().getErrorMessage().setHTML(Constants.PASSWORD_ERR);
 
       } else {
         String msg =
