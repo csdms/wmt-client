@@ -40,11 +40,72 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 @def fontSmall 13px;
 @def fontMedium 14px;
 @def fontLarge 18px;
+@def fontExtraLarge 24px;
 
 body, table td, select, button {
   font-family: fontFamily;
   font-size: fontSmall;
 }
+
+/* The sign in screen is shown on startup. */
+.wmt-SignInScreen {
+  width: 100%;
+  height: 100%;
+  background-color: colorAbisso;
+}
+.wmt-SignInScreenTitle {
+  color: white;
+  padding: 14px;
+  font-size: fontExtraLarge;
+  cursor: default;
+}
+.wmt-SignInScreenBox {
+  color: colorAcquaProfonda;
+  width: 80%;
+  max-width: 400px;
+  font-size: fontMedium;
+  line-height: 1.25;
+  padding: 6px 12px;
+}
+.wmt-SignInScreenButton {
+  color: white;
+  background-color: colorAcqua;
+  font-size: fontMedium;
+  line-height: 1.25;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-top: 14px;
+  border: 2px solid colorAcqua;
+}
+.wmt-SignInScreenError {
+  color: colorWarning;
+  font-size: fontMedium;
+  cursor: default;
+  margin: 6px 6px 0px 6px;
+  max-width: 400px;
+}
+.wmt-SignInScreenLinks {
+  color: white;
+  font-size: fontMedium;
+  cursor: pointer;
+}
+.wmt-SignInScreenLinks:hover {
+  color: colorTerra;
+}
+.wmt-SignInScreenLinksInfo {
+  color: white;
+  font-size: fontSmall;
+  cursor: default;
+}
+.wmt-SignInScreenLinksInfoPanel {
+  margin: 6px;
+  max-width: 400px;
+}
+.wmt-SignInScreenLinksPanel {
+  margin-top: 12px;
+}
+
+
 
 /* The primary structuring element of the WMT client. */
 .wmt-DockLayoutPanel {
@@ -67,7 +128,7 @@ body, table td, select, button {
   line-height: 20px;
   cursor: pointer;
 }
-.wmt-LoginPanel {
+.wmt-UserPanel {
   float: right;
   margin: 8px 10px 8px 0px;
 }

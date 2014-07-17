@@ -40,6 +40,7 @@ import edu.colorado.csdms.wmt.client.security.Security;
 import edu.colorado.csdms.wmt.client.ui.ComponentCell;
 import edu.colorado.csdms.wmt.client.ui.ModelTree;
 import edu.colorado.csdms.wmt.client.ui.Perspective;
+import edu.colorado.csdms.wmt.client.ui.SignInScreen;
 
 /**
  * A class for storing and sharing data, as well as the state of UI elements,
@@ -52,6 +53,10 @@ public class DataManager {
   private Boolean developmentMode;
   private Boolean apiDevelopmentMode;
 
+  // The initial sign-in screen. Either this or the Perspective are always
+  // attached to the RootLayoutPanel of the application.
+  private SignInScreen signInScreen;
+  
   // Get the state of UI elements through the Perspective. 
   private Perspective perspective;
 
@@ -81,7 +86,7 @@ public class DataManager {
    * Initializes the DataManager object used in a WMT session.
    */
   public DataManager() {
-    security = new Security();
+    security = new Security(this);
     componentIdList = new ArrayList<String>();
     retryComponentLoad = new HashMap<String, Integer>();
     components = new ArrayList<ComponentJSO>();
@@ -153,6 +158,14 @@ public class DataManager {
       prefix = Constants.FA_WRENCH;
     }
     return prefix;
+  }
+
+  public SignInScreen getSignInScreen() {
+    return signInScreen;
+  }
+
+  public void setSignInScreen(SignInScreen signInScreen) {
+    this.signInScreen = signInScreen;
   }
 
   /**

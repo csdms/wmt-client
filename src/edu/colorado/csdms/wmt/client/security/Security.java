@@ -23,6 +23,9 @@
  */
 package edu.colorado.csdms.wmt.client.security;
 
+import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.ui.handler.AuthenticationHandler;
+
 /**
  * A class for working with usernames and passwords in WMT.
  * 
@@ -30,6 +33,7 @@ package edu.colorado.csdms.wmt.client.security;
  */
 public class Security {
 
+  private AuthenticationHandler authHandler;  
   private String hpccHostname;
   private String hpccUsername; // for the HPCC where the model is run
   private String hpccPassword;
@@ -39,10 +43,21 @@ public class Security {
   
   /**
    * Initializes the Security object used in a WMT session.
+   * 
+   * @param data the DataManager object for the WMT session
    */
-  public Security() {
+  public Security(DataManager data) {
+    this.authHandler = new AuthenticationHandler(data);
   }
   
+  public AuthenticationHandler getAuthenticationHandler() {
+    return authHandler;
+  }
+
+  public void setAuthenticationHandler(AuthenticationHandler authHandler) {
+    this.authHandler = authHandler;
+  }
+
   /**
    * Returns the hostname of the machine where the user wants the model to be
    * run.

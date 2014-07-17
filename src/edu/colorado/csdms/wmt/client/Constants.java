@@ -40,6 +40,8 @@ public class Constants {
   public static final String WMT_HELP = CSDMS_HOME + "wiki/WMT_help";
   public static final String WMT_TUTORIAL = CSDMS_HOME + "wiki/WMT_tutorial";
   public static final String CSDMS_EMAIL = "CSDMSsupport@colorado.edu";
+  public static final String CSDMS_EMAIL_LINK = "<a href='mailto:" 
+      + CSDMS_EMAIL + "'>CSDMS Support</a>";
   public static final String WMT_TITLE = "<h2>WMT</h2><p><b>The CSDMS Web"
       + " Modeling Tool</b></br>Version: " + VERSION + "</p>";
 
@@ -58,7 +60,7 @@ public class Constants {
   public static final String LOGOUT_PATH = "account/logout";
   public static final String USERNAME_PATH = "account/username";
   public static final String USERNAME_COOKIE = "__WMT_username";
-  public static final Long COOKIE_DURATION = (long) (1000*60*60*24*14); // 2 wks
+  public static final Long COOKIE_DURATION = (long) (1000 * 60 * 60 * 24 * 14); // 2 wks
 
   // API URLs for labels.
   public static final String LABELS_LIST_PATH = "tag/list";
@@ -67,7 +69,7 @@ public class Constants {
   public static final String LABELS_MODEL_ADD_PATH = "tag/model/add";
   public static final String LABELS_MODEL_QUERY_PATH = "tag/model/query";
   public static final String LABELS_MODEL_GET_PATH = "tag/model/";
-  
+
   // API URLs for components.
   public static final String COMPONENTS_LIST_PATH = "components/list";
   public static final String COMPONENTS_SHOW_PATH = "components/show/";
@@ -87,29 +89,36 @@ public class Constants {
   public static final String RUN_STAGE_PATH = "run/stage";
   public static final String RUN_LAUNCH_PATH = "run/launch";
 
-  // Error and warning messages.
+  // Error, warning, and informational messages.
   public static String REQUEST_ERR_MSG = "Failed to send the request: ";
   public static String RESPONSE_ERR_MSG = "No match found in the response.";
   public static String CLOSE_MSG =
       "Any unsaved model data will be lost if this page"
           + " is reloaded or closed.";
+  public static String NEW_USER_INFO =
+      "Create a new sign-in to WMT with a preferred email"
+          + " address and password. To authenticate your sign-in, you'll be"
+          + " asked to repeat your password.";
+  public static String FORGOT_PASSWORD_INFO =
+      "Please contact " + CSDMS_EMAIL_LINK + " for assistance.";
   public static String LOGIN_ERR = "Please sign in with an email address"
       + " and a password.";
   public static String PASSWORD_ERR = "This email address is registered,"
-      + " but the password is not valid.\n\nIf you've forgotten your password,"
-      + " please contact CSDMS support (CSDMSsupport@colorado.edu)"
-      + " for assistance.";
+      + " but the password is not valid. If you've forgotten your password,"
+      + " please contact " + CSDMS_EMAIL_LINK + " for assistance.";
   public static String ADD_LABEL_ERR = "This label already exists."
       + " Please choose a different name.";
-  public static String DELETE_LABEL_ERR = "This label cannot be deleted because"
-      + " it is not owned by the current user.";
-  public static String SIGN_IN_MSG = 
-      WMT_TITLE + "<p>Please sign in to use WMT.</p>"
-      + "<p>If this is your first time using WMT, create a<br>"
-      + "sign in with an email address and a password.</p>"
-      + "<p>For assistance, email <a href='mailto:" + Constants.CSDMS_EMAIL 
-      + "'>" + Constants.CSDMS_EMAIL + "</a>.</p>";
+  public static String DELETE_LABEL_ERR =
+      "This label cannot be deleted because"
+          + " it is not owned by the current user.";
 
+  // Questions
+  public static final String QUESTION_START = "Are you sure you want to ";
+  public static String QUESTION_SIGN_OUT = QUESTION_START
+      + "sign out from WMT?";
+  public static String QUESTION_PARAMETER_RESET = QUESTION_START
+      + "reset all parameters to their default values?";
+  
   // Number of tries to fetch a component; a magic number.
   public static Integer RETRY_ATTEMPTS = 3;
 
@@ -163,6 +172,7 @@ public class Constants {
   public static String FA_COGS = "<i class='fa fa-cogs fa-fw'></i> ";
   public static String FA_USER = "<i class='fa fa-user fa-fw'></i> ";
   public static String FA_BEER = "<i class='fa fa-beer'></i> ";
+  public static String FA_RARROW = "<i class='fa fa-arrow-right'></i> ";
 
   // Tooltip text strings.
   public static String MODEL_OPEN = "Open an existing model.";
@@ -179,8 +189,7 @@ public class Constants {
       "View and edit this component's parameters.";
   public static String COMPONENT_INFO =
       "View information about this component.";
-  public static String COMPONENT_INFO_1 =
-      "View information about a component.";  
+  public static String COMPONENT_INFO_1 = "View information about a component.";
   public static String COMPONENT_DELETE =
       "Delete this component from the model.";
   public static String PARAMETER_RESET = "Reset all parameters for this"
@@ -191,13 +200,6 @@ public class Constants {
       + " generated by the current parameter values. The model must be saved.";
   public static String PARAMETER_VIEW_DEFAULT = "View the input files"
       + " generated by the default parameter values for this component.";
-
-  // Questions
-  public static final String QUESTION_START = "Are you sure you want to ";
-  public static String QUESTION_SIGN_OUT = QUESTION_START
-      + "sign out from WMT?";
-  public static String QUESTION_PARAMETER_RESET = QUESTION_START
-      + "reset all parameters to their default values?";
 
   protected Constants() {
   }
