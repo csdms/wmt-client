@@ -1,37 +1,57 @@
 [![Build Status](https://travis-ci.org/csdms/wmt-client.svg?branch=master)](https://travis-ci.org/csdms/wmt-client)
 
-WMT
-===
+# WMT-client
 
-The CSDMS Web Modeling Tool
----------------------------
+**WMT-client** is a client-side user interface
+for the CSDMS Web Modeling Tool, [WMT](https://github.com/csdms/wmt).
 
-WMT is a RESTful web application that allows users to build and run
-coupled surface dynamics models on a high-performance computing
-cluster (HPCC) from a web browser on a desktop, laptop or tablet
-computer.
+**WMT-client** is written with [GWT](http://www.gwtproject.org/),
+a toolkit that allows Ajax applications to be developed in Java.
+For deployment on the web,
+the GWT compiler translates the Java code
+to optimized and obfuscated JavaScript.
+GWT emphasizes cross-browser compatibility,
+and is supported on all modern browsers.
+Unit tests are performed with [JUnit](http://junit.org/).
+Continuous integration testing is performed with [Travis CI](https://travis-ci.com/).
 
-With WMT, a user can:
+For a detailed description of the **WMT-client** interface,
+please see [WMT Help](http://csdms.colorado.edu/wiki/WMT_help)
+on the CSDMS website.
+For a brief tutorial,
+see the [WMT Tutorial](http://csdms.colorado.edu/wiki/WMT_tutorial).
+An instance of WMT running **WMT-client**
+can be found at https://csdms.colorado.edu/wmt.
 
-* select a Common Component Architecture (CCA) component model from a
-  list to run in standalone mode,
-* build a coupled model from multiple components organized as nodes of
-  a tree structure,
-* view and edit the parameters for these model components,
-* upload custom input files to the server,
-* save models to a server, where they can be accessed on any
-  Internet-accessible computer,
-* share saved models with others in the community, and
-* run a model by connecting to a remote HPCC where the components are installed.
+See the [Releases](https://github.com/csdms/wmt-client/releases) page
+for downloads.
 
-Although WMT is web-based, the creation and configuration of a model
-can be done offline.  Reconnection is necessary only when saving a
-model and submitting it for a run.
+## About WMT
 
-For a detailed description of the WMT interface, please see
-[WMT Help](http://csdms.colorado.edu/wiki/WMT_help) on the CSDMS
-website.  For a brief tutorial, please see the
-[WMT Tutorial](http://csdms.colorado.edu/wiki/WMT_tutorial).
+The CSDMS Web Modeling Tool (WMT) is
+a web application that provides an Ajax client-side graphical
+interface (**WMT-client**)
+and a RESTful server-side database and API
+(**WMT-server**) that allows users,
+from a web browser on a desktop, laptop or tablet computer,
+to build and run coupled Earth
+system models on a supercomputer.
 
-See the [Releases](https://github.com/csdms/wmt/releases) page in the
-wiki for downloads.
+For more information on WMT and **WMT-server**,
+see https://github.com/csdms/wmt.
+
+
+## About CSDMS
+
+[CSDMS](http://csdms.colorado.edu/wiki/Main_Page),
+the Community Surface Dynamics Modeling System,
+is an NSF-funded project that supports a diverse community
+of users and developers
+of earth and ocean system models. 
+CSDMS develops, integrates, archives and disseminates
+earth system models and tools to an international community
+with the goal of building the frameworks necessary
+to model the earth system.
+Modelers use CSDMS for access
+to hundreds of open source surface dynamics models and tools,
+as well as model metadata.
