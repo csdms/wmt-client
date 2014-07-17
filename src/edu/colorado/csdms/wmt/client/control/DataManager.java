@@ -50,6 +50,8 @@ import edu.colorado.csdms.wmt.client.ui.SignInScreen;
  */
 public class DataManager {
   
+  public static String VERSION = "2014-07-17";
+
   private Boolean developmentMode;
   private Boolean apiDevelopmentMode;
 
