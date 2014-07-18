@@ -47,7 +47,9 @@ body, table td, select, button {
   font-size: fontSmall;
 }
 
-/* The sign in screen is shown on startup. */
+/* 
+   The sign in screen is shown on startup. 
+*/
 .wmt-SignInScreen {
   width: 100%;
   height: 100%;
@@ -107,7 +109,9 @@ body, table td, select, button {
 
 
 
-/* The primary structuring element of the WMT client. */
+/* 
+   The DockLayoutPanel is the primary structuring element of the WMT client. 
+*/
 .wmt-DockLayoutPanel {
   padding: 3px;
 }
@@ -115,7 +119,9 @@ body, table td, select, button {
   /* border: 1px dashed burlywood; */
 }
 
-/* The navbar runs along the top of the client interface. Includes login. */
+/* 
+   The navbar runs along the top of the client interface.
+*/
 .wmt-NavBar {
   width: 100%;
   background-color: colorAbisso;
@@ -132,13 +138,6 @@ body, table td, select, button {
   float: right;
   margin: 8px 10px 8px 0px;
 }
-.wmt-LoginBox {
-  color: colorAcquaProfonda;
-  font-size: fontMedium;
-  line-height: 1.25;
-  padding: 6px 12px;
-  margin-right: 5px;
-}
 .wmt-SignInButton {
   display: inline-block;
   color: white;
@@ -151,7 +150,9 @@ body, table td, select, button {
   border: 2px solid colorAcqua;
 }
 
-/* The splitter base divides the Model and Parameters tabs. */
+/* 
+   The splitter base divides the Model and Parameters tabs.
+*/
 .wmt-SplitLayoutPanel {
 }
 .gwt-SplitLayoutPanel .gwt-SplitLayoutPanel-HDragger {
@@ -159,7 +160,9 @@ body, table td, select, button {
   border-left: 1px solid colorAbisso;
 }
 
-/* Rules for the Model and Parameters tabs. */
+/*
+   Rules for the Model and Parameters tabs.
+*/
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs {
   background: white !important;
   font-size: fontLarge;
@@ -178,7 +181,9 @@ body, table td, select, button {
   color: colorAbisso !important;
 }
 
-/* A consistent style for all buttons. */
+/*
+   A consistent style for all buttons.
+*/
 .wmt-Button, .wmt-ActionPanelButton {
   color: colorAbisso;
   background-color: colorTerraTerra;
@@ -190,7 +195,9 @@ body, table td, select, button {
   background-color: colorTerra;
 }
 
-/* ActionPanels are button groups on top of the Model & Parameters tabs. */
+/*
+   ActionPanels are button groups on top of the Model & Parameters tabs.
+*/
 .wmt-ActionPanel {
   margin: 5px 0px 10px 2px;
 }
@@ -202,12 +209,12 @@ body, table td, select, button {
   background-color: colorTerra;
 }
 
-/* Rules for the ModelTree. */
+/*
+   Rules for the ModelTree & TreeItems within.
+*/
 .wmt-ModelTree {
   margin-top: 14px;
 }
-
-/* The offset for TreeItems in the ModelTree. */
 .wmt-TreeItem {
    margin-left: 90px !important;
 }

@@ -49,13 +49,9 @@ import edu.colorado.csdms.wmt.client.ui.SignInScreen;
  * @author Mark Piper (mark.piper@colorado.edu)
  */
 public class DataManager {
-  
-  public static String VERSION = "2014-07-17";
-  
+
   private Boolean developmentMode;
   private Boolean apiDevelopmentMode;
-  
-  public Constants constants;
 
   // The initial sign-in screen. Either this or the Perspective are always
   // attached to the RootLayoutPanel of the application.

@@ -889,10 +889,13 @@ public class DataTransfer {
                 + "Response code: " + response.getStatusCode();
         Window.alert(msg);
       }
+      
+      data.showDefaultCursor();
     }
 
     @Override
     public void onError(Request request, Throwable exception) {
+      data.showDefaultCursor();
       Window.alert(Constants.REQUEST_ERR_MSG + exception.getMessage());
     }
   }
