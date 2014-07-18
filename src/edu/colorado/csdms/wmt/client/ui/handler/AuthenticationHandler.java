@@ -72,6 +72,7 @@ public class AuthenticationHandler {
     }
 
     // Authenticate the user with the server.
+    data.showWaitCursor();
     DataTransfer.login(data);
   }
   
@@ -88,6 +89,7 @@ public class AuthenticationHandler {
     ClickHandler okHandler = new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
+        data.showWaitCursor();
         DataTransfer.logout(data);
         questionDialog.hide();
       }
