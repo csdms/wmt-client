@@ -5,6 +5,8 @@
 **WMT-client** is a client-side user interface
 for the CSDMS Web Modeling Tool, [WMT](https://github.com/csdms/wmt).
 
+![WMT client interface](img/WMT-client.png)
+
 **WMT-client** is written with [GWT](http://www.gwtproject.org/),
 a toolkit that allows Ajax applications to be developed in Java.
 For deployment on the web,
@@ -20,11 +22,12 @@ please see [WMT Help](http://csdms.colorado.edu/wiki/WMT_help)
 on the CSDMS website.
 For a brief tutorial,
 see the [WMT Tutorial](http://csdms.colorado.edu/wiki/WMT_tutorial).
-An instance of WMT running **WMT-client**
-can be found at https://csdms.colorado.edu/wmt.
-
 See the [Releases](https://github.com/csdms/wmt-client/releases) page
 for downloads.
+
+A live instance of WMT running **WMT-client**
+can be found at https://csdms.colorado.edu/wmt.
+
 
 ## About WMT
 
