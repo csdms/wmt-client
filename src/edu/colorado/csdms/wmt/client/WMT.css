@@ -400,6 +400,7 @@ body, table td, select, button {
   color: colorAbisso;
   background: white;
   border: 2px solid colorAcquaProfonda;
+  box-shadow: 2px 2px 1px lightgray;
 }
 .wmt-DialogBox .dialogTop {
   background: colorAbisso;
