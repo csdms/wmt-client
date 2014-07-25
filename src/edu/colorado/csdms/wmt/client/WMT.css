@@ -244,7 +244,7 @@ body, table td, select, button {
 .wmt-ComponentCell-showingParameters:after {
   position: absolute;
   right: -20px;
-  top: 0px;
+  top: 2px;
   font-family: "FontAwesome";
   /* padding: 3px; */
   content: "\f0ad"; /* fa-wrench */
