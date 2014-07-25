@@ -79,6 +79,11 @@ public class HelpDialogBox extends DialogBox {
     HTML helpHtml = new HTML(help);
     HTML tutorialHtml = new HTML(tutorial);
 
+    titleHtml.setStyleName("wmt-Label");
+    websiteHtml.setStyleName("wmt-Label");
+    helpHtml.setStyleName("wmt-Label");
+    tutorialHtml.setStyleName("wmt-Label");
+    
     contents.add(titleHtml);
     contents.add(websiteHtml);
     contents.add(helpHtml);

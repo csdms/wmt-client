@@ -65,6 +65,7 @@ public class DroplistPanel extends Composite {
 
     // Styles!
     droplist.setStyleName("wmt-DroplistBox");
+    dropLabel.setStyleName("wmt-Label");
     dropLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
     HorizontalPanel contents = new HorizontalPanel();

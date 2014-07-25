@@ -364,6 +364,11 @@ body, table td, select, button {
   padding: 4px 2px;
 }
 
+/* Used by text/labels displayed in dialogs. */
+.wmt-Label {
+  cursor: default;
+}
+
 /* Used for all input widgets. ValueBoxen display numeric values. */
 .wmt-TextBoxen, .wmt-ValueBoxen {
   color: colorAbisso;
@@ -406,6 +411,7 @@ body, table td, select, button {
 }
 .wmt-DialogBox .dialogTop {
   background: colorAbisso;
+  cursor: default;
 }
 .wmt-DialogBox .Caption {
   font-size: fontMedium;
