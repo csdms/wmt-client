@@ -50,10 +50,11 @@ public class UserPanel extends HorizontalPanel {
     this.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
  
     loginName = new HTML();
-    loginName.setStyleName("wmt-SignInButton");
+    loginName.setStyleName("wmt-UserPanelButton");
 
     signOutButton = new Button(Constants.SIGN_OUT);
-    signOutButton.setStyleName("wmt-SignInButton");
+    signOutButton.setStyleName("wmt-UserPanelButton");
+    signOutButton.addStyleDependentName("signOut");
 
     this.add(loginName);
     this.add(signOutButton);

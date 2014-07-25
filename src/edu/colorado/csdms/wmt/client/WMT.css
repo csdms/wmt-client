@@ -132,22 +132,25 @@ body, table td, select, button {
   padding: 15px;
   font-size: fontLarge;
   line-height: 20px;
-  cursor: pointer;
+  cursor: default;
 }
 .wmt-UserPanel {
   float: right;
   margin: 8px 10px 8px 0px;
 }
-.wmt-SignInButton {
+.wmt-UserPanelButton {
   display: inline-block;
   color: white;
   background-color: colorAcqua;
   font-size: fontMedium;
   line-height: 1.25;
   padding: 6px 12px;
-  cursor: pointer;
+  cursor: default;
   margin: 2px;
   border: 2px solid colorAcqua;
+}
+.wmt-UserPanelButton-signOut {
+  cursor: pointer;
 }
 
 /* 
