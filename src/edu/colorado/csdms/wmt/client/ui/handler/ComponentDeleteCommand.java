@@ -89,6 +89,7 @@ public class ComponentDeleteCommand implements Command {
       tree.insertTreeItem(cell.getPortId(), parent, targetIndex);
     } else {
       tree.initializeTree();
+      data.resetModelComponents(); // revert any mods to params; issue #28.
       ((ComponentSelectionMenu) tree.getDriverComponentCell()
           .getComponentMenu()).updateComponents();
       try {

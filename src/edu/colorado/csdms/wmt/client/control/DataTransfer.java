@@ -1306,7 +1306,7 @@ public class DataTransfer {
         for (int i = 0; i < jso.getIds().length(); i++) {
 
           GWT.log("Entry : " + entry.getValue().getId());
-          GWT.log("JSO : " + jso.getIds().get(i));
+          GWT.log("JSO : " + jso.getIds().get(i)); // fails in dev mode, see LabelQueryJSOTest#testGetIds
           
           if (entry.getValue().getId() == jso.getIds().get(i)) {
             entry.getValue().isSelected(true);
