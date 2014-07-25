@@ -80,8 +80,8 @@ public class ComponentDeleteCommand implements Command {
 
     // If this isn't the driver, delete the target TreeItem and replace it with
     // a new one sporting the appropriate open uses port. If it is the driver,
-    // reinitialize the ModelTree, update the available components and deselect
-    // the component label.
+    // reinitialize the ModelTree, update the available components, deselect all
+    // labels and rebuild the labels menu.
     if (target.getParentItem() != null) {
       TreeItem parent = target.getParentItem();
       Integer targetIndex = parent.getChildIndex(target);
@@ -89,12 +89,11 @@ public class ComponentDeleteCommand implements Command {
       tree.insertTreeItem(cell.getPortId(), parent, targetIndex);
     } else {
       tree.initializeTree();
-      data.resetModelComponents(); // revert any mods to params; issue #28.
+      data.resetModelComponents(); // revert any mods to params; issue #28
       ((ComponentSelectionMenu) tree.getDriverComponentCell()
           .getComponentMenu()).updateComponents();
       try {
-        data.modelLabels.get(data.getComponent(componentId).getName())
-            .isSelected(false);
+        data.getPerspective().getLabelsMenu().resetSelections(); // issue #27
         data.getPerspective().getLabelsMenu().populateMenu();
       } catch (Exception e) {
         GWT.log(e.toString());

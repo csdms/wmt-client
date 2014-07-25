@@ -125,6 +125,16 @@ public class LabelsMenu extends PopupPanel {
       }
     }
   }
+  
+  /**
+   * Deselects all labels except for the username label. This is the default
+   * state for the {@link LabelsMenu}.
+   */
+  public void resetSelections() {
+    for (Map.Entry<String, LabelJSO> entry : data.modelLabels.entrySet()) {
+      entry.getValue().isSelected(entry.getKey().equals(data.security.getWmtUsername()));
+    }
+  }
 
   /**
    * Handles actions when the selection state of a label changes.
