@@ -132,22 +132,25 @@ body, table td, select, button {
   padding: 15px;
   font-size: fontLarge;
   line-height: 20px;
-  cursor: pointer;
+  cursor: default;
 }
 .wmt-UserPanel {
   float: right;
   margin: 8px 10px 8px 0px;
 }
-.wmt-SignInButton {
+.wmt-UserPanelButton {
   display: inline-block;
   color: white;
   background-color: colorAcqua;
   font-size: fontMedium;
   line-height: 1.25;
   padding: 6px 12px;
-  cursor: pointer;
+  cursor: default;
   margin: 2px;
   border: 2px solid colorAcqua;
+}
+.wmt-UserPanelButton-signOut {
+  cursor: pointer;
 }
 
 /* 
@@ -190,6 +193,7 @@ body, table td, select, button {
   padding: 5px 7px;
   border: 1px solid colorAcquaProfonda;
   border-bottom: 1px solid colorAbisso;
+  cursor: pointer;
 }
 .wmt-Button:hover {
   background-color: colorTerra;
@@ -227,6 +231,7 @@ body, table td, select, button {
   background-color: colorTerraTerra;
   border: 2px solid colorAcquaProfonda;
   height: 60px;
+  cursor: pointer;
 }
 
 /* A ComponentCell that displays a component. */
@@ -241,7 +246,7 @@ body, table td, select, button {
 .wmt-ComponentCell-showingParameters:after {
   position: absolute;
   right: -20px;
-  top: 0px;
+  top: 2px;
   font-family: "FontAwesome";
   /* padding: 3px; */
   content: "\f0ad"; /* fa-wrench */
@@ -273,7 +278,6 @@ body, table td, select, button {
 .wmt-ComponentCell-MenuCell {
   padding: 2px;
   margin-right: 3px;
-  cursor: default; /* for Firefox */
 }
 
 /* Rules for WMT widgets derived from a GWT PopupPanel. */
@@ -360,6 +364,11 @@ body, table td, select, button {
   padding: 4px 2px;
 }
 
+/* Used by text/labels displayed in dialogs. */
+.wmt-Label {
+  cursor: default;
+}
+
 /* Used for all input widgets. ValueBoxen display numeric values. */
 .wmt-TextBoxen, .wmt-ValueBoxen {
   color: colorAbisso;
@@ -387,6 +396,7 @@ body, table td, select, button {
   width: 210px; /* calculated by comparison with ValueBoxen */
   height: 32px;
   background-color: colorTerraTerra;
+  cursor: pointer;
 }
 .wmt-DroplistBox-upload {
   width: 175px; /* calculated by comparison with DroplistBox */
@@ -397,9 +407,11 @@ body, table td, select, button {
   color: colorAbisso;
   background: white;
   border: 2px solid colorAcquaProfonda;
+  box-shadow: 2px 2px 1px lightgray;
 }
 .wmt-DialogBox .dialogTop {
   background: colorAbisso;
+  cursor: default;
 }
 .wmt-DialogBox .Caption {
   font-size: fontMedium;

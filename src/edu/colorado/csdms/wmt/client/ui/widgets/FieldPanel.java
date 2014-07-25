@@ -83,6 +83,7 @@ public class FieldPanel extends Composite {
 
     // Styles!
     fieldBox.setStyleName("wmt-TextBoxen");
+    fieldLabel.setStyleName("wmt-Label");
     fieldLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
     HorizontalPanel contents = new HorizontalPanel();
