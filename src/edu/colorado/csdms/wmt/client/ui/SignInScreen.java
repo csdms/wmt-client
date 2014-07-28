@@ -116,10 +116,22 @@ public class SignInScreen extends HorizontalPanel {
     forgotPasswordInfoPanel.add(forgotPasswordInfo);
     forgotPasswordInfoPanel.setVisible(false);
 
+    // WMT video
+    HTML seeVideo = new HTML(Constants.FA_RARROW + "What is WMT?");
+    seeVideo.setStyleName("wmt-SignInScreenLinks");
+    HTML seeVideoInfo = new HTML(Constants.SEE_VIDEO_INFO);
+    seeVideoInfo.setStyleName("wmt-SignInScreenLinksInfo");
+    final HorizontalPanel seeVideoInfoPanel = new HorizontalPanel();
+    seeVideoInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
+    seeVideoInfoPanel.add(seeVideoInfo);
+    seeVideoInfoPanel.setVisible(false);
+    
     // Add the question links above to a panel.
     VerticalPanel linksPanel = new VerticalPanel();
     linksPanel.setHorizontalAlignment(ALIGN_CENTER);
     linksPanel.setStyleName("wmt-SignInScreenLinksPanel");
+    linksPanel.add(seeVideo);
+    linksPanel.add(seeVideoInfoPanel);
     linksPanel.add(newUser);
     linksPanel.add(newUserInfoPanel);
     linksPanel.add(forgotPassword);
@@ -154,6 +166,17 @@ public class SignInScreen extends HorizontalPanel {
       }
     });
 
+    /*
+     * Handler to display answer to "What is WMT?" link.
+     */
+    seeVideo.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent event) {
+        seeVideoInfoPanel
+            .setVisible(!seeVideoInfoPanel.isVisible());
+      }
+    });
+    
     /*
      * Perform sign-in action if user hits <Enter> key in password box.
      */

@@ -103,6 +103,9 @@ public class Constants {
           + " asked to repeat your password.";
   public static String FORGOT_PASSWORD_INFO =
       "Please contact " + CSDMS_EMAIL_LINK + " for assistance.";
+  public static String SEE_VIDEO_INFO = "For an overview of WMT, and an example"
+      + " of its use, check out <a href='http://youtu.be/hbfmxHRYbtA'>this</a>"
+      + " short YouTube video.";
   public static String LOGIN_ERR = "Please sign in with an email address"
       + " and a password.";
   public static String PASSWORD_ERR = "This email address is registered,"
