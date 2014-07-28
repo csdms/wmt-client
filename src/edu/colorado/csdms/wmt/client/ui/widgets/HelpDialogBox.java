@@ -24,9 +24,6 @@
 package edu.colorado.csdms.wmt.client.ui.widgets;
 
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -62,32 +59,38 @@ public class HelpDialogBox extends DialogBox {
     contents.setWidth("30em");
     contents.getElement().getStyle().setMargin(1.0, Unit.EM);
 
-    String website =
-        "<p>For more information on CSDMS, please visit our <a href='"
-            + Constants.CSDMS_HOME + "'>website</a>, or <a href='mailto:"
-            + Constants.CSDMS_EMAIL + "'>email</a> us.</p>";
-    String help =
-        "<p>For a detailed description of the WMT interface,"
-            + " please see <a href='" + Constants.WMT_HELP
-            + "'>WMT Help</a>.</p>";
-    String tutorial =
-        "<p>For a brief tutorial, please see <a href='"
-            + Constants.WMT_TUTORIAL + "'>WMT Tutorial</a>.</p>";
+    // Anchors in the help text.
+    String websiteAnchor = "<a href='" + Constants.CSDMS_HOME 
+        + "' target=\"CSDMS\">website</a>";
+    String emailAnchor = "<a href='mailto:" + Constants.CSDMS_EMAIL 
+        + "'>email</a>";
+    String helpAnchor = "<a href='" + Constants.WMT_HELP
+        + "' target=\"WMT_help\">WMT Help</a>";
+    String tutorialAnchor = "<a href='" + Constants.WMT_TUTORIAL 
+        + "' target=\"WMT_tutorial\">WMT Tutorial</a>";
+    String videoAnchor = "<a href='" + Constants.WMT_VIDEO 
+        + "' target=\"WMT_video\">this</a>";
+    
+    // The help text.
+    String websiteText = "<p>For more information on CSDMS, please visit our " 
+        + websiteAnchor + ", or " + emailAnchor + " us.</p>";
+    String helpText = "<p>For a detailed description of the WMT interface,"
+        + " please see " + helpAnchor + ". For a brief tutorial,"
+        + " see " + tutorialAnchor + ". For a demonstration of using WMT,"
+        + " check out " + videoAnchor + " YouTube video.</p>";
 
+    // The help text as HTML widgets.
     HTML titleHtml = new HTML(Constants.WMT_TITLE);
-    HTML websiteHtml = new HTML(website);
-    HTML helpHtml = new HTML(help);
-    HTML tutorialHtml = new HTML(tutorial);
+    HTML websiteHtml = new HTML(websiteText);
+    HTML helpHtml = new HTML(helpText);
 
     titleHtml.setStyleName("wmt-Label");
     websiteHtml.setStyleName("wmt-Label");
     helpHtml.setStyleName("wmt-Label");
-    tutorialHtml.setStyleName("wmt-Label");
     
     contents.add(titleHtml);
     contents.add(websiteHtml);
     contents.add(helpHtml);
-    contents.add(tutorialHtml);
 
     contents.setCellHorizontalAlignment(titleHtml,
         HasHorizontalAlignment.ALIGN_CENTER);
@@ -101,30 +104,5 @@ public class HelpDialogBox extends DialogBox {
      * Hides the dialog box.
      */
     closePanel.getButton().addClickHandler(new DialogCancelHandler(this));
-
-    /*
-     * Intercepts a click on a link and opens the URL in a new tab.
-     */
-    websiteHtml.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent event) {
-        event.preventDefault();
-        Window.open(Constants.CSDMS_HOME, "CSDMS", null);
-      }
-    });
-    helpHtml.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent event) {
-        event.preventDefault();
-        Window.open(Constants.WMT_HELP, "WMT_help", null);
-      }
-    });
-    tutorialHtml.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent event) {
-        event.preventDefault();
-        Window.open(Constants.WMT_TUTORIAL, "WMT_tutorial", null);
-      }
-    });
   }
 }

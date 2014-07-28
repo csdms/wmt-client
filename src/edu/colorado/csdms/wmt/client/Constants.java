@@ -46,6 +46,7 @@ public class Constants {
   public static final String WMT_TITLE = "<h2>WMT</h2><p><b>The CSDMS Web"
       + " Modeling Tool</b></br>Version: " + VERSION 
       + " (" + VERSION_DATE + ")</p>";
+  public static final String WMT_VIDEO = "http://youtu.be/hbfmxHRYbtA";
 
   // This switch toggles API development and public mode.
   public static final Boolean USE_API_DEV_MODE = true;
@@ -104,7 +105,7 @@ public class Constants {
   public static String FORGOT_PASSWORD_INFO =
       "Please contact " + CSDMS_EMAIL_LINK + " for assistance.";
   public static String SEE_VIDEO_INFO = "For an overview of WMT, and an example"
-      + " of its use, check out <a href='http://youtu.be/hbfmxHRYbtA'>this</a>"
+      + " of its use, check out <a href='" + WMT_VIDEO + "'>this</a>"
       + " short YouTube video.";
   public static String LOGIN_ERR = "Please sign in with an email address"
       + " and a password.";
