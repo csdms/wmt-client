@@ -33,8 +33,8 @@ import com.google.gwt.core.client.GWT;
  */
 public class Constants {
 
-  public static String VERSION = "0.9.2";
-  public static String VERSION_DATE = "2014-07-17";
+  public static String VERSION = "0.9.3";
+  public static String VERSION_DATE = "2014-07-29";
   
   // The CSDMS website, email, and wiki articles.
   public static final String CSDMS_HOME = "http://csdms.colorado.edu/";
@@ -46,6 +46,7 @@ public class Constants {
   public static final String WMT_TITLE = "<h2>WMT</h2><p><b>The CSDMS Web"
       + " Modeling Tool</b></br>Version: " + VERSION 
       + " (" + VERSION_DATE + ")</p>";
+  public static final String WMT_VIDEO = "http://youtu.be/hbfmxHRYbtA";
 
   // This switch toggles API development and public mode.
   public static final Boolean USE_API_DEV_MODE = true;
@@ -103,6 +104,9 @@ public class Constants {
           + " asked to repeat your password.";
   public static String FORGOT_PASSWORD_INFO =
       "Please contact " + CSDMS_EMAIL_LINK + " for assistance.";
+  public static String SEE_VIDEO_INFO = "For an overview of WMT, and an example"
+      + " of its use, check out <a href='" + WMT_VIDEO + "'>this</a>"
+      + " short YouTube video.";
   public static String LOGIN_ERR = "Please sign in with an email address"
       + " and a password.";
   public static String PASSWORD_ERR = "This email address is registered,"
