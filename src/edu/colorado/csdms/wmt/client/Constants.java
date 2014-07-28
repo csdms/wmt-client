@@ -33,8 +33,8 @@ import com.google.gwt.core.client.GWT;
  */
 public class Constants {
 
-  public static String VERSION = "0.9.2";
-  public static String VERSION_DATE = "2014-07-17";
+  public static String VERSION = "0.9.3";
+  public static String VERSION_DATE = "2014-07-29";
   
   // The CSDMS website, email, and wiki articles.
   public static final String CSDMS_HOME = "http://csdms.colorado.edu/";
