@@ -27,7 +27,8 @@ import com.google.gwt.core.client.GWT;
 
 /**
  * A class that defines, as public static members, constants used in the WMT
- * client.
+ * client. In lieu of a configuration file, these constants can be edited 
+ * before building the module.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
@@ -53,7 +54,8 @@ public class Constants {
 
   // By same-origin policy, must use HTTPS consistently across all URLs.
   public static final String BASE_URL = "https://csdms.colorado.edu/";
-  public static final String API_URL = BASE_URL + "wmt-server/";
+//  public static final String BASE_URL = "http://localhost/";
+  public static final String API_URL = BASE_URL + "wmt/api";
   public static final String API_DEV_URL = BASE_URL + "wmt/api-dev/";
   public static final String LOCAL_URL = GWT.getHostPageBaseURL();
 
@@ -92,6 +94,9 @@ public class Constants {
   public static final String RUN_STAGE_PATH = "run/stage";
   public static final String RUN_LAUNCH_PATH = "run/launch";
 
+  // The list of available HPCC hosts with the CSDMS software stack installed.
+  public static final String HOSTS[] = {"beach.colorado.edu", "localhost"};
+  
   // Error, warning, and informational messages.
   public static String REQUEST_ERR_MSG = "Failed to send the request: ";
   public static String RESPONSE_ERR_MSG = "No match found in the response.";
