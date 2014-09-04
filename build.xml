@@ -12,7 +12,7 @@
   <property environment="env"/>
 
   <!-- Configure path to GWT SDK -->
-  <property name="gwt.sdk" location="${env.PWD}/gwt-2.5.1" />
+  <property name="gwt.sdk" location="${env.GWT_HOME}" />
 
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>
