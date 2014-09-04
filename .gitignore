@@ -3,3 +3,9 @@
 /test-classes
 /.gwt
 /.settings
+/war/wmt
+/war/edu.colorado.csdms.wmt.WMT.JUnit
+/war/WEB-INF/classes
+/war/WEB-INF/deploy
+
+*.jar
