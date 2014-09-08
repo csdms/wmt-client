@@ -8,3 +8,6 @@ before_script:
   - unzip -qq /tmp/gwt-2.5.1.zip
   - export GWT_HOME=$PWD/gwt-2.5.1/
   - export PATH=$PATH:$GWT_HOME
+
+script
+  - ant test.prod
