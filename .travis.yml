@@ -9,5 +9,5 @@ before_script:
   - export GWT_HOME=$PWD/gwt-2.5.1/
   - export PATH=$PATH:$GWT_HOME
 
-script
+script:
   - ant test.prod
