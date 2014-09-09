@@ -49,14 +49,8 @@ public class Constants {
       + " (" + VERSION_DATE + ")</p>";
   public static final String WMT_VIDEO = "http://youtu.be/hbfmxHRYbtA";
 
-  // This switch toggles API development and public mode.
-  public static final Boolean USE_API_DEV_MODE = true;
-
-  // By same-origin policy, must use HTTPS consistently across all URLs.
-  public static final String BASE_URL = "https://csdms.colorado.edu/";
-//  public static final String BASE_URL = "http://localhost/";
-  public static final String API_URL = BASE_URL + "wmt/api";
-  public static final String API_DEV_URL = BASE_URL + "wmt/api-dev/";
+  // Configuration.
+  public static final String CONFIGURATION_FILE = "./.config/configuration.txt";
   public static final String LOCAL_URL = GWT.getHostPageBaseURL();
 
   // API URLs for user login, logout, and status. Also, a cookie.
