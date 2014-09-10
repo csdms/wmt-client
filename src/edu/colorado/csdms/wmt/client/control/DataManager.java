@@ -51,7 +51,6 @@ import edu.colorado.csdms.wmt.client.ui.SignInScreen;
 public class DataManager {
 
   private Boolean developmentMode;
-  private Boolean apiDevelopmentMode;
   private String apiUrl;
 
   // The initial sign-in screen. Either this or the Perspective are always
@@ -114,22 +113,6 @@ public class DataManager {
     this.developmentMode = developmentMode;
   }
 
-  /**
-   * Returns true if we're using the API development mode.
-   */
-  public Boolean isApiDevelopmentMode() {
-    return apiDevelopmentMode;
-  }
-
-  /**
-   * Stores the API development mode: true if it's being used.
-   * 
-   * @param apiDevelopmentMode
-   */
-  public void isApiDevelopmentMode(Boolean apiDevelopmentMode) {
-    this.apiDevelopmentMode = apiDevelopmentMode;
-  }
-  
   /**
    * Returns the URL to the WMT API server.
    */
