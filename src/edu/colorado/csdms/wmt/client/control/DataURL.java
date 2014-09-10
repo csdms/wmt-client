@@ -59,7 +59,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/authenticate.json";
     } else {
-      return data.getApiUrl() + Constants.NEW_USER_LOGIN_PATH;
+      return data.config.getApiUrl() + Constants.NEW_USER_LOGIN_PATH;
     }
   }
 
@@ -72,7 +72,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/authenticate.json";
     } else {
-      return data.getApiUrl() + Constants.LOGIN_PATH;
+      return data.config.getApiUrl() + Constants.LOGIN_PATH;
     }
   }
 
@@ -85,7 +85,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/authenticate.json";
     } else {
-      return data.getApiUrl() + Constants.LOGOUT_PATH;
+      return data.config.getApiUrl() + Constants.LOGOUT_PATH;
     }
   }
 
@@ -99,7 +99,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/authenticate.json";
     } else {
-      return data.getApiUrl() + Constants.USERNAME_PATH;
+      return data.config.getApiUrl() + Constants.USERNAME_PATH;
     }
   }
 
@@ -112,7 +112,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/labels.json";
     } else {
-      return data.getApiUrl() + Constants.LABELS_NEW_PATH;
+      return data.config.getApiUrl() + Constants.LABELS_NEW_PATH;
     }
   }
 
@@ -126,7 +126,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/labels.json";
     } else {
-      return data.getApiUrl() + Constants.LABELS_DELETE_PATH
+      return data.config.getApiUrl() + Constants.LABELS_DELETE_PATH
           + labelId.toString();
     }
   }
@@ -141,7 +141,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/labels.json";
     } else {
-      return data.getApiUrl() + Constants.LABELS_LIST_PATH;
+      return data.config.getApiUrl() + Constants.LABELS_LIST_PATH;
     }
   }
 
@@ -154,7 +154,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/labels.json";
     } else {
-      return data.getApiUrl() + Constants.LABELS_MODEL_ADD_PATH;
+      return data.config.getApiUrl() + Constants.LABELS_MODEL_ADD_PATH;
     }
   }
 
@@ -167,7 +167,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/labels.json";
     } else {
-      return data.getApiUrl() + Constants.LABELS_MODEL_QUERY_PATH;
+      return data.config.getApiUrl() + Constants.LABELS_MODEL_QUERY_PATH;
     }
   }
 
@@ -181,7 +181,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/labels.json";
     } else {
-      return data.getApiUrl() + Constants.LABELS_MODEL_GET_PATH
+      return data.config.getApiUrl() + Constants.LABELS_MODEL_GET_PATH
           + modelId.toString();
     }
   }
@@ -195,7 +195,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "data/components.json";
     } else {
-      return data.getApiUrl() + Constants.COMPONENTS_LIST_PATH;
+      return data.config.getApiUrl() + Constants.COMPONENTS_LIST_PATH;
     }
   }
 
@@ -209,7 +209,8 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "data/" + componentId + ".json";
     } else {
-      return data.getApiUrl() + Constants.COMPONENTS_SHOW_PATH + componentId;
+      return data.config.getApiUrl() + Constants.COMPONENTS_SHOW_PATH 
+          + componentId;
     }
   }
 
@@ -231,7 +232,7 @@ public class DataURL {
         modelId = "0";
       }
       String url =
-          data.getApiUrl() + "models/" + modelId + "/" + componentId
+          data.config.getApiUrl() + "models/" + modelId + "/" + componentId
               + "/format?format=" + format;
       return url;
     }
@@ -246,7 +247,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/model_list.json";
     } else {
-      return data.getApiUrl() + Constants.MODELS_LIST_PATH;
+      return data.config.getApiUrl() + Constants.MODELS_LIST_PATH;
     }
   }
 
@@ -260,7 +261,8 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/open" + modelId.toString() + ".json";
     } else {
-      return data.getApiUrl() + Constants.MODELS_OPEN_PATH + modelId.toString();
+      return data.config.getApiUrl() + Constants.MODELS_OPEN_PATH 
+          + modelId.toString();
     }
   }
 
@@ -275,7 +277,8 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/show" + modelId.toString() + ".json";
     } else {
-      return data.getApiUrl() + Constants.MODELS_SHOW_PATH + modelId.toString();
+      return data.config.getApiUrl() + Constants.MODELS_SHOW_PATH 
+          + modelId.toString();
     }
   }
 
@@ -290,7 +293,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/saved.json";
     } else {
-      return data.getApiUrl() + Constants.MODELS_NEW_PATH;
+      return data.config.getApiUrl() + Constants.MODELS_NEW_PATH;
     }
   }
 
@@ -304,7 +307,8 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/saved.json";
     } else {
-      return data.getApiUrl() + Constants.MODELS_EDIT_PATH + modelId.toString();
+      return data.config.getApiUrl() + Constants.MODELS_EDIT_PATH 
+          + modelId.toString();
     }
   }
 
@@ -319,7 +323,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/saved.json";
     } else {
-      return data.getApiUrl() + Constants.MODELS_DELETE_PATH
+      return data.config.getApiUrl() + Constants.MODELS_DELETE_PATH
           + modelId.toString();
     }
   }
@@ -333,7 +337,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/saved.json";
     } else {
-      return data.getApiUrl() + Constants.MODELS_UPLOAD_PATH;
+      return data.config.getApiUrl() + Constants.MODELS_UPLOAD_PATH;
     }
   }
 
@@ -346,7 +350,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/saved.json";
     } else {
-      return data.getApiUrl() + Constants.RUN_NEW_PATH;
+      return data.config.getApiUrl() + Constants.RUN_NEW_PATH;
     }
   }
 
@@ -357,7 +361,7 @@ public class DataURL {
    * @param data the DataManager object for the WMT session
    */
   public static String showModelRun(DataManager data) {
-    return data.getApiUrl() + Constants.RUN_SHOW_PATH;
+    return data.config.getApiUrl() + Constants.RUN_SHOW_PATH;
   }
 
   /**
@@ -369,7 +373,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/saved.json";
     } else {
-      return data.getApiUrl() + Constants.RUN_STAGE_PATH;
+      return data.config.getApiUrl() + Constants.RUN_STAGE_PATH;
     }
   }
 
@@ -383,7 +387,7 @@ public class DataURL {
     if (data.isDevelopmentMode()) {
       return LOCAL_URL + "save/saved.json";
     } else {
-      return data.getApiUrl() + Constants.RUN_LAUNCH_PATH;
+      return data.config.getApiUrl() + Constants.RUN_LAUNCH_PATH;
     }
   }
 }
