@@ -35,10 +35,6 @@ public class Constants {
   // The location of the WMT client configuration file.
   public static final String CONFIGURATION_FILE = "./config.json";
   
-  // TODO Replace with values from config file.
-  public static String VERSION = "0.9.3";
-  public static String VERSION_DATE = "2014-07-29";
-  
   // The CSDMS website, email, and wiki articles.
   public static final String CSDMS_HOME = "http://csdms.colorado.edu/";
   public static final String WMT_HELP = CSDMS_HOME + "wiki/WMT_help";
@@ -46,9 +42,6 @@ public class Constants {
   public static final String CSDMS_EMAIL = "CSDMSsupport@colorado.edu";
   public static final String CSDMS_EMAIL_LINK = "<a href='mailto:" 
       + CSDMS_EMAIL + "'>CSDMS Support</a>";
-  public static final String WMT_TITLE = "<h2>WMT</h2><p><b>The CSDMS Web"
-      + " Modeling Tool</b></br>Version: " + VERSION 
-      + " (" + VERSION_DATE + ")</p>";
   public static final String WMT_VIDEO = "http://youtu.be/hbfmxHRYbtA";
 
   // API URLs for user login, logout, and status. Also, a cookie.

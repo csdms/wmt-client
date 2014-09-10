@@ -80,7 +80,10 @@ public class HelpDialogBox extends DialogBox {
         + " check out " + videoAnchor + " YouTube video.</p>";
 
     // The help text as HTML widgets.
-    HTML titleHtml = new HTML(Constants.WMT_TITLE);
+    String wmtTitle = "<h2>WMT</h2><p><b>The CSDMS Web Modeling Tool</b></br>"
+      + "Version: " + data.config.getVersion() 
+      + " (" + data.config.getReleaseDate() + ")</p>";
+    HTML titleHtml = new HTML(wmtTitle);
     HTML websiteHtml = new HTML(websiteText);
     HTML helpHtml = new HTML(helpText);
 
