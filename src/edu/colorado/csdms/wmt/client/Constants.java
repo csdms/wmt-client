@@ -23,8 +23,6 @@
  */
 package edu.colorado.csdms.wmt.client;
 
-import com.google.gwt.core.client.GWT;
-
 /**
  * A class that defines, as public static members, constants used in the WMT
  * client. In lieu of a configuration file, these constants can be edited 
@@ -34,6 +32,9 @@ import com.google.gwt.core.client.GWT;
  */
 public class Constants {
 
+  // The location of the WMT client configuration file.
+  public static final String CONFIGURATION_FILE = "./.config/configuration.txt";
+  
   public static String VERSION = "0.9.3";
   public static String VERSION_DATE = "2014-07-29";
   
@@ -48,10 +49,6 @@ public class Constants {
       + " Modeling Tool</b></br>Version: " + VERSION 
       + " (" + VERSION_DATE + ")</p>";
   public static final String WMT_VIDEO = "http://youtu.be/hbfmxHRYbtA";
-
-  // Configuration.
-  public static final String CONFIGURATION_FILE = "./.config/configuration.txt";
-  public static final String LOCAL_URL = GWT.getHostPageBaseURL();
 
   // API URLs for user login, logout, and status. Also, a cookie.
   public static final String NEW_USER_LOGIN_PATH = "account/new";
