@@ -33,8 +33,9 @@ package edu.colorado.csdms.wmt.client;
 public class Constants {
 
   // The location of the WMT client configuration file.
-  public static final String CONFIGURATION_FILE = "./.config/configuration.txt";
+  public static final String CONFIGURATION_FILE = "./config.json";
   
+  // TODO Replace with values from config file.
   public static String VERSION = "0.9.3";
   public static String VERSION_DATE = "2014-07-29";
   
