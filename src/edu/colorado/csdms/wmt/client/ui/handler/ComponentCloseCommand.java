@@ -39,19 +39,19 @@ import edu.colorado.csdms.wmt.client.ui.ModelTree;
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class ComponentDeleteCommand implements Command {
+public class ComponentCloseCommand implements Command {
 
   private DataManager data;
   private ComponentCell cell;
   private String componentId;
 
   /**
-   * Creates a new instance of {@link ComponentDeleteCommand}.
+   * Creates a new instance of {@link ComponentCloseCommand}.
    * 
    * @param data the DataManager object for the WMT session
    * @param cell the {@link ComponentCell} this Command acts on
    */
-  public ComponentDeleteCommand(DataManager data, ComponentCell cell) {
+  public ComponentCloseCommand(DataManager data, ComponentCell cell) {
     this.data = data;
     this.cell = cell;
     this.componentId = cell.getComponentId();
@@ -110,7 +110,7 @@ public class ComponentDeleteCommand implements Command {
         if (alias == null) {
           keepLooping = false;
         } else {
-          ComponentDeleteCommand cmd = new ComponentDeleteCommand(data, alias);
+          ComponentCloseCommand cmd = new ComponentCloseCommand(data, alias);
           cmd.execute(); // recursive
         }
       }
