@@ -47,6 +47,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
 import edu.colorado.csdms.wmt.client.data.ComponentListJSO;
+import edu.colorado.csdms.wmt.client.data.ConfigurationJSO;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
 import edu.colorado.csdms.wmt.client.data.LabelQueryJSO;
 import edu.colorado.csdms.wmt.client.data.ModelJSO;
@@ -204,6 +205,42 @@ public class DataTransfer {
     return sb.toString();
   }
 
+  /**
+   * Makes an HTTP GET method call to load the client configuration file.
+   * 
+   * @param data the DataManager object for the WMT session
+   */
+  public static void getConfiguration(final DataManager data) {
+    try {
+      new RequestBuilder(RequestBuilder.GET, Constants.CONFIGURATION_FILE)
+          .sendRequest("", new RequestCallback() {
+
+            @Override
+            public void onResponseReceived(Request request, Response response) {
+              String rtxt = response.getText();
+              GWT.log(rtxt);
+              ConfigurationJSO jso = parse(rtxt);
+              data.config = jso;
+              
+              // Once the location of the API has been determined, retrieve 
+              // (asynchronously) and store the list of available components
+              // and models. Note that when #getComponentList completes, it 
+              // immediately starts pulling component data from the server with
+              // calls to #getComponent. Asynchronous requests are cool!              
+              getComponentList(data);
+              getModelList(data);
+            }
+
+            @Override
+            public void onError(Request request, Throwable exception) {
+              Window.alert(Constants.REQUEST_ERR_MSG + exception.getMessage());
+            }
+          });
+    } catch (RequestException e) {
+      Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
+    }
+  }
+  
   /**
    * Makes an asynchronous HTTPS POST request to create a new user login to WMT.
    * 

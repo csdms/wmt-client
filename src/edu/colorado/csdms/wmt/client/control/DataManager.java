@@ -33,6 +33,7 @@ import com.google.gwt.dom.client.Style.Cursor;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
+import edu.colorado.csdms.wmt.client.data.ConfigurationJSO;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
 import edu.colorado.csdms.wmt.client.data.ModelJSO;
 import edu.colorado.csdms.wmt.client.data.ModelMetadataJSO;
@@ -74,6 +75,7 @@ public class DataManager {
   
   // Experiment with public members, for convenience.
   public Security security;
+  public ConfigurationJSO config;
   public List<String> componentIdList;
   public Integer nComponents = 0;
   public HashMap<String, Integer> retryComponentLoad;
@@ -87,6 +89,7 @@ public class DataManager {
    */
   public DataManager() {
     security = new Security(this);
+    config = ConfigurationJSO.createObject().cast();
     componentIdList = new ArrayList<String>();
     retryComponentLoad = new HashMap<String, Integer>();
     components = new ArrayList<ComponentJSO>();
