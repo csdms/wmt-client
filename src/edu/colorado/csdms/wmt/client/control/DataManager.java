@@ -52,6 +52,7 @@ public class DataManager {
 
   private Boolean developmentMode;
   private Boolean apiDevelopmentMode;
+  private String apiUrl;
 
   // The initial sign-in screen. Either this or the Perspective are always
   // attached to the RootLayoutPanel of the application.
@@ -127,6 +128,22 @@ public class DataManager {
    */
   public void isApiDevelopmentMode(Boolean apiDevelopmentMode) {
     this.apiDevelopmentMode = apiDevelopmentMode;
+  }
+  
+  /**
+   * Returns the URL to the WMT API server.
+   */
+  public String getApiUrl() {
+    return apiUrl;
+  }
+
+  /**
+   * Stores the URL to the WMT API as a String.
+   * 
+   * @param apiUrl the URL
+   */
+  public void setApiUrl(String apiUrl) {
+    this.apiUrl = apiUrl;
   }
 
   /**
