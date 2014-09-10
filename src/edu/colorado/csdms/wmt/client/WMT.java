@@ -55,14 +55,13 @@ public class WMT implements EntryPoint {
     // Initialize the DataManager object.
     data = new DataManager();
 
+    // Get the WMT client configuration values.
+    DataTransfer.getConfiguration(data);
+    
     // Is GWT in development or production mode?
     data.isDevelopmentMode(!GWT.isProdMode() && GWT.isClient());
 
-    // Are we using the development mode of the API?
-    data.isApiDevelopmentMode(Constants.USE_API_DEV_MODE);
-
     // Load WMT's CSS rules. 
-    // (See http://www.gwtproject.org/doc/latest/DevGuideUiCss.html#cssfiles)
     Resources.INSTANCE.css().ensureInjected();
 
     // Show the sign-in screen.
@@ -78,12 +77,5 @@ public class WMT implements EntryPoint {
     // Check whether the user is already logged in.
     // XXX Consider permanently removing this?
 //    DataTransfer.getLoginState(data);
-
-    // Retrieve (asynchronously) and store the list of available components
-    // and models. Note that when DataTransfer#getComponentList completes,
-    // it immediately starts pulling component data from the server with calls
-    // to DataTransfer#getComponent. Asynchronous requests are cool!
-    DataTransfer.getComponentList(data);
-    DataTransfer.getModelList(data);
   }
 }
