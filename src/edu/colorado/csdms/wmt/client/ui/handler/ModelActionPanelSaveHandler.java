@@ -64,11 +64,11 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
     }
     
     if (isSaveAs) {
-      showSaveDialogBox();
+      showSaveDialogBox(Constants.MODELS_SAVEAS_PATH);
     } else {
       if (!data.modelIsSaved()) {
         if (data.getMetadata().getId() == Constants.DEFAULT_MODEL_ID) {
-          showSaveDialogBox();
+          showSaveDialogBox(Constants.MODELS_NEW_PATH);
         } else {
 
           // Don't allow a user to save a model that doesn't belong to them.
@@ -80,11 +80,11 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
                     + " this model with the current user as the owner?";
             Boolean saveCopy = Window.confirm(msg);
             if (saveCopy) {
-              showSaveDialogBox();
+              showSaveDialogBox(Constants.MODELS_NEW_PATH);
             }
           } else {
             data.serialize();
-            DataTransfer.postModel(data);
+            DataTransfer.postModel(data, Constants.MODELS_EDIT_PATH);
           }
         }
       }
@@ -95,8 +95,10 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
    * Pops up an instance of {@link SaveDialogBox} to prompt the user to save the
    * model. Events are sent to {@link SaveModelHandler} and
    * {@link DialogCancelHandler}.
+   * 
+   * @param saveType new model, edit existing model, or model save as
    */
-  private void showSaveDialogBox() {
+  private void showSaveDialogBox(String saveType) {
     
     String modelName = data.getModel().getName();
     if (data.modelIsSaved()) {
@@ -107,7 +109,8 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
         "Enter a name for the model. No file extension is needed.");
     
     // Define handlers.
-    final SaveModelHandler saveHandler = new SaveModelHandler(data, saveDialog);
+    final SaveModelHandler saveHandler =
+        new SaveModelHandler(data, saveDialog, saveType);
     final DialogCancelHandler cancelHandler =
         new DialogCancelHandler(saveDialog);
 

@@ -77,6 +77,7 @@ public class DataTransfer {
   private static final String ADD = "add";
   private static final String DELETE = "delete";
   private static final String EDIT = "edit";
+  private static final String SAVEAS = "saveas";
   private static final String INIT = "init";
   private static final String STAGE = "stage";
   private static final String LAUNCH = "launch";
@@ -468,11 +469,12 @@ public class DataTransfer {
 
   /**
    * Makes an asynchronous HTTP POST request to save a new model, or edits to an
-   * existing model, to the server.
+   * existing model, or a duplicate of an existing model, to the server.
    * 
    * @param data the DataManager object for the WMT session
+   * @param saveType new model, edit existing model, or model save as
    */
-  public static void postModel(DataManager data) {
+  public static void postModel(DataManager data, String saveType) {
 
     Integer modelId = data.getMetadata().getId();
 
@@ -480,12 +482,18 @@ public class DataTransfer {
     GWT.log("this model id: " + modelId.toString());
 
     String url, type;
-    if (data.modelIdList.contains(modelId)) {
-      url = DataURL.editModel(data, modelId);
-      type = EDIT;
-    } else {
+    if (saveType.equals(Constants.MODELS_NEW_PATH)) {
       url = DataURL.newModel(data);
       type = NEW;
+    } else if (saveType.equals(Constants.MODELS_EDIT_PATH)) {
+      url = DataURL.editModel(data, modelId);
+      type = EDIT;
+    } else if (saveType.equals(Constants.MODELS_SAVEAS_PATH)) {
+      url = DataURL.saveasModel(data, modelId);
+      type = SAVEAS;
+    } else {
+      Window.alert("No match found for save action.");
+      return;
     }
     GWT.log(type + ": " + url);
     GWT.log(data.getModelString());
@@ -1183,6 +1191,10 @@ public class DataTransfer {
           data.getMetadata().setId(modelId);
           editActions();
         } else if (type.matches(EDIT)) {
+          editActions();
+        } else if (type.matches(SAVEAS)) {
+          Integer modelId = Integer.valueOf(rtxt);
+          data.getMetadata().setId(modelId);
           editActions();
         } else if (type.matches(DELETE)) {
           DataTransfer.getModelList(data);
