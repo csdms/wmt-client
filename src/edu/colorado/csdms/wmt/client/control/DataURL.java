@@ -313,6 +313,22 @@ public class DataURL {
   }
 
   /**
+   * Returns the URL for duplicating an existing model on the server, given its
+   * id.
+   * 
+   * @param data the DataManager object for the WMT session
+   * @param modelId the id of the model, an Integer set by the API
+   */
+  public static String saveasModel(DataManager data, Integer modelId) {
+    if (data.isDevelopmentMode()) {
+      return LOCAL_URL + "save/saved.json";
+    } else {
+      return data.config.getApiUrl() + Constants.MODELS_SAVEAS_PATH 
+          + modelId.toString();
+    }
+  }
+
+  /**
    * Returns the URL for deleting an existing model from the server, given its
    * id.
    * 
