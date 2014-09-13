@@ -53,6 +53,7 @@ public class SaveModelHandler implements ClickHandler {
   public SaveModelHandler(DataManager data, SaveDialogBox box, String saveType) {
     this.data = data;
     this.box = box;
+    this.saveType = saveType;
   }
   
   @Override
@@ -71,7 +72,7 @@ public class SaveModelHandler implements ClickHandler {
     }
 
     // Serialize the model from the GUI and post it to the server.
-    data.getMetadata().setId(Constants.DEFAULT_MODEL_ID);
+    data.getMetadata().setId(Constants.DEFAULT_MODEL_ID); // FIXME?!
     data.serialize();
     DataTransfer.postModel(data, saveType);
   }
