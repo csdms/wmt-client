@@ -71,8 +71,13 @@ public class SaveModelHandler implements ClickHandler {
       data.saveAttempts++;
     }
 
+    // If this is a new model, reset the model id. (The "models/new" API call
+    // will return a new id for the model.)
+    if (saveType.matches(Constants.MODELS_NEW_PATH)) {
+      data.getMetadata().setId(Constants.DEFAULT_MODEL_ID);
+    }
+
     // Serialize the model from the GUI and post it to the server.
-    data.getMetadata().setId(Constants.DEFAULT_MODEL_ID); // FIXME?!
     data.serialize();
     DataTransfer.postModel(data, saveType);
   }

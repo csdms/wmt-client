@@ -70,7 +70,7 @@ public class Constants {
   public static final String MODELS_SHOW_PATH = "models/show/";
   public static final String MODELS_NEW_PATH = "models/new";
   public static final String MODELS_EDIT_PATH = "models/edit/";
-  public static final String MODELS_SAVEAS_PATH = "models/saveas";
+  public static final String MODELS_SAVEAS_PATH = "models/saveas/";
   public static final String MODELS_DELETE_PATH = "models/delete/";
   public static final String MODELS_UPLOAD_PATH = "models/upload";
 
