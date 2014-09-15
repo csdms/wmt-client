@@ -59,16 +59,17 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
     // Hide the MoreActionsMenu.
     data.getPerspective().getActionButtonPanel().getMoreMenu().hide();
 
-    if (!data.security.isLoggedIn()) {
-      return;
-    }
-    
+    // If this is a new model, or if this is the "Save As" action on an 
+    // existing model, or if this is an attempt to save a public model that
+    // the user doesn't own, then show a dialog box that prompts the user for
+    // a model name. If this is a save of an existing model that the user 
+    // owns, skip the dialog and save the model to the server.
     if (isSaveAs) {
-      showSaveDialogBox();
+      showSaveDialogBox(Constants.MODELS_SAVEAS_PATH);
     } else {
       if (!data.modelIsSaved()) {
         if (data.getMetadata().getId() == Constants.DEFAULT_MODEL_ID) {
-          showSaveDialogBox();
+          showSaveDialogBox(Constants.MODELS_NEW_PATH);
         } else {
 
           // Don't allow a user to save a model that doesn't belong to them.
@@ -80,11 +81,11 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
                     + " this model with the current user as the owner?";
             Boolean saveCopy = Window.confirm(msg);
             if (saveCopy) {
-              showSaveDialogBox();
+              showSaveDialogBox(Constants.MODELS_NEW_PATH);
             }
           } else {
             data.serialize();
-            DataTransfer.postModel(data);
+            DataTransfer.postModel(data, Constants.MODELS_EDIT_PATH);
           }
         }
       }
@@ -95,19 +96,24 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
    * Pops up an instance of {@link SaveDialogBox} to prompt the user to save the
    * model. Events are sent to {@link SaveModelHandler} and
    * {@link DialogCancelHandler}.
+   * 
+   * @param saveType new model, edit existing model, or model save as
    */
-  private void showSaveDialogBox() {
-    
+  private void showSaveDialogBox(String saveType) {
+
+    // If the model has been saved previously, append "copy" to the name.
     String modelName = data.getModel().getName();
-    if (data.modelIsSaved()) {
+    if (data.getMetadata().getId() != Constants.DEFAULT_MODEL_ID) {
       modelName += " copy";
     }
+    
     saveDialog = new SaveDialogBox(data, modelName);
     saveDialog.getNamePanel().setTitle(
         "Enter a name for the model. No file extension is needed.");
     
     // Define handlers.
-    final SaveModelHandler saveHandler = new SaveModelHandler(data, saveDialog);
+    final SaveModelHandler saveHandler =
+        new SaveModelHandler(data, saveDialog, saveType);
     final DialogCancelHandler cancelHandler =
         new DialogCancelHandler(saveDialog);
 

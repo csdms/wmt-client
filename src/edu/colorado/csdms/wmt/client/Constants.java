@@ -70,6 +70,7 @@ public class Constants {
   public static final String MODELS_SHOW_PATH = "models/show/";
   public static final String MODELS_NEW_PATH = "models/new";
   public static final String MODELS_EDIT_PATH = "models/edit/";
+  public static final String MODELS_SAVEAS_PATH = "models/saveas/";
   public static final String MODELS_DELETE_PATH = "models/delete/";
   public static final String MODELS_UPLOAD_PATH = "models/upload";
 
@@ -186,8 +187,8 @@ public class Constants {
   public static String COMPONENT_INFO =
       "View information about this component.";
   public static String COMPONENT_INFO_1 = "View information about a component.";
-  public static String COMPONENT_DELETE =
-      "Delete this component from the model.";
+  public static String COMPONENT_CLOSE =
+      "Remove this component (and its children, if any) from the model.";
   public static String PARAMETER_RESET = "Reset all parameters for this"
       + " component to their default values.";
   public static String PARAMETER_VIEW_FILE = "View the input files for this"

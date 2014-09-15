@@ -41,16 +41,19 @@ public class SaveModelHandler implements ClickHandler {
   
   private DataManager data;
   private SaveDialogBox box;
+  private String saveType;
   
   /**
    * Creates a new {@link SaveModelHandler}.
    * 
    * @param data the DataManager object for the WMT session
    * @param box the dialog box
+   * @param saveType new model, edit existing model, or model save as
    */
-  public SaveModelHandler(DataManager data, SaveDialogBox box) {
+  public SaveModelHandler(DataManager data, SaveDialogBox box, String saveType) {
     this.data = data;
     this.box = box;
+    this.saveType = saveType;
   }
   
   @Override
@@ -68,9 +71,14 @@ public class SaveModelHandler implements ClickHandler {
       data.saveAttempts++;
     }
 
+    // If this is a new model, reset the model id. (The "models/new" API call
+    // will return a new id for the model.)
+    if (saveType.matches(Constants.MODELS_NEW_PATH)) {
+      data.getMetadata().setId(Constants.DEFAULT_MODEL_ID);
+    }
+
     // Serialize the model from the GUI and post it to the server.
-    data.getMetadata().setId(Constants.DEFAULT_MODEL_ID);
     data.serialize();
-    DataTransfer.postModel(data);
+    DataTransfer.postModel(data, saveType);
   }
 }
