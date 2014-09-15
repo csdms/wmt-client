@@ -159,6 +159,19 @@ public class DataURL {
   }
 
   /**
+   * Returns the API URL for detaching a label from a model.
+   * 
+   * @param data the DataManager object for the WMT session
+   */
+  public static String removeModelLabel(DataManager data) {
+    if (data.isDevelopmentMode()) {
+      return LOCAL_URL + "save/labels.json";
+    } else {
+      return data.config.getApiUrl() + Constants.LABELS_MODEL_REMOVE_PATH;
+    }
+  }
+
+  /**
    * Returns the API URL for finding what models use a given set of labels.
    * 
    * @param data the DataManager object for the WMT session

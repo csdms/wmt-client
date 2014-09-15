@@ -57,6 +57,7 @@ public class Constants {
   public static final String LABELS_NEW_PATH = "tag/new";
   public static final String LABELS_DELETE_PATH = "tag/delete/";
   public static final String LABELS_MODEL_ADD_PATH = "tag/model/add";
+  public static final String LABELS_MODEL_REMOVE_PATH = "tag/model/remove";
   public static final String LABELS_MODEL_QUERY_PATH = "tag/model/query";
   public static final String LABELS_MODEL_GET_PATH = "tag/model/";
 

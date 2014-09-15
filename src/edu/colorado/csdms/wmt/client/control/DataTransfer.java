@@ -691,7 +691,8 @@ public class DataTransfer {
   }
 
   /**
-   * Makes an asynchronous HTTPS POST request to attach a label to a model.
+   * Makes an asynchronous HTTPS POST request to attach a label to a model. The
+   * complement of {@link DataTransfer#removeModelLabel}.
    * 
    * @param data the DataManager object for the WMT session
    * @param modelId the id of the model, an Integer
@@ -722,6 +723,39 @@ public class DataTransfer {
     }
   }
 
+  /**
+   * Makes an asynchronous HTTPS POST request to detach a label from a model.
+   * The complement of {@link DataTransfer#addModelLabel}.
+   * 
+   * @param data the DataManager object for the WMT session
+   * @param modelId the id of the model, an Integer
+   * @param labelId the id of the label to remove, an Integer
+   */
+  public static void removeModelLabel(DataManager data, Integer modelId,
+      Integer labelId) {
+
+    String url = DataURL.removeModelLabel(data);
+    GWT.log(url);
+
+    RequestBuilder builder =
+        new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+
+    HashMap<String, String> entries = new HashMap<String, String>();
+    entries.put("model", modelId.toString()); // type="text" in API
+    entries.put("tag", labelId.toString());
+    String queryString = buildQueryString(entries);
+    
+    try {
+      builder.setHeader("Content-Type", "application/x-www-form-urlencoded");
+      @SuppressWarnings("unused")
+      Request request =
+          builder.sendRequest(queryString, new LabelRequestCallback(data, url,
+              Constants.LABELS_MODEL_REMOVE_PATH));
+    } catch (RequestException e) {
+      Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
+    }
+  }
+  
   /**
    * Makes an asynchronous HTTPS GET request to query what models use the given
    * labels, input as an List of Integer ids.
@@ -1142,16 +1176,20 @@ public class DataTransfer {
     private void editActions() {
       data.updateModelSaveState(true);
       DataTransfer.getModelList(data);
-      addSelectedLabels(data.getMetadata().getId());
+      updateSelectedLabels(data.getMetadata().getId());
     }
 
     /*
-     * A helper for adding all selected labels to a model.
+     * A helper for attaching all selected labels to (and detaching all 
+     * unselected labels from) a model.
      */
-    private void addSelectedLabels(Integer modelId) {
+    private void updateSelectedLabels(Integer modelId) {
+      // XXX This may be slow.
       for (Map.Entry<String, LabelJSO> entry : data.modelLabels.entrySet()) {
         if (entry.getValue().isSelected()) {
           addModelLabel(data, modelId, entry.getValue().getId());
+        } else {
+          removeModelLabel(data, modelId, entry.getValue().getId());
         }
       }
     }
@@ -1361,6 +1399,8 @@ public class DataTransfer {
         } else if (type.matches(Constants.LABELS_LIST_PATH)) {
           listActions(rtxt);
         } else if (type.matches(Constants.LABELS_MODEL_ADD_PATH)) {
+          ; // Do nothing
+        } else if (type.matches(Constants.LABELS_MODEL_REMOVE_PATH)) {
           ; // Do nothing
         } else if (type.matches(Constants.LABELS_MODEL_QUERY_PATH)) {
           queryActions(rtxt);
