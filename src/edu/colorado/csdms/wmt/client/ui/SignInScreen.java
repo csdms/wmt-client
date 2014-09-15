@@ -36,6 +36,9 @@ public class SignInScreen extends HorizontalPanel {
   private PasswordTextBox passwordBox;
   private Button signInButton;
   private HTML errorMessage;
+  private HorizontalPanel newUserInfoPanel;
+  private HorizontalPanel forgotPasswordInfoPanel;
+  private HorizontalPanel seeVideoInfoPanel;
 
   /**
    * Makes a new {@link SignInScreen} for a user to sign in to WMT.
@@ -101,7 +104,7 @@ public class SignInScreen extends HorizontalPanel {
     newUser.setStyleName("wmt-SignInScreenLinks");
     HTML newUserInfo = new HTML(Constants.NEW_USER_INFO);
     newUserInfo.setStyleName("wmt-SignInScreenLinksInfo");
-    final HorizontalPanel newUserInfoPanel = new HorizontalPanel();
+    newUserInfoPanel = new HorizontalPanel();
     newUserInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
     newUserInfoPanel.add(newUserInfo);
     newUserInfoPanel.setVisible(false);
@@ -111,7 +114,7 @@ public class SignInScreen extends HorizontalPanel {
     forgotPassword.setStyleName("wmt-SignInScreenLinks");
     HTML forgotPasswordInfo = new HTML(Constants.FORGOT_PASSWORD_INFO);
     forgotPasswordInfo.setStyleName("wmt-SignInScreenLinksInfo");
-    final HorizontalPanel forgotPasswordInfoPanel = new HorizontalPanel();
+    forgotPasswordInfoPanel = new HorizontalPanel();
     forgotPasswordInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
     forgotPasswordInfoPanel.add(forgotPasswordInfo);
     forgotPasswordInfoPanel.setVisible(false);
@@ -121,11 +124,11 @@ public class SignInScreen extends HorizontalPanel {
     seeVideo.setStyleName("wmt-SignInScreenLinks");
     HTML seeVideoInfo = new HTML(Constants.SEE_VIDEO_INFO);
     seeVideoInfo.setStyleName("wmt-SignInScreenLinksInfo");
-    final HorizontalPanel seeVideoInfoPanel = new HorizontalPanel();
+    seeVideoInfoPanel = new HorizontalPanel();
     seeVideoInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
     seeVideoInfoPanel.add(seeVideoInfo);
     seeVideoInfoPanel.setVisible(false);
-    
+
     // Add the question links above to a panel.
     VerticalPanel linksPanel = new VerticalPanel();
     linksPanel.setHorizontalAlignment(ALIGN_CENTER);
@@ -200,6 +203,15 @@ public class SignInScreen extends HorizontalPanel {
       }
     });
     
+  }
+
+  /**
+   * Closes text panels under the "Sign In" button.
+   */
+  public void closeInfoPanels() {
+    newUserInfoPanel.setVisible(false);
+    forgotPasswordInfoPanel.setVisible(false);
+    seeVideoInfoPanel.setVisible(false);
   }
 
   public SuggestBox getEmailBox() {
