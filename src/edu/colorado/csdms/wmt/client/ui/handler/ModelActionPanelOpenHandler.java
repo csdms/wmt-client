@@ -53,10 +53,6 @@ public class ModelActionPanelOpenHandler implements ClickHandler {
 
   @Override
   public void onClick(ClickEvent event) {
-    
-    if (!data.security.isLoggedIn()) {
-      return;
-    }
 
     openDialog = new OpenDialogBox(data);
 
