@@ -70,7 +70,8 @@ public class SaveModelHandler implements ClickHandler {
       Window.alert(msg);
       return;
     }
-    if (saveType == Constants.MODELS_NEW_PATH) {
+    if (saveType == Constants.MODELS_NEW_PATH
+        || saveType == Constants.MODELS_SAVEAS_PATH) {
       String msg = "A model with the name \"" + modelName + "\" exists."
           + " Please choose a different name for this model.";
       for (int i = 0; i < data.modelNameList.size(); i++) {

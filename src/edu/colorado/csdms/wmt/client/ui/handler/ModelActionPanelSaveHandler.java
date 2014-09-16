@@ -65,7 +65,11 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
     // a model name. If this is a save of an existing model that the user 
     // owns, skip the dialog and save the model to the server.
     if (isSaveAs) {
-      showSaveDialogBox(Constants.MODELS_SAVEAS_PATH);
+      if (data.getMetadata().getId() == Constants.DEFAULT_MODEL_ID) {
+        showSaveDialogBox(Constants.MODELS_NEW_PATH);
+      } else {
+        showSaveDialogBox(Constants.MODELS_SAVEAS_PATH);
+      }
     } else {
       if (!data.modelIsSaved()) {
         if (data.getMetadata().getId() == Constants.DEFAULT_MODEL_ID) {
