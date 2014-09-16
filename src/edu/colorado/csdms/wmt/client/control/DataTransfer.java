@@ -514,8 +514,8 @@ public class DataTransfer {
     try {
       @SuppressWarnings("unused")
       Request request =
-          builder
-              .sendRequest(null, new ModelRequestCallback(data, url, Constants.MODELS_DELETE_PATH));
+          builder.sendRequest(null, new ModelRequestCallback(data, url,
+              Constants.MODELS_DELETE_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -1219,6 +1219,7 @@ public class DataTransfer {
           editActions();
         } else if (type.matches(Constants.MODELS_DELETE_PATH)) {
           DataTransfer.getModelList(data);
+          Window.alert("Model deleted.");
         } else {
           Window.alert(Constants.RESPONSE_ERR_MSG);
         }
