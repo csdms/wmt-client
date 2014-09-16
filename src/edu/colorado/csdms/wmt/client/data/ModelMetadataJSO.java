@@ -27,9 +27,9 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * A GWT JavaScript overlay (JSO) type that gives the metadata for a WMT
- * model, including the owner, the model id and the model name; information
- * corresponding to the "open" URL in the API. Declares JSNI methods to access
- * these attributes.
+ * model, including the owner, the model id, the model name, and the creation
+ * date; information corresponding to the "open" URL in the API. Declares JSNI 
+ * methods to access these attributes.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
@@ -94,5 +94,12 @@ public class ModelMetadataJSO extends JavaScriptObject {
    */
   public final native void setOwner(String owner) /*-{
 		this.owner = owner;
+  }-*/;
+
+  /**
+   * A JSNI method to get the creation date of the model, a String.
+   */
+  public final native String getDate() /*-{
+		return this.date;
   }-*/;
 }
