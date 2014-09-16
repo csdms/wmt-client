@@ -25,6 +25,7 @@ package edu.colorado.csdms.wmt.client.ui.handler;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
@@ -59,13 +60,30 @@ public class SaveModelHandler implements ClickHandler {
   @Override
   public void onClick(ClickEvent event) {
 
+    // Retrieve the name the user gave the model.
+    String modelName = box.getNamePanel().getField().getText();
+
+    // If the name is null, or if the name is a dup, issue a message and return.
+    if (modelName.isEmpty()) {
+      String msg = "Please supply a name for this model, or select"
+          + " the \"Cancel\" button.";
+      Window.alert(msg);
+      return;
+    }
+    if (saveType == Constants.MODELS_NEW_PATH) {
+      String msg = "A model with the name \"" + modelName + "\" exists."
+          + " Please choose a different name for this model.";
+      for (int i = 0; i < data.modelNameList.size(); i++) {
+        if (data.modelNameList.get(i).matches(modelName)) {
+          Window.alert(msg);
+          return;
+        }
+      }
+    }
+    
     box.hide();
 
     // Set the model name in the DataManager.
-    String modelName = box.getNamePanel().getField().getText();
-    if (modelName.isEmpty()) {
-      return;
-    }
     if (!data.getModel().getName().matches(modelName)) {
       data.getModel().setName(modelName);
       data.saveAttempts++;
