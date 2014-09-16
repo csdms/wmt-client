@@ -118,4 +118,12 @@ public class OpenDialogBox extends DialogBox {
   public void setChoicePanel(ChoicePanel choicePanel) {
     this.choicePanel = choicePanel;
   }
+
+  public LabelsOpenModelMenu getLabelsMenu() {
+    return labelsMenu;
+  }
+
+  public void setLabelsMenu(LabelsOpenModelMenu labelsMenu) {
+    this.labelsMenu = labelsMenu;
+  }
 }

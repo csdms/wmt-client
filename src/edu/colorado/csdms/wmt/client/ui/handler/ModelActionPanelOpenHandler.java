@@ -54,14 +54,10 @@ public class ModelActionPanelOpenHandler implements ClickHandler {
   @Override
   public void onClick(ClickEvent event) {
 
+    // Make a new open dialog; populate its droplist with all available models.
     openDialog = new OpenDialogBox(data);
-
-    // Populate the droplist with all available models on the server.
-    for (int i = 0; i < data.modelNameList.size(); i++) {
-      openDialog.getDroplistPanel().getDroplist().addItem(
-          data.modelNameList.get(i));
-    }
-
+    openDialog.getLabelsMenu().populateMenu(true);
+    
     // Define handlers.
     final OpenModelHandler openHandler = new OpenModelHandler(data, openDialog);
     final DialogCancelHandler cancelHandler =
