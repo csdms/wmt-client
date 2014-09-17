@@ -45,6 +45,8 @@ public class ModelListJSOTest extends GWTTestCase {
   private ModelListJSO jso;
   private String name;
   private int id;
+  private String owner;
+  private String date;
   private JsArray<ModelListJSO> jsoList;
 
   /**
@@ -59,12 +61,18 @@ public class ModelListJSOTest extends GWTTestCase {
    * A JSNI method that defines a fixture for the tests. Returns a
    * {@link ModelListJSO} object for testing.
    * 
-   * @param ids
+   * @param name
+   * @param id
+   * @param owner
+   * @param date
    */
-  private native ModelListJSO testModelListJSO(String name, int id) /*-{
+  private native ModelListJSO testModelListJSO(String name, int id, 
+      String owner, String date) /*-{
 		return {
 			"name" : name,
-			"id" : id
+			"id" : id,
+			"owner" : owner,
+			"date" : date
 		};
   }-*/;
 
@@ -74,13 +82,15 @@ public class ModelListJSOTest extends GWTTestCase {
   protected void gwtSetUp() throws Exception {
     name = "HydroTrend and Friends";
     id = 5;
-    jso = testModelListJSO(name, id);
+    owner = "mark.piper@colorado.edu";
+    date = "2014-05-16T17:24:26";
+    jso = testModelListJSO(name, id, owner, date);
     
     jsoList = (JsArray<ModelListJSO>) ModelListJSO.createObject();
     jsoList.setLength(3);
     jsoList.push(jso);
-    jsoList.push(testModelListJSO("foo", 42));
-    jsoList.push(testModelListJSO("bar", 1));
+    jsoList.push(testModelListJSO("foo", 42, "me", "2014-01-01"));
+    jsoList.push(testModelListJSO("bar", 1, "you", "2014-12-31"));
   }
 
   @After
@@ -100,6 +110,18 @@ public class ModelListJSOTest extends GWTTestCase {
     assertEquals(id, jso.getModelId());
   }
   
+  // Test getting the owner of the model.
+  @Test
+  public void testGetOwner() {
+    assertEquals(owner, jso.getOwner());
+  }
+  
+  // Test getting the creation date of the model.
+  @Test
+  public void testGetDate() {
+    assertEquals(date, jso.getDate());
+  }
+  
   // Test the length of the array.
   @Test
   public void testLength() {
@@ -111,6 +133,7 @@ public class ModelListJSOTest extends GWTTestCase {
 //  @Test
 //  public void testGetSingleId() {
 //    int index = 0;
-//    assertEquals(jso, jsoList.get(index));
+//    ModelListJSO jsoZero = jsoList.get(index);
+//    assertEquals(jso, jsoZero);
 //  }
 }

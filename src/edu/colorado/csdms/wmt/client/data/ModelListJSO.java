@@ -57,7 +57,21 @@ public class ModelListJSO extends JavaScriptObject {
   public final native int getModelId() /*-{
 		return this.id;
   }-*/;    
-  
+
+  /**
+   * Gets the owner of the model, a String. This is a JSNI method.
+   */
+  public final native String getOwner() /*-{
+		return this.owner;
+  }-*/;
+
+  /**
+   * Gets the ISO 8601 date of the model, a String. This is a JSNI method.
+   */
+  public final native String getDate() /*-{
+		return this.date;
+  }-*/;
+
   /**
    * Gets the JsArray of models. This is a JSNI method.
    */
