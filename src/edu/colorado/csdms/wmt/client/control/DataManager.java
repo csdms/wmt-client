@@ -36,6 +36,7 @@ import edu.colorado.csdms.wmt.client.data.ComponentJSO;
 import edu.colorado.csdms.wmt.client.data.ConfigurationJSO;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
 import edu.colorado.csdms.wmt.client.data.ModelJSO;
+import edu.colorado.csdms.wmt.client.data.ModelListJSO;
 import edu.colorado.csdms.wmt.client.data.ModelMetadataJSO;
 import edu.colorado.csdms.wmt.client.security.Security;
 import edu.colorado.csdms.wmt.client.ui.ComponentCell;
@@ -79,8 +80,7 @@ public class DataManager {
   public List<String> componentIdList;
   public Integer nComponents = 0;
   public HashMap<String, Integer> retryComponentLoad;
-  public List<Integer> modelIdList;
-  public List<String> modelNameList;
+  public ModelListJSO modelList;
   public TreeMap<String, LabelJSO> modelLabels; // maintains sort
   public Integer saveAttempts = 0;
 
@@ -94,9 +94,8 @@ public class DataManager {
     retryComponentLoad = new HashMap<String, Integer>();
     components = new ArrayList<ComponentJSO>();
     modelComponents = new ArrayList<ComponentJSO>();
-    modelIdList = new ArrayList<Integer>();
     modelLabels = new TreeMap<String, LabelJSO>();
-    modelNameList = new ArrayList<String>();
+    modelList = ModelListJSO.createObject().cast();
   }
 
   /**
@@ -366,6 +365,40 @@ public class DataManager {
    */
   public void setMetadata(ModelMetadataJSO metadata) {
     this.metadata = metadata;
+  }
+
+  /**
+   * A convenience method that iterates through the list of available models
+   * stored in modelList to locate the model that matches the input model name.
+   * The id of the matched model is returned.
+   * 
+   * @param modelName the name of the model to locate
+   */
+  public Integer findModel(String modelName) {
+    Integer modelId = Constants.DEFAULT_MODEL_ID;
+    for (int i = 0; i < modelList.getModels().length(); i++) {
+      if (modelList.getModels().get(i).getName().matches(modelName)) {
+        modelId = modelList.getModels().get(i).getModelId();
+      }
+    }
+    return modelId;
+  }
+
+  /**
+   * A convenience method that iterates through the list of available models
+   * stored in modelList to locate the model that has the input model id.
+   * The name of the matched model is returned.
+   * 
+   * @param modelId the id of the model to locate
+   */
+  public String findModel(Integer modelId) {
+    String modelName = Constants.DEFAULT_MODEL_NAME;
+    for (int i = 0; i < modelList.getModels().length(); i++) {
+      if (modelList.getModels().get(i).getModelId() == modelId) {
+        modelName = modelList.getModels().get(i).getName();
+      }
+    }
+    return modelName;
   }
 
   /**

@@ -460,7 +460,6 @@ public class DataTransfer {
 
     Integer modelId = data.getMetadata().getId();
 
-    GWT.log("all model ids: " + data.modelIdList.toString());
     GWT.log("this model id: " + modelId.toString());
 
     String url;
@@ -1105,17 +1104,8 @@ public class DataTransfer {
         String rtxt = response.getText();
         GWT.log(rtxt);
         ModelListJSO jso = parse(rtxt);
-
-        // Start with clean lists of model names and ids.
-        data.modelIdList.clear();
-        data.modelNameList.clear();
-
-        // Load the list of models into the DataManager.
-        for (int i = 0; i < jso.getModels().length(); i++) {
-          data.modelIdList.add(jso.getModels().get(i).getModelId());
-          data.modelNameList.add(jso.getModels().get(i).getName());
-        }
-
+        data.modelList = jso;
+        
       } else {
         String msg =
             "The URL '" + url + "' did not give an 'OK' response. "
@@ -1351,18 +1341,13 @@ public class DataTransfer {
      */
     private void queryActions(String rtxt) {
       LabelQueryJSO jso = parse(rtxt);
-//       Window.alert(jso.getIds().join());
-
+      
       // Populate the droplist with the restricted list of models.
       data.getPerspective().getOpenDialogBox().getDroplistPanel().getDroplist()
           .clear();
       for (int i = 0; i < jso.getIds().length(); i++) {
         Integer modelId = jso.getIds().get(i);
-        Integer modelIndex = data.modelIdList.indexOf(modelId);
-        if (modelIndex == -1) { // the API shouldn't return nonexistent models,
-          continue;             // but just in case...
-        }
-        String modelName = data.modelNameList.get(modelIndex);
+        String modelName = data.findModel(modelId);
         data.getPerspective().getOpenDialogBox().getDroplistPanel()
             .getDroplist().addItem(modelName);
       }

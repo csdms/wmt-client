@@ -126,10 +126,10 @@ public class LabelsOpenModelMenu extends PopupPanel {
   private void rebuildDroplist() {
     selectedLabelIds.clear();
     openDialog.getDroplistPanel().getDroplist().clear();
-    for (int i = 0; i < data.modelNameList.size(); i++) {
+    for (int i = 0; i < data.modelList.getModels().length(); i++) {
       openDialog.getDroplistPanel().getDroplist().addItem(
-          data.modelNameList.get(i));
-    }
+          data.modelList.getModels().get(i).getName());
+    }    
   }
   
   /**

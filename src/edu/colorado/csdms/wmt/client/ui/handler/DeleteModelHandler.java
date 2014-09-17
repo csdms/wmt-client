@@ -60,7 +60,7 @@ public class DeleteModelHandler implements ClickHandler {
 
     Integer selIndex =
         box.getDroplistPanel().getDroplist().getSelectedIndex();
-    Integer modelId = data.modelIdList.get(selIndex);
+    Integer modelId = data.modelList.getModels().get(selIndex).getModelId();
     GWT.log("Deleting model: " + modelId);
 
     DataTransfer.deleteModel(data, modelId);

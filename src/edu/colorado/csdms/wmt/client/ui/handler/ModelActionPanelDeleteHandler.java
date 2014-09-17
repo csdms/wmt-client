@@ -60,15 +60,15 @@ public class ModelActionPanelDeleteHandler implements ClickHandler {
     // Hide the MoreActionsMenu.
     data.getPerspective().getActionButtonPanel().getMoreMenu().hide();
 
+    // Display a droplist populated with models the user owns.
     deleteDialog = new DroplistDialogBox();
     deleteDialog.setText("Delete Model...");
     deleteDialog.getChoicePanel().getOkButton().setHTML(
         Constants.FA_DELETE + "Delete");
-
-    // Populate the ModelDroplist with the available models on the server.
-    for (int i = 0; i < data.modelNameList.size(); i++) {
+    // FIXME not all models
+    for (int i = 0; i < data.modelList.getModels().length(); i++) {
       deleteDialog.getDroplistPanel().getDroplist().addItem(
-          data.modelNameList.get(i));
+          data.modelList.getModels().get(i).getName());
     }
 
     // Define handlers.

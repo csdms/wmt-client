@@ -35,15 +35,15 @@ import edu.colorado.csdms.wmt.client.ui.widgets.SaveDialogBox;
 /**
  * Handles click on the "OK" button in the save dialog that appears when the
  * "Save Model As..." button is clicked in the ModelActionPanel. Uses
- * {@link DataManager#serialize()} to serialize the model, then posts it to
- * the server with {@link DataTransfer#postModel(DataManager)}.
+ * {@link DataManager#serialize()} to serialize the model, then posts it to the
+ * server with {@link DataTransfer#postModel(DataManager)}.
  */
 public class SaveModelHandler implements ClickHandler {
-  
+
   private DataManager data;
   private SaveDialogBox box;
   private String saveType;
-  
+
   /**
    * Creates a new {@link SaveModelHandler}.
    * 
@@ -56,7 +56,7 @@ public class SaveModelHandler implements ClickHandler {
     this.box = box;
     this.saveType = saveType;
   }
-  
+
   @Override
   public void onClick(ClickEvent event) {
 
@@ -74,14 +74,14 @@ public class SaveModelHandler implements ClickHandler {
         || saveType == Constants.MODELS_SAVEAS_PATH) {
       String msg = "A model with the name \"" + modelName + "\" exists."
           + " Please choose a different name for this model.";
-      for (int i = 0; i < data.modelNameList.size(); i++) {
-        if (data.modelNameList.get(i).matches(modelName)) {
+      for (int i = 0; i < data.modelList.getModels().length(); i++) {
+        if (data.modelList.getModels().get(i).getName().matches(modelName)) {
           Window.alert(msg);
           return;
         }
       }
     }
-    
+
     box.hide();
 
     // Set the model name in the DataManager.
