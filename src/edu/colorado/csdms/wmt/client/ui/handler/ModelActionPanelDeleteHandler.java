@@ -29,6 +29,7 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.data.ModelListJSO;
 import edu.colorado.csdms.wmt.client.ui.widgets.DroplistDialogBox;
 
 /**
@@ -65,10 +66,12 @@ public class ModelActionPanelDeleteHandler implements ClickHandler {
     deleteDialog.setText("Delete Model...");
     deleteDialog.getChoicePanel().getOkButton().setHTML(
         Constants.FA_DELETE + "Delete");
-    // FIXME not all models
     for (int i = 0; i < data.modelList.getModels().length(); i++) {
-      deleteDialog.getDroplistPanel().getDroplist().addItem(
-          data.modelList.getModels().get(i).getName());
+      ModelListJSO modelJso = data.modelList.getModels().get(i);
+      if (modelJso.getOwner().matches(data.security.getWmtUsername())) {
+        deleteDialog.getDroplistPanel().getDroplist().addItem(
+            modelJso.getName());
+      }
     }
 
     // Define handlers.
