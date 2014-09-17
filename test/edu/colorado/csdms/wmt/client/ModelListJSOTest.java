@@ -94,14 +94,6 @@ public class ModelListJSOTest extends GWTTestCase {
     assertEquals(name, jso.getName());
   }
 
-  // Test setting the name of the model.
-  @Test
-  public void testSetName() {
-    String newName = "Foo";
-    jso.setName(newName);
-    assertEquals(newName, jso.getName());
-  }
-
   // Test getting the id of the model.
   @Test
   public void testGetId() {

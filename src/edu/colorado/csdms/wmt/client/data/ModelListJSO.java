@@ -50,15 +50,6 @@ public class ModelListJSO extends JavaScriptObject {
   }-*/;
 
   /**
-   * Sets the model name, a String. This is a JSNI method.
-   * 
-   * @param name the name of the model, a String
-   */
-  public final native void setName(String name) /*-{
-		this.name = name;
-  }-*/;
-
-  /**
    * A JSNI method to get the id of the model, an int used to uniquely
    * identify it in the database. The user can't modify this id -- it's set by
    * the API. 
