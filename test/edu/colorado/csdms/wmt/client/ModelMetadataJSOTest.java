@@ -149,6 +149,6 @@ public class ModelMetadataJSOTest extends GWTTestCase {
    */
   @Test
   public void testGetDate() {
-    assertEquals(name, jso.getDate());
+    assertEquals(date, jso.getDate());
   }
 }
