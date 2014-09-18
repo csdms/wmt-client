@@ -36,6 +36,7 @@ import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ModelJSO;
 import edu.colorado.csdms.wmt.client.data.ModelMetadataJSO;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentSelectionCommand;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentCell;
 
 /**
  * A ModelTree is used to graphically represent the construction of a simulation

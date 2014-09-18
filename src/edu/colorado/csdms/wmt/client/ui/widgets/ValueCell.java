@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui;
+package edu.colorado.csdms.wmt.client.ui.widgets;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -41,7 +41,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import edu.colorado.csdms.wmt.client.control.DataURL;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
-import edu.colorado.csdms.wmt.client.ui.widgets.UploadDialogBox;
+import edu.colorado.csdms.wmt.client.ui.ParameterTable;
 
 /**
  * Used to display the value of a parameter in a {@link ParameterTable}, a

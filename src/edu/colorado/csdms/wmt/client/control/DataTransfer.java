@@ -53,9 +53,9 @@ import edu.colorado.csdms.wmt.client.data.LabelQueryJSO;
 import edu.colorado.csdms.wmt.client.data.ModelJSO;
 import edu.colorado.csdms.wmt.client.data.ModelListJSO;
 import edu.colorado.csdms.wmt.client.data.ModelMetadataJSO;
-import edu.colorado.csdms.wmt.client.ui.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.handler.AddNewUserHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.widgets.NewUserDialogBox;
 import edu.colorado.csdms.wmt.client.ui.widgets.RunInfoDialogBox;
 
@@ -460,7 +460,6 @@ public class DataTransfer {
 
     Integer modelId = data.getMetadata().getId();
 
-    GWT.log("all model ids: " + data.modelIdList.toString());
     GWT.log("this model id: " + modelId.toString());
 
     String url;
@@ -514,8 +513,8 @@ public class DataTransfer {
     try {
       @SuppressWarnings("unused")
       Request request =
-          builder
-              .sendRequest(null, new ModelRequestCallback(data, url, Constants.MODELS_DELETE_PATH));
+          builder.sendRequest(null, new ModelRequestCallback(data, url,
+              Constants.MODELS_DELETE_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -1047,11 +1046,6 @@ public class DataTransfer {
         ComponentJSO jso = parse(rtxt);
         data.addComponent(jso); // "class" component
         data.addModelComponent(copy(jso)); // "instance" component, for model
-        data.nComponents++;
-
-        if (data.nComponents == data.componentIdList.size()) {
-          data.showDefaultCursor();
-        }
 
         // Replace the associated placeholder ComponentSelectionMenu item.
         ((ComponentSelectionMenu) data.getPerspective().getModelTree()
@@ -1067,10 +1061,9 @@ public class DataTransfer {
         if (attempt < Constants.RETRY_ATTEMPTS) {
           getComponent(data, componentId);
         } else {
-          data.nComponents++;
           String msg =
-              "The URL '" + url + "' did not give an 'OK' response. "
-                  + "Response code: " + response.getStatusCode();
+              "The URL '" + url + "' did not give an 'OK' response."
+                  + " Response code: " + response.getStatusCode();
           Window.alert(msg);
         }
       }
@@ -1105,17 +1098,8 @@ public class DataTransfer {
         String rtxt = response.getText();
         GWT.log(rtxt);
         ModelListJSO jso = parse(rtxt);
-
-        // Start with clean lists of model names and ids.
-        data.modelIdList.clear();
-        data.modelNameList.clear();
-
-        // Load the list of models into the DataManager.
-        for (int i = 0; i < jso.getModels().length(); i++) {
-          data.modelIdList.add(jso.getModels().get(i).getModelId());
-          data.modelNameList.add(jso.getModels().get(i).getName());
-        }
-
+        data.modelList = jso;
+        
       } else {
         String msg =
             "The URL '" + url + "' did not give an 'OK' response. "
@@ -1219,6 +1203,7 @@ public class DataTransfer {
           editActions();
         } else if (type.matches(Constants.MODELS_DELETE_PATH)) {
           DataTransfer.getModelList(data);
+          Window.alert("Model deleted.");
         } else {
           Window.alert(Constants.RESPONSE_ERR_MSG);
         }
@@ -1350,18 +1335,13 @@ public class DataTransfer {
      */
     private void queryActions(String rtxt) {
       LabelQueryJSO jso = parse(rtxt);
-//       Window.alert(jso.getIds().join());
-
+      
       // Populate the droplist with the restricted list of models.
       data.getPerspective().getOpenDialogBox().getDroplistPanel().getDroplist()
           .clear();
       for (int i = 0; i < jso.getIds().length(); i++) {
         Integer modelId = jso.getIds().get(i);
-        Integer modelIndex = data.modelIdList.indexOf(modelId);
-        if (modelIndex == -1) { // the API shouldn't return nonexistent models,
-          continue;             // but just in case...
-        }
-        String modelName = data.modelNameList.get(modelIndex);
+        String modelName = data.findModel(modelId);
         data.getPerspective().getOpenDialogBox().getDroplistPanel()
             .getDroplist().addItem(modelName);
       }

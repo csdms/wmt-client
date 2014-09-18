@@ -21,12 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui;
+package edu.colorado.csdms.wmt.client.ui.widgets;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -37,9 +36,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.control.DataTransfer;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
-import edu.colorado.csdms.wmt.client.ui.widgets.OpenDialogBox;
 
 /**
  * Encapsulates an alphabetized, scrollable list of labels used to tag and
@@ -55,8 +52,8 @@ public class LabelsOpenModelMenu extends PopupPanel {
   private List<Integer> selectedLabelIds;
   
   /**
-   * Makes a new {@link LabelsOpenModelMenu}, optionally specifying whether the menu is 
-   * used in the context of opening a saved model.
+   * Makes a new {@link LabelsOpenModelMenu}, optionally specifying whether the
+   * menu is used in the context of opening a saved model.
    * 
    * @param data the DataManager object for the WMT session
    * @param openDialog the reference of an enclosing {@link OpenDialogBox}
@@ -79,29 +76,25 @@ public class LabelsOpenModelMenu extends PopupPanel {
     scroller.setSize(Constants.MENU_WIDTH, Constants.MENU_HEIGHT);
     menu.add(scroller);
 
-    // Populate the menu with the stored model labels and their values.
-    populateMenu(false); // don't rebuild droplist
+    // Populate the menu with the stored model labels.
+    populateMenu();
   }
   
   /**
    * A helper that loads the {@link LabelsOpenModelMenu} with {@link CheckBox}
    * labels. Each CheckBox has a handler that maps the selection state of the
-   * openDialog to the labels variable stored in the {@link DataManager}.
-   * 
-   * @param rebuildDroplist true to rebuild droplist in {@link OpenDialogBox}
+   * labels menu to the droplist in the {@link OpenDialogBox}.
    */
-  public void populateMenu(Boolean rebuildDroplist) {
+  public void populateMenu() {
     labelPanel.clear();
     for (Map.Entry<String, LabelJSO> entry : data.modelLabels.entrySet()) {
       CheckBox labelBox = new CheckBox(entry.getKey());
       labelBox.setWordWrap(false);
       labelBox.setStyleName("wmt-PopupPanelCheckBoxItem");
-      if (data.security.isLoggedIn()
-          && !data.security.getWmtUsername()
-              .equals(entry.getValue().getOwner())) {
+      if (!data.security.getWmtUsername().equals(entry.getValue().getOwner())) {
         labelBox.addStyleDependentName("public");
       }
-      labelBox.addClickHandler(new LabelSelectionHandler(data, entry));
+      labelBox.addClickHandler(new LabelSelectionHandler());
 
       // Force the "public" and username labels to the top, in either order.
       if (entry.getKey().equals("public")
@@ -111,24 +104,39 @@ public class LabelsOpenModelMenu extends PopupPanel {
       } else {
         labelPanel.add(labelBox);
       }
-    }
-
-    // Rebuild the list of available models in the droplist.
-    if (rebuildDroplist) {
-      rebuildDroplist();
+      
+      // Select the username label, by default.
+      if (entry.getKey().equals(data.security.getWmtUsername())) {
+        labelBox.setValue(true);
+        entry.getValue().isSelected(true);
+        selectedLabelIds.add(entry.getValue().getId());
+      }
     }
   }
-
+  
   /**
-   * Builds the {@link OpenDialogBox} droplist with every available model made
-   * by the user, plus all public models.
+   * Makes an ArrayList of label ids that are selected in the labelPanel.
+   * 
+   * Note: If the "public" or username labels are not selected, then clear the
+   * list of ids, regardless of whether other labels are selected; i.e., either
+   * the "public" or username label must be selected.
    */
-  private void rebuildDroplist() {
+  private void makeSelectedLabelIdsList() {
     selectedLabelIds.clear();
-    openDialog.getDroplistPanel().getDroplist().clear();
-    for (int i = 0; i < data.modelNameList.size(); i++) {
-      openDialog.getDroplistPanel().getDroplist().addItem(
-          data.modelNameList.get(i));
+    Boolean isPublicOrUserLabelSelected = false;
+    for (int i = 0; i < labelPanel.getWidgetCount(); i++) {
+      CheckBox labelBox = (CheckBox) labelPanel.getWidget(i);
+      if (labelBox.getValue()) {
+        if (labelBox.getText().matches("public") 
+            || labelBox.getText().matches(data.security.getWmtUsername())) {
+          isPublicOrUserLabelSelected = true;
+        }
+        LabelJSO jso = data.modelLabels.get(labelBox.getText());
+        selectedLabelIds.add(jso.getId());
+      }
+    }
+    if (!isPublicOrUserLabelSelected) {
+      selectedLabelIds.clear();
     }
   }
   
@@ -137,35 +145,29 @@ public class LabelsOpenModelMenu extends PopupPanel {
    */
   public class LabelSelectionHandler implements ClickHandler {
 
-    private DataManager data;
-    private Entry<String, LabelJSO> entry;
-    
-    public LabelSelectionHandler(DataManager data, Entry<String, LabelJSO> entry) {
-      this.data = data;
-      this.entry = entry;
+    public LabelSelectionHandler() {
     }
-    
+
     @Override
     public void onClick(ClickEvent event) {
-      CheckBox labelBox = (CheckBox) event.getSource();
-      entry.getValue().isSelected(labelBox.getValue());
-
-      // If used with an OpenDialogBox, filter results with selected labels.
-      if (labelBox.getValue()) {
-        selectedLabelIds.add(entry.getValue().getId());
+      // Determine what labels are selected and use them to filter the list
+      // of models shown in the droplist in the open dialog box. If there are
+      // no labels selected, clear the droplist.
+      makeSelectedLabelIdsList();
+      if (!selectedLabelIds.isEmpty()) {
+        openDialog.populateDroplist();
       } else {
-        Integer element = entry.getValue().getId();
-        selectedLabelIds.remove(element);
-      }
-      
-      // If no labels are selected, rebuild the droplist; otherwise, go find
-      // models that have the selected labels.
-      if (selectedLabelIds.isEmpty()) {
-        rebuildDroplist();
-      } else {
-        DataTransfer.queryModelLabels(data, selectedLabelIds);
+        openDialog.getDroplistPanel().getDroplist().clear();
       }
     } 
+  }
+
+  public List<Integer> getSelectedLabelIds() {
+    return selectedLabelIds;
+  }
+
+  public void setSelectedLabelIds(List<Integer> selectedLabelIds) {
+    this.selectedLabelIds = selectedLabelIds;
   }
 
 }

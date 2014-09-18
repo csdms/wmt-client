@@ -27,7 +27,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.ComponentCell;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentCell;
 import edu.colorado.csdms.wmt.client.ui.widgets.ComponentInfoDialogBox;
 
 /**
