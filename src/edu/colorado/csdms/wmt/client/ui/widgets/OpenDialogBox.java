@@ -27,6 +27,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -84,19 +85,34 @@ public class OpenDialogBox extends DialogBox {
       }
     });
     
-    HorizontalPanel row = new HorizontalPanel();
-    row.setSpacing(5); // px
-    row.add(droplistPanel);
-    row.add(labelsButton);
-    row.setCellVerticalAlignment(labelsButton,
+    HorizontalPanel row1 = new HorizontalPanel();
+    row1.setSpacing(5); // px
+    row1.add(droplistPanel);
+    row1.add(labelsButton);
+    row1.setCellVerticalAlignment(labelsButton,
         HasVerticalAlignment.ALIGN_MIDDLE);
 
+    Grid descriptionGrid = new Grid(2, 2);
+    descriptionGrid.setHTML(0, 0, "owner:");
+    descriptionGrid.setHTML(1, 0, "creation date:");
+    descriptionGrid.setHTML(0, 1, "mark.piper@colorado.edu");
+    descriptionGrid.setHTML(1, 1, "2014-05-16T10:06:07");
+    descriptionGrid.getCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_RIGHT);
+    descriptionGrid.getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_RIGHT);    
+    
+    HorizontalPanel row2 = new HorizontalPanel();
+    row2.setSpacing(5); // px
+    row2.setWidth("100%");
+    row2.add(descriptionGrid);
+    row2.setCellHorizontalAlignment(descriptionGrid, HasHorizontalAlignment.ALIGN_CENTER);
+    
     choicePanel = new ChoicePanel();
     choicePanel.getOkButton().setHTML(Constants.FA_OPEN + "Open");
 
     VerticalPanel contents = new VerticalPanel();
     contents.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-    contents.add(row);
+    contents.add(row1);
+    contents.add(row2);
     contents.add(choicePanel);
 
     this.setWidget(contents);
