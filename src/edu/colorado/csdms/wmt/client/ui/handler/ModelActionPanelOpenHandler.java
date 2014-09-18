@@ -31,7 +31,7 @@ import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.ui.widgets.OpenDialogBox;
 
 /**
- * Handles click on the "Open Model..." button in the ModelActionPanel. Pops up
+ * Handles click on the "Open Model..." button in the ModelActionPanel. Displays
  * an instance of {@link OpenDialogBox} to prompt the user for a model to open.
  * Events are sent to {@link OpenModelHandler} (on clicking "OK" button or
  * hitting <code>Enter</code> key) and {@link DialogCancelHandler} (on clicking
@@ -54,9 +54,10 @@ public class ModelActionPanelOpenHandler implements ClickHandler {
   @Override
   public void onClick(ClickEvent event) {
 
-    // Make a new open dialog; populate its droplist with all available models.
+    // Make a new open dialog and populate its droplist with the models owned 
+    // by the user.
     openDialog = new OpenDialogBox(data);
-    openDialog.getLabelsMenu().populateMenu(true);
+    openDialog.populateDroplist();
     
     // Define handlers.
     final OpenModelHandler openHandler = new OpenModelHandler(data, openDialog);
