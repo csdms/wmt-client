@@ -53,9 +53,9 @@ import edu.colorado.csdms.wmt.client.data.LabelQueryJSO;
 import edu.colorado.csdms.wmt.client.data.ModelJSO;
 import edu.colorado.csdms.wmt.client.data.ModelListJSO;
 import edu.colorado.csdms.wmt.client.data.ModelMetadataJSO;
-import edu.colorado.csdms.wmt.client.ui.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.handler.AddNewUserHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.widgets.NewUserDialogBox;
 import edu.colorado.csdms.wmt.client.ui.widgets.RunInfoDialogBox;
 
@@ -1046,11 +1046,6 @@ public class DataTransfer {
         ComponentJSO jso = parse(rtxt);
         data.addComponent(jso); // "class" component
         data.addModelComponent(copy(jso)); // "instance" component, for model
-        data.nComponents++;
-
-        if (data.nComponents == data.componentIdList.size()) {
-          data.showDefaultCursor();
-        }
 
         // Replace the associated placeholder ComponentSelectionMenu item.
         ((ComponentSelectionMenu) data.getPerspective().getModelTree()
@@ -1066,10 +1061,9 @@ public class DataTransfer {
         if (attempt < Constants.RETRY_ATTEMPTS) {
           getComponent(data, componentId);
         } else {
-          data.nComponents++;
           String msg =
-              "The URL '" + url + "' did not give an 'OK' response. "
-                  + "Response code: " + response.getStatusCode();
+              "The URL '" + url + "' did not give an 'OK' response."
+                  + " Response code: " + response.getStatusCode();
           Window.alert(msg);
         }
       }

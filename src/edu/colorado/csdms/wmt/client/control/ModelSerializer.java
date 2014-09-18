@@ -36,9 +36,9 @@ import edu.colorado.csdms.wmt.client.data.ModelComponentConnectionsJSO;
 import edu.colorado.csdms.wmt.client.data.ModelComponentJSO;
 import edu.colorado.csdms.wmt.client.data.ModelComponentParametersJSO;
 import edu.colorado.csdms.wmt.client.data.ModelJSO;
-import edu.colorado.csdms.wmt.client.ui.ComponentCell;
 import edu.colorado.csdms.wmt.client.ui.ModelTree;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentSelectionCommand;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentCell;
 
 /**
  * Serializes the model built in a WMT session.

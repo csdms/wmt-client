@@ -28,9 +28,9 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.TreeItem;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.ComponentCell;
-import edu.colorado.csdms.wmt.client.ui.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.ModelTree;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentCell;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentSelectionMenu;
 
 /**
  * Defines the action for the "Delete" menu item in a {@link ComponentCell};

@@ -21,42 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui;
+package edu.colorado.csdms.wmt.client.ui.widgets;
 
-import java.text.ParseException;
+import com.google.gwt.user.client.ui.HTML;
 
-import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.text.shared.Parser;
+import edu.colorado.csdms.wmt.client.data.ParameterJSO;
 
 /**
- * A localized parser based on {@link NumberFormat#getDecimalFormat}.
+ * A cell for the first column in a ParameterTable, holding the parameter
+ * description with its units.
+ * 
+ * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class DoubleCellParser implements Parser<Double> {
-
-  private static DoubleCellParser INSTANCE;
+public class DescriptionCell extends HTML {
 
   /**
-   * Returns the instance of the no-op renderer.
+   * Makes a DescriptionCell from the information contained in the input
+   * ParameterJSO object.
+   * 
+   * @param parameter a ParameterJSO object
    */
-  public static Parser<Double> instance() {
-    if (INSTANCE == null) {
-      INSTANCE = new DoubleCellParser();
-    }
-    return INSTANCE;
-  }
+  public DescriptionCell(ParameterJSO parameter) {
 
-  protected DoubleCellParser() {
-  }
+    String units = parameter.getValue().getUnits();
+    String description = parameter.getDescription();
 
-  public Double parse(CharSequence object) throws ParseException {
-    if ("".equals(object.toString())) {
-      return null;
+    if (units != null) {
+      description += " (" + units + ")";
     }
 
-    try {
-      return NumberFormat.getDecimalFormat().parse(object.toString());
-    } catch (NumberFormatException e) {
-      throw new ParseException(e.getMessage(), 0);
-    }
+    this.setHTML(description);
   }
 }

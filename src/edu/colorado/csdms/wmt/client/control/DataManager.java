@@ -39,10 +39,10 @@ import edu.colorado.csdms.wmt.client.data.ModelJSO;
 import edu.colorado.csdms.wmt.client.data.ModelListJSO;
 import edu.colorado.csdms.wmt.client.data.ModelMetadataJSO;
 import edu.colorado.csdms.wmt.client.security.Security;
-import edu.colorado.csdms.wmt.client.ui.ComponentCell;
 import edu.colorado.csdms.wmt.client.ui.ModelTree;
 import edu.colorado.csdms.wmt.client.ui.Perspective;
 import edu.colorado.csdms.wmt.client.ui.SignInScreen;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentCell;
 
 /**
  * A class for storing and sharing data, as well as the state of UI elements,
@@ -53,7 +53,6 @@ import edu.colorado.csdms.wmt.client.ui.SignInScreen;
 public class DataManager {
 
   private Boolean developmentMode;
-  private String apiUrl;
 
   // The initial sign-in screen. Either this or the Perspective are always
   // attached to the RootLayoutPanel of the application.
@@ -64,7 +63,6 @@ public class DataManager {
 
   private List<ComponentJSO> components; // "class" components
   private List<ComponentJSO> modelComponents; // "instance" components
-  private String selectedComponent;
   private ComponentCell componentShowingParameters;
   
   private ModelJSO model;
@@ -78,7 +76,6 @@ public class DataManager {
   public Security security;
   public ConfigurationJSO config;
   public List<String> componentIdList;
-  public Integer nComponents = 0;
   public HashMap<String, Integer> retryComponentLoad;
   public ModelListJSO modelList;
   public TreeMap<String, LabelJSO> modelLabels; // maintains sort
@@ -113,22 +110,6 @@ public class DataManager {
    */
   public void isDevelopmentMode(Boolean developmentMode) {
     this.developmentMode = developmentMode;
-  }
-
-  /**
-   * Returns the URL to the WMT API server.
-   */
-  public String getApiUrl() {
-    return apiUrl;
-  }
-
-  /**
-   * Stores the URL to the WMT API as a String.
-   * 
-   * @param apiUrl the URL
-   */
-  public void setApiUrl(String apiUrl) {
-    this.apiUrl = apiUrl;
   }
 
   /**
@@ -368,9 +349,9 @@ public class DataManager {
   }
 
   /**
-   * A convenience method that iterates through the list of available models
-   * stored in modelList to locate the model that matches the input model name.
-   * The id of the matched model is returned.
+   * A convenience method that iterates through the list of available models to
+   * locate the model that matches the input model name. The id of the matched
+   * model is returned.
    * 
    * @param modelName the name of the model to locate
    */
@@ -385,9 +366,9 @@ public class DataManager {
   }
 
   /**
-   * A convenience method that iterates through the list of available models
-   * stored in modelList to locate the model that has the input model id.
-   * The name of the matched model is returned.
+   * A convenience method that iterates through the list of available models to
+   * locate the model that has the input model id. The name of the matched model
+   * is returned.
    * 
    * @param modelId the id of the model to locate
    */
@@ -459,33 +440,23 @@ public class DataManager {
     this.simulationId = simulationId;
   }
 
+  /**
+   * Returns the {@link ComponentCell} that's currently displaying its 
+   * parameters in the Parameters view.
+   */
   public ComponentCell getShowingParameters() {
     return componentShowingParameters;
   }
 
+  /**
+   * Sets the {@link ComponentCell} that's showing its parameters in the 
+   * Parameters view.
+   * 
+   * @param componentShowingParameters
+   */
   public void setShowingParameters(ComponentCell componentShowingParameters) {
     this.componentShowingParameters = componentShowingParameters;
     this.componentShowingParameters.addStyleDependentName("showingParameters");
-  }
-
-  /**
-   * Returns the id of the Component (a String) that is currently selected in
-   * the {@link ModelTree}.
-   */
-  @Deprecated
-  public String getSelectedComponent() {
-    return selectedComponent;
-  }
-
-  /**
-   * Stores the id of the Component that is currently selected in the
-   * {@link ModelTree}.
-   * 
-   * @param selectedComponent the id of the Component to set, a String
-   */
-  @Deprecated
-  public void setSelectedComponent(String selectedComponent) {
-    this.selectedComponent = selectedComponent;
   }
 
   /**
@@ -495,11 +466,8 @@ public class DataManager {
    * be uploaded to a server.
    */
   public void serialize() {
-    
     ModelSerializer serializer = new ModelSerializer(this);
     serializer.serialize();
-    
-    // Stringify the model.
     modelString = DataTransfer.stringify(model);
   }
 
@@ -509,9 +477,7 @@ public class DataManager {
    * to populate the {@link ModelTree}.
    */
   public void deserialize() {
-
     perspective.setModelPanelTitle();
-
     ModelSerializer serializer = new ModelSerializer(this);
     serializer.deserialize();
   }

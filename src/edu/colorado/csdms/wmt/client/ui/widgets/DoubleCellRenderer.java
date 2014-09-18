@@ -21,35 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui;
+package edu.colorado.csdms.wmt.client.ui.widgets;
 
-import com.google.gwt.user.client.ui.HTML;
-
-import edu.colorado.csdms.wmt.client.data.ParameterJSO;
+import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.text.shared.AbstractRenderer;
+import com.google.gwt.text.shared.Renderer;
 
 /**
- * A cell for the first column in a ParameterTable, holding the parameter
- * description with its units.
- * 
- * @author Mark Piper (mark.piper@colorado.edu)
+ * A localized renderer based on {@link NumberFormat#getDecimalFormat}.
  */
-public class DescriptionCell extends HTML {
+public class DoubleCellRenderer extends AbstractRenderer<Double> {
+
+  private static DoubleCellRenderer INSTANCE;
 
   /**
-   * Makes a DescriptionCell from the information contained in the input
-   * ParameterJSO object.
-   * 
-   * @param parameter a ParameterJSO object
+   * Returns the instance.
    */
-  public DescriptionCell(ParameterJSO parameter) {
-
-    String units = parameter.getValue().getUnits();
-    String description = parameter.getDescription();
-
-    if (units != null) {
-      description += " (" + units + ")";
+  public static Renderer<Double> instance() {
+    if (INSTANCE == null) {
+      INSTANCE = new DoubleCellRenderer();
     }
+    return INSTANCE;
+  }
 
-    this.setHTML(description);
+  protected DoubleCellRenderer() {
+  }
+
+  public String render(Double object) {
+    if (object == null) {
+      return "";
+    }
+    return NumberFormat.getFormat("#,##0.0#####").format(object);
   }
 }
