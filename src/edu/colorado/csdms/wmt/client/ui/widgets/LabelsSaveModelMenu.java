@@ -85,21 +85,21 @@ public class LabelsSaveModelMenu extends PopupPanel {
       labelBox.setWordWrap(false);
       labelBox.setStyleName("wmt-PopupPanelCheckBoxItem");
       labelBox.setValue(entry.getValue().isSelected());
-      if (data.security.isLoggedIn()
-          && !data.security.getWmtUsername()
-              .equals(entry.getValue().getOwner())) {
+      if (!data.security.getWmtUsername().equals(entry.getValue().getOwner())) {
         labelBox.addStyleDependentName("public");
       }
       labelBox.addClickHandler(new LabelSelectionHandler(data, entry));
 
-      // Force the "public" and username labels to the top, in either order.
-      if (entry.getKey().equals("public")
-          || entry.getKey().equals(data.security.getWmtUsername())) {
+      // Add each labelBox to the labelPanel. Force the "public" label to the 
+      // top; suppress the username label.
+      if (entry.getKey().equals("public")) {
         labelBox.addStyleDependentName("header");
         labelPanel.insert(labelBox, 0);
       } else {
-        labelPanel.add(labelBox);
-      }      
+        if (!entry.getKey().equals(data.security.getWmtUsername())) {
+          labelPanel.add(labelBox);
+        }
+      }
     }
   }
 
