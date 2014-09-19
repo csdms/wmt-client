@@ -359,7 +359,7 @@ public class DataManager {
     Integer modelId = Constants.DEFAULT_MODEL_ID;
     for (int i = 0; i < modelList.getModels().length(); i++) {
       if (modelList.getModels().get(i).getName().equals(modelName)) {
-        modelId = modelList.getModels().get(i).getModelId();
+        modelId = modelList.getModels().get(i).getId();
       }
     }
     return modelId;
@@ -375,7 +375,7 @@ public class DataManager {
   public String findModel(Integer modelId) {
     String modelName = Constants.DEFAULT_MODEL_NAME;
     for (int i = 0; i < modelList.getModels().length(); i++) {
-      if (modelList.getModels().get(i).getModelId() == modelId) {
+      if (modelList.getModels().get(i).getId() == modelId) {
         modelName = modelList.getModels().get(i).getName();
       }
     }
