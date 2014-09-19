@@ -107,7 +107,7 @@ public class ModelListJSOTest extends GWTTestCase {
   // Test getting the id of the model.
   @Test
   public void testGetId() {
-    assertEquals(id, jso.getModelId());
+    assertEquals(id, jso.getId());
   }
   
   // Test getting the owner of the model.

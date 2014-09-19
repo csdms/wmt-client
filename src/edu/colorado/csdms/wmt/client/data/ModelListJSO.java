@@ -54,7 +54,7 @@ public class ModelListJSO extends JavaScriptObject {
    * identify it in the database. The user can't modify this id -- it's set by
    * the API. 
    */
-  public final native int getModelId() /*-{
+  public final native int getId() /*-{
 		return this.id;
   }-*/;    
 

@@ -23,6 +23,8 @@
  */
 package edu.colorado.csdms.wmt.client.ui.widgets;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -30,6 +32,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
@@ -49,6 +52,7 @@ public class OpenDialogBox extends DialogBox {
   private DataManager data;
   private DroplistPanel droplistPanel;
   private ChoicePanel choicePanel;
+  private MetadataPanel metadataPanel;
   private LabelsOpenModelMenu labelsMenu;
   
   /**
@@ -66,6 +70,15 @@ public class OpenDialogBox extends DialogBox {
     data.getPerspective().setOpenDialogBox(this);
     
     droplistPanel = new DroplistPanel();
+    droplistPanel.getDroplist().addChangeHandler(new ChangeHandler() {
+      @Override
+      public void onChange(ChangeEvent event) {
+        ListBox droplist = (ListBox) event.getSource();
+        String modelName = droplist.getItemText(droplist.getSelectedIndex());
+        metadataPanel.setOwner(OpenDialogBox.this.data.findModel(modelName).getOwner());
+        metadataPanel.setDate(OpenDialogBox.this.data.findModel(modelName).getDate());
+      }
+    });
 
     final Button labelsButton = new Button(Constants.FA_TAGS + "Labels");
     labelsButton.setStyleName("wmt-Button");
@@ -91,12 +104,15 @@ public class OpenDialogBox extends DialogBox {
     row.setCellVerticalAlignment(labelsButton,
         HasVerticalAlignment.ALIGN_MIDDLE);
 
+    metadataPanel = new MetadataPanel();
+    
     choicePanel = new ChoicePanel();
     choicePanel.getOkButton().setHTML(Constants.FA_OPEN + "Open");
 
     VerticalPanel contents = new VerticalPanel();
     contents.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
     contents.add(row);
+    contents.add(metadataPanel);
     contents.add(choicePanel);
 
     this.setWidget(contents);
@@ -132,5 +148,13 @@ public class OpenDialogBox extends DialogBox {
 
   public void setLabelsMenu(LabelsOpenModelMenu labelsMenu) {
     this.labelsMenu = labelsMenu;
+  }
+
+  public MetadataPanel getMetadataPanel() {
+    return metadataPanel;
+  }
+
+  public void setMetadataPanel(MetadataPanel metadataPanel) {
+    this.metadataPanel = metadataPanel;
   }
 }

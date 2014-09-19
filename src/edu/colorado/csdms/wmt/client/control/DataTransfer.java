@@ -41,6 +41,7 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ClosingEvent;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
@@ -1335,16 +1336,24 @@ public class DataTransfer {
      */
     private void queryActions(String rtxt) {
       LabelQueryJSO jso = parse(rtxt);
+      ListBox droplist =
+          data.getPerspective().getOpenDialogBox().getDroplistPanel()
+              .getDroplist();
       
       // Populate the droplist with the restricted list of models.
-      data.getPerspective().getOpenDialogBox().getDroplistPanel().getDroplist()
-          .clear();
+      droplist.clear();
       for (int i = 0; i < jso.getIds().length(); i++) {
         Integer modelId = jso.getIds().get(i);
-        String modelName = data.findModel(modelId);
-        data.getPerspective().getOpenDialogBox().getDroplistPanel()
-            .getDroplist().addItem(modelName);
+        String modelName = data.findModel(modelId).getName();
+        droplist.addItem(modelName);
       }
+
+      // Show metadata for the first model in the droplist.
+      String selectedModelName = droplist.getItemText(droplist.getSelectedIndex());
+      data.getPerspective().getOpenDialogBox().getMetadataPanel()
+          .setOwner(data.findModel(selectedModelName).getOwner());
+      data.getPerspective().getOpenDialogBox().getMetadataPanel()
+          .setDate(data.findModel(selectedModelName).getDate());
     }
 
     /*
