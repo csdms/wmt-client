@@ -350,36 +350,36 @@ public class DataManager {
 
   /**
    * A convenience method that iterates through the list of available models to
-   * locate the model that matches the input model name. The id of the matched
-   * model is returned.
+   * locate the model that matches the input model name. The ModelListJSO for
+   * the matched model is returned.
    * 
    * @param modelName the name of the model to locate
    */
-  public Integer findModel(String modelName) {
-    Integer modelId = Constants.DEFAULT_MODEL_ID;
+  public ModelListJSO findModel(String modelName) {
+    ModelListJSO jso = ModelListJSO.createObject().cast();
     for (int i = 0; i < modelList.getModels().length(); i++) {
       if (modelList.getModels().get(i).getName().equals(modelName)) {
-        modelId = modelList.getModels().get(i).getId();
+        jso = modelList.getModels().get(i);
       }
     }
-    return modelId;
+    return jso;
   }
 
   /**
    * A convenience method that iterates through the list of available models to
-   * locate the model that has the input model id. The name of the matched model
-   * is returned.
+   * locate the model that has the input model id. The ModelListJSO for the
+   * matched model is returned.
    * 
    * @param modelId the id of the model to locate
    */
-  public String findModel(Integer modelId) {
-    String modelName = Constants.DEFAULT_MODEL_NAME;
+  public ModelListJSO findModel(Integer modelId) {
+    ModelListJSO jso = ModelListJSO.createObject().cast();
     for (int i = 0; i < modelList.getModels().length(); i++) {
       if (modelList.getModels().get(i).getId() == modelId) {
-        modelName = modelList.getModels().get(i).getName();
+        jso = modelList.getModels().get(i);
       }
     }
-    return modelName;
+    return jso;
   }
 
   /**
