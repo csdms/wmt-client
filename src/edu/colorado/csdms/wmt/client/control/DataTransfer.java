@@ -1346,7 +1346,14 @@ public class DataTransfer {
         Integer modelId = jso.getIds().get(i);
         String modelName = data.findModel(modelId).getName();
         droplist.addItem(modelName);
-      }     
+      }
+
+      // Show metadata for the first model in the droplist.
+      String selectedModelName = droplist.getItemText(droplist.getSelectedIndex());
+      data.getPerspective().getOpenDialogBox().getMetadataPanel()
+          .setOwner(data.findModel(selectedModelName).getOwner());
+      data.getPerspective().getOpenDialogBox().getMetadataPanel()
+          .setDate(data.findModel(selectedModelName).getDate());
     }
 
     /*
