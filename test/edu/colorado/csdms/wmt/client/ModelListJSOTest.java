@@ -42,7 +42,7 @@ import edu.colorado.csdms.wmt.client.data.ModelListJSO;
  */
 public class ModelListJSOTest extends GWTTestCase {
 
-  private ModelListJSO jso;
+  private ModelListJSO jso, jso1;
   private String name;
   private int id;
   private String owner;
@@ -76,6 +76,20 @@ public class ModelListJSOTest extends GWTTestCase {
 		};
   }-*/;
 
+  /**
+   * A JSNI method that defines a fixture for the tests. Returns a
+   * {@link ModelListJSO} object for testing.
+   * 
+   * @param name
+   * @param id
+   */
+  private native ModelListJSO testModelListJSO(String name, int id) /*-{
+		return {
+			"name" : name,
+			"id" : id
+		};
+  }-*/;
+
   @SuppressWarnings("unchecked")
   @Before
   @Override
@@ -84,7 +98,10 @@ public class ModelListJSOTest extends GWTTestCase {
     id = 5;
     owner = "mark.piper@colorado.edu";
     date = "2014-05-16T17:24:26";
+    
     jso = testModelListJSO(name, id, owner, date);
+
+    jso1 = testModelListJSO(name, id);
     
     jsoList = (JsArray<ModelListJSO>) ModelListJSO.createObject();
     jsoList.setLength(3);
@@ -115,13 +132,25 @@ public class ModelListJSOTest extends GWTTestCase {
   public void testGetOwner() {
     assertEquals(owner, jso.getOwner());
   }
-  
+
+  // Test getting the owner when it's undefined.
+  @Test
+  public void testGetUndefOwner() {
+    assertNull(jso1.getOwner());
+  }
+
   // Test getting the creation date of the model.
   @Test
   public void testGetDate() {
     assertEquals(date, jso.getDate());
   }
-  
+
+  // Test getting the date when it's undefined.
+  @Test
+  public void testGetUndefDate() {
+    assertNull(jso1.getDate());
+  }
+
   // Test the length of the array.
   @Test
   public void testLength() {
