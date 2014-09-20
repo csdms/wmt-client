@@ -197,13 +197,24 @@ public class Perspective extends DockLayoutPanel {
 
   /**
    * A convenience method for setting the tab title of the Model panel. If the
-   * model isn't saved, prepend an asterisk to its name.
+   * model isn't saved, prepend an asterisk to its name. If the model isn't 
+   * owned by the current user, append "read-only" to its name.
    */
   public void setModelPanelTitle() {
     String tabTitle = data.tabPrefix("model") + "Model";
-    if (data.getModel().getName() != Constants.DEFAULT_MODEL_NAME) {
+    String modelName = data.getModel().getName();
+    if (modelName != Constants.DEFAULT_MODEL_NAME) {
       String marker = data.modelIsSaved() ? "" : "*";
-      tabTitle += " (" + marker + data.getModel().getName() + ")";
+      tabTitle += " (" + marker + modelName + ")";
+
+      // This is a workaround for the difficult-to-modify TabLayoutPanel CSS.
+      String modelOwner = data.findModel(modelName).getOwner();
+      if ((modelOwner != null)
+          && (modelOwner != data.security.getWmtUsername())) {
+        tabTitle += 
+            "<span style=\"margin-left:5px; color:rgb(203,73,54); "
+                + "font-size:13px;\">read-only</span>"; // Font Awesome-ify?
+      }
     }
     viewWest.setTabHTML(0, tabTitle);
   }
