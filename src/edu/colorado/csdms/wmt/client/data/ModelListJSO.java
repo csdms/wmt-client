@@ -59,17 +59,19 @@ public class ModelListJSO extends JavaScriptObject {
   }-*/;    
 
   /**
-   * Gets the owner of the model, a String. This is a JSNI method.
+   * Gets the owner of the model, a String. If an owner hasn't been set, null 
+   * is returned. This is a JSNI method.
    */
   public final native String getOwner() /*-{
-		return this.owner;
+		return (typeof this.owner == 'undefined') ? null : this.owner;
   }-*/;
 
   /**
-   * Gets the ISO 8601 date of the model, a String. This is a JSNI method.
+   * Gets the ISO 8601 date of the model, a String. If a date hasn't been set, 
+   * null is returned. This is a JSNI method.
    */
   public final native String getDate() /*-{
-		return this.date;
+    return (typeof this.date == 'undefined') ? null : this.date;
   }-*/;
 
   /**
