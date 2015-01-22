@@ -111,6 +111,9 @@ public class Constants {
           + " it is not owned by the current user.";
 
   // Questions
+  public static String QUESTION_WMT = "What is WMT?";
+  public static String QUESTION_NEW_USER = "New User?";  
+  public static String QUESTION_FORGOT_PASSWORD = "Forgot Password?";    
   public static final String QUESTION_START = "Are you sure you want to ";
   public static String QUESTION_SIGN_OUT = QUESTION_START
       + "sign out from WMT?";

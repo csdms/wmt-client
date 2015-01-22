@@ -9,32 +9,33 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.colorado.csdms.wmt.client.Constants;
 
 /**
- * Makes a {@link VerticalPanel} displaying a question "Forgot Password?". When
- * clicked, it expands to show instructions for retrieving a lost WMT password.
+ * Makes a {@link VerticalPanel} holding "question" and "answer" panels, with
+ * the "answer" panel initially hidden. Clicking the "question" panel toggles
+ * the visibility of the answer.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class ForgotPasswordPanel extends VerticalPanel implements ClickHandler {
+public class SignInInfoPanel extends VerticalPanel implements ClickHandler {
 
   private HTML question;
   private HTML answer;
   private HorizontalPanel answerPanel;
   
   /**
-   * Makes a new {@link ForgotPasswordPanel}.
+   * Makes a new {@link SignInInfoPanel}.
    */
-  public ForgotPasswordPanel() {
-    
+  public SignInInfoPanel(String questionText, String answerText) {
+
     this.setWidth("100%");
     this.setHorizontalAlignment(ALIGN_CENTER);
     this.addDomHandler(this, ClickEvent.getType());
     
-    question = new HTML(Constants.FA_RARROW + "Forgot Password?");
+    question = new HTML(Constants.FA_RARROW + questionText);
     question.setStyleName("wmt-SignInScreenLinks");
     HorizontalPanel questionPanel = new HorizontalPanel();
     questionPanel.add(question);
     
-    answer = new HTML(Constants.FORGOT_PASSWORD_INFO);
+    answer = new HTML(answerText);
     answer.setStyleName("wmt-SignInScreenLinksInfo");
     answerPanel = new HorizontalPanel();
     answerPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
@@ -54,7 +55,7 @@ public class ForgotPasswordPanel extends VerticalPanel implements ClickHandler {
   }
 
   /*
-   * Handler to toggle the visibility of the answer to "Forgot Password?" text.
+   * Handler to toggle the visibility of the answer text.
    */
   @Override
   public void onClick(ClickEvent event) {

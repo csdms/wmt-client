@@ -19,9 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.widgets.ForgotPasswordPanel;
-import edu.colorado.csdms.wmt.client.ui.widgets.NewUserPanel;
-import edu.colorado.csdms.wmt.client.ui.widgets.ShowVideoPanel;
+import edu.colorado.csdms.wmt.client.ui.widgets.SignInInfoPanel;
 
 /**
  * The {@link SignInScreen} is the first thing a user sees on loading WMT. It
@@ -39,9 +37,9 @@ public class SignInScreen extends HorizontalPanel {
   private PasswordTextBox passwordBox;
   private Button signInButton;
   private HTML errorMessage;
-  private ShowVideoPanel showVideoPanel;
-  private NewUserPanel newUserPanel;
-  private ForgotPasswordPanel forgotPasswordPanel;
+  private SignInInfoPanel showVideoPanel;  
+  private SignInInfoPanel newUserPanel;
+  private SignInInfoPanel forgotPasswordPanel;
 
   /**
    * Makes a new {@link SignInScreen} for a user to sign in to WMT.
@@ -102,15 +100,20 @@ public class SignInScreen extends HorizontalPanel {
     errorMessage = new HTML();
     errorMessage.setStyleName("wmt-SignInScreenError");
 
-    // What is WMT? Show the YouTube video.
-    showVideoPanel = new ShowVideoPanel();
+    // What is WMT?
+    showVideoPanel =
+        new SignInInfoPanel(Constants.QUESTION_WMT, Constants.SEE_VIDEO_INFO);
 
     // Is this a new user?
-    newUserPanel = new NewUserPanel();
+    newUserPanel =
+        new SignInInfoPanel(Constants.QUESTION_NEW_USER,
+            Constants.NEW_USER_INFO);
 
     // Has the user forgotten their password?
-    forgotPasswordPanel = new ForgotPasswordPanel();
-
+    forgotPasswordPanel =
+        new SignInInfoPanel(Constants.QUESTION_FORGOT_PASSWORD,
+            Constants.FORGOT_PASSWORD_INFO);
+    
     // Add the question links above to a panel.
     VerticalPanel linksPanel = new VerticalPanel();
     linksPanel.setHorizontalAlignment(ALIGN_CENTER);
