@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.ui.widgets.NewUserPanel;
 
 /**
  * The {@link SignInScreen} is the first thing a user sees on loading WMT. It
@@ -36,9 +37,9 @@ public class SignInScreen extends HorizontalPanel {
   private PasswordTextBox passwordBox;
   private Button signInButton;
   private HTML errorMessage;
-  private HorizontalPanel newUserInfoPanel;
   private HorizontalPanel forgotPasswordInfoPanel;
   private HorizontalPanel seeVideoInfoPanel;
+  private NewUserPanel newUserPanel;
 
   /**
    * Makes a new {@link SignInScreen} for a user to sign in to WMT.
@@ -100,14 +101,7 @@ public class SignInScreen extends HorizontalPanel {
     errorMessage.setStyleName("wmt-SignInScreenError");
 
     // Is this a new user?
-    HTML newUser = new HTML(Constants.FA_RARROW + "New User?");
-    newUser.setStyleName("wmt-SignInScreenLinks");
-    HTML newUserInfo = new HTML(Constants.NEW_USER_INFO);
-    newUserInfo.setStyleName("wmt-SignInScreenLinksInfo");
-    newUserInfoPanel = new HorizontalPanel();
-    newUserInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
-    newUserInfoPanel.add(newUserInfo);
-    newUserInfoPanel.setVisible(false);
+    newUserPanel = new NewUserPanel();
 
     // Has the user forgotten their password?
     HTML forgotPassword = new HTML(Constants.FA_RARROW + "Forgot Password?");
@@ -135,8 +129,7 @@ public class SignInScreen extends HorizontalPanel {
     linksPanel.setStyleName("wmt-SignInScreenLinksPanel");
     linksPanel.add(seeVideo);
     linksPanel.add(seeVideoInfoPanel);
-    linksPanel.add(newUser);
-    linksPanel.add(newUserInfoPanel);
+    linksPanel.add(newUserPanel);
     linksPanel.add(forgotPassword);
     linksPanel.add(forgotPasswordInfoPanel);
 
@@ -147,16 +140,6 @@ public class SignInScreen extends HorizontalPanel {
     contents.add(signInButton);
     contents.add(errorMessage);
     contents.add(linksPanel);
-
-    /*
-     * Handler to display answer to "New User?" link.
-     */
-    newUser.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent event) {
-        newUserInfoPanel.setVisible(!newUserInfoPanel.isVisible());
-      }
-    });
 
     /*
      * Handler to display answer to "Forgot Password?" link.
@@ -206,10 +189,10 @@ public class SignInScreen extends HorizontalPanel {
   }
 
   /**
-   * Closes text panels under the "Sign In" button.
+   * Closes "answer" text panels under the "Sign In" button.
    */
   public void closeInfoPanels() {
-    newUserInfoPanel.setVisible(false);
+    newUserPanel.getAnswerPanel().setVisible(false);
     forgotPasswordInfoPanel.setVisible(false);
     seeVideoInfoPanel.setVisible(false);
   }
