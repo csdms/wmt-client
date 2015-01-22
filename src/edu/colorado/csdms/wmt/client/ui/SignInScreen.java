@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.ui.widgets.SignInInfoPanel;
 
 /**
  * The {@link SignInScreen} is the first thing a user sees on loading WMT. It
@@ -36,9 +37,9 @@ public class SignInScreen extends HorizontalPanel {
   private PasswordTextBox passwordBox;
   private Button signInButton;
   private HTML errorMessage;
-  private HorizontalPanel newUserInfoPanel;
-  private HorizontalPanel forgotPasswordInfoPanel;
-  private HorizontalPanel seeVideoInfoPanel;
+  private SignInInfoPanel showVideoPanel;  
+  private SignInInfoPanel newUserPanel;
+  private SignInInfoPanel forgotPasswordPanel;
 
   /**
    * Makes a new {@link SignInScreen} for a user to sign in to WMT.
@@ -99,46 +100,27 @@ public class SignInScreen extends HorizontalPanel {
     errorMessage = new HTML();
     errorMessage.setStyleName("wmt-SignInScreenError");
 
+    // What is WMT?
+    showVideoPanel =
+        new SignInInfoPanel(Constants.QUESTION_WMT, Constants.SEE_VIDEO_INFO);
+
     // Is this a new user?
-    HTML newUser = new HTML(Constants.FA_RARROW + "New User?");
-    newUser.setStyleName("wmt-SignInScreenLinks");
-    HTML newUserInfo = new HTML(Constants.NEW_USER_INFO);
-    newUserInfo.setStyleName("wmt-SignInScreenLinksInfo");
-    newUserInfoPanel = new HorizontalPanel();
-    newUserInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
-    newUserInfoPanel.add(newUserInfo);
-    newUserInfoPanel.setVisible(false);
+    newUserPanel =
+        new SignInInfoPanel(Constants.QUESTION_NEW_USER,
+            Constants.NEW_USER_INFO);
 
     // Has the user forgotten their password?
-    HTML forgotPassword = new HTML(Constants.FA_RARROW + "Forgot Password?");
-    forgotPassword.setStyleName("wmt-SignInScreenLinks");
-    HTML forgotPasswordInfo = new HTML(Constants.FORGOT_PASSWORD_INFO);
-    forgotPasswordInfo.setStyleName("wmt-SignInScreenLinksInfo");
-    forgotPasswordInfoPanel = new HorizontalPanel();
-    forgotPasswordInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
-    forgotPasswordInfoPanel.add(forgotPasswordInfo);
-    forgotPasswordInfoPanel.setVisible(false);
-
-    // WMT video
-    HTML seeVideo = new HTML(Constants.FA_RARROW + "What is WMT?");
-    seeVideo.setStyleName("wmt-SignInScreenLinks");
-    HTML seeVideoInfo = new HTML(Constants.SEE_VIDEO_INFO);
-    seeVideoInfo.setStyleName("wmt-SignInScreenLinksInfo");
-    seeVideoInfoPanel = new HorizontalPanel();
-    seeVideoInfoPanel.setStyleName("wmt-SignInScreenLinksInfoPanel");
-    seeVideoInfoPanel.add(seeVideoInfo);
-    seeVideoInfoPanel.setVisible(false);
-
+    forgotPasswordPanel =
+        new SignInInfoPanel(Constants.QUESTION_FORGOT_PASSWORD,
+            Constants.FORGOT_PASSWORD_INFO);
+    
     // Add the question links above to a panel.
     VerticalPanel linksPanel = new VerticalPanel();
     linksPanel.setHorizontalAlignment(ALIGN_CENTER);
     linksPanel.setStyleName("wmt-SignInScreenLinksPanel");
-    linksPanel.add(seeVideo);
-    linksPanel.add(seeVideoInfoPanel);
-    linksPanel.add(newUser);
-    linksPanel.add(newUserInfoPanel);
-    linksPanel.add(forgotPassword);
-    linksPanel.add(forgotPasswordInfoPanel);
+    linksPanel.add(showVideoPanel);
+    linksPanel.add(newUserPanel);
+    linksPanel.add(forgotPasswordPanel);
 
     // Load the contents of the SignInScreen.
     contents.add(title);
@@ -147,38 +129,6 @@ public class SignInScreen extends HorizontalPanel {
     contents.add(signInButton);
     contents.add(errorMessage);
     contents.add(linksPanel);
-
-    /*
-     * Handler to display answer to "New User?" link.
-     */
-    newUser.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent event) {
-        newUserInfoPanel.setVisible(!newUserInfoPanel.isVisible());
-      }
-    });
-
-    /*
-     * Handler to display answer to "Forgot Password?" link.
-     */
-    forgotPassword.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent event) {
-        forgotPasswordInfoPanel
-            .setVisible(!forgotPasswordInfoPanel.isVisible());
-      }
-    });
-
-    /*
-     * Handler to display answer to "What is WMT?" link.
-     */
-    seeVideo.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent event) {
-        seeVideoInfoPanel
-            .setVisible(!seeVideoInfoPanel.isVisible());
-      }
-    });
     
     /*
      * Perform sign-in action if user hits <Enter> key in password box.
@@ -206,12 +156,12 @@ public class SignInScreen extends HorizontalPanel {
   }
 
   /**
-   * Closes text panels under the "Sign In" button.
+   * Closes "answer" text panels under the "Sign In" button.
    */
   public void closeInfoPanels() {
-    newUserInfoPanel.setVisible(false);
-    forgotPasswordInfoPanel.setVisible(false);
-    seeVideoInfoPanel.setVisible(false);
+    newUserPanel.getAnswerPanel().setVisible(false);
+    forgotPasswordPanel.getAnswerPanel().setVisible(false);
+    showVideoPanel.getAnswerPanel().setVisible(false);    
   }
 
   public SuggestBox getEmailBox() {
