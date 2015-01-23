@@ -173,6 +173,7 @@ public class ValueCell extends HorizontalPanel {
     this.add(uploadButton);
 
     this.setCellVerticalAlignment(fileDroplist, ALIGN_MIDDLE);
+    this.setCellVerticalAlignment(uploadButton, ALIGN_MIDDLE);
     uploadButton.getElement().getStyle().setMarginLeft(3, Unit.PX);
   }
 
