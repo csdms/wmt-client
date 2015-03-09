@@ -28,6 +28,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.Window;
 
+import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.ui.widgets.RunDialogBox;
 
@@ -67,10 +68,9 @@ public class SetupRunModelHandler implements ClickHandler {
     
     runDialog = new RunDialogBox();
 
-    // TODO This should be configured. Can't desensitize ListBox elements.
-    String hosts[] = {"beach.colorado.edu"};
-    for (int i = 0; i < hosts.length; i++) {
-      runDialog.getHostPanel().getDroplist().addItem(hosts[i]);
+    // Display the list of available HPCC hosts.
+    for (int i = 0; i < Constants.HOSTS.length; i++) {
+      runDialog.getHostPanel().getDroplist().addItem(Constants.HOSTS[i]);
     }
 
     // Define handlers.

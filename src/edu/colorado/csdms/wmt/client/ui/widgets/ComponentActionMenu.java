@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui;
+package edu.colorado.csdms.wmt.client.ui.widgets;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -32,7 +32,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.handler.ComponentDeleteCommand;
+import edu.colorado.csdms.wmt.client.ui.handler.ComponentCloseCommand;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentGetInformationCommand;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentShowParametersCommand;
 
@@ -82,18 +82,18 @@ public class ComponentActionMenu extends PopupPanel {
     separator.setStyleName("wmt-PopupPanelSeparator");
     menu.add(separator);
 
-    HTML deleteComponent = new HTML(Constants.FA_CLOBBER + "Delete");
-    deleteComponent.addClickHandler(new ComponentActionHandler("delete"));
-    deleteComponent.setStyleName("wmt-PopupPanelItem");
-    deleteComponent.setTitle(Constants.COMPONENT_DELETE);
-    menu.add(deleteComponent);
+    HTML closeComponent = new HTML(Constants.FA_CLOBBER + "Close");
+    closeComponent.addClickHandler(new ComponentActionHandler("close"));
+    closeComponent.setStyleName("wmt-PopupPanelItem");
+    closeComponent.setTitle(Constants.COMPONENT_CLOSE);
+    menu.add(closeComponent);
   }
   
   /**
    * Handles a click on a menu item in the {@link ComponentActionMenu}.
    * <p>
    * <b>Note:</b> This class wraps {@link ComponentShowParametersCommand},
-   * {@link ComponentGetInformationCommand} and {@link ComponentDeleteCommand}.
+   * {@link ComponentGetInformationCommand} and {@link ComponentCloseCommand}.
    * It might be helpful to port the code from these classes to this handler.
    */
   public class ComponentActionHandler implements ClickHandler {
@@ -118,8 +118,8 @@ public class ComponentActionMenu extends PopupPanel {
         cmd = new ComponentShowParametersCommand(data, cell);
       } else if (type.equalsIgnoreCase("info")) {
         cmd = new ComponentGetInformationCommand(data, cell);
-      } else if (type.equalsIgnoreCase("delete")) {
-        cmd = new ComponentDeleteCommand(data, cell);
+      } else if (type.equalsIgnoreCase("close")) {
+        cmd = new ComponentCloseCommand(data, cell);
       }
       cmd.execute();
       data.showDefaultCursor();

@@ -47,7 +47,9 @@ body, table td, select, button {
   font-size: fontSmall;
 }
 
-/* The sign in screen is shown on startup. */
+/* 
+   The sign in screen is shown on startup. 
+*/
 .wmt-SignInScreen {
   width: 100%;
   height: 100%;
@@ -107,7 +109,9 @@ body, table td, select, button {
 
 
 
-/* The primary structuring element of the WMT client. */
+/* 
+   The DockLayoutPanel is the primary structuring element of the WMT client. 
+*/
 .wmt-DockLayoutPanel {
   padding: 3px;
 }
@@ -115,7 +119,9 @@ body, table td, select, button {
   /* border: 1px dashed burlywood; */
 }
 
-/* The navbar runs along the top of the client interface. Includes login. */
+/* 
+   The navbar runs along the top of the client interface.
+*/
 .wmt-NavBar {
   width: 100%;
   background-color: colorAbisso;
@@ -126,32 +132,30 @@ body, table td, select, button {
   padding: 15px;
   font-size: fontLarge;
   line-height: 20px;
-  cursor: pointer;
+  cursor: default;
 }
 .wmt-UserPanel {
   float: right;
   margin: 8px 10px 8px 0px;
 }
-.wmt-LoginBox {
-  color: colorAcquaProfonda;
-  font-size: fontMedium;
-  line-height: 1.25;
-  padding: 6px 12px;
-  margin-right: 5px;
-}
-.wmt-SignInButton {
+.wmt-UserPanelButton {
   display: inline-block;
   color: white;
   background-color: colorAcqua;
   font-size: fontMedium;
   line-height: 1.25;
   padding: 6px 12px;
-  cursor: pointer;
+  cursor: default;
   margin: 2px;
   border: 2px solid colorAcqua;
 }
+.wmt-UserPanelButton-signOut {
+  cursor: pointer;
+}
 
-/* The splitter base divides the Model and Parameters tabs. */
+/* 
+   The splitter base divides the Model and Parameters tabs.
+*/
 .wmt-SplitLayoutPanel {
 }
 .gwt-SplitLayoutPanel .gwt-SplitLayoutPanel-HDragger {
@@ -159,7 +163,9 @@ body, table td, select, button {
   border-left: 1px solid colorAbisso;
 }
 
-/* Rules for the Model and Parameters tabs. */
+/*
+   Rules for the Model and Parameters tabs.
+*/
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs {
   background: white !important;
   font-size: fontLarge;
@@ -178,19 +184,24 @@ body, table td, select, button {
   color: colorAbisso !important;
 }
 
-/* A consistent style for all buttons. */
+/*
+   A consistent style for all buttons.
+*/
 .wmt-Button, .wmt-ActionPanelButton {
   color: colorAbisso;
   background-color: colorTerraTerra;
   padding: 5px 7px;
   border: 1px solid colorAcquaProfonda;
   border-bottom: 1px solid colorAbisso;
+  cursor: pointer;
 }
 .wmt-Button:hover {
   background-color: colorTerra;
 }
 
-/* ActionPanels are button groups on top of the Model & Parameters tabs. */
+/*
+   ActionPanels are button groups on top of the Model & Parameters tabs.
+*/
 .wmt-ActionPanel {
   margin: 5px 0px 10px 2px;
 }
@@ -202,12 +213,12 @@ body, table td, select, button {
   background-color: colorTerra;
 }
 
-/* Rules for the ModelTree. */
+/*
+   Rules for the ModelTree & TreeItems within.
+*/
 .wmt-ModelTree {
   margin-top: 14px;
 }
-
-/* The offset for TreeItems in the ModelTree. */
 .wmt-TreeItem {
    margin-left: 90px !important;
 }
@@ -220,6 +231,7 @@ body, table td, select, button {
   background-color: colorTerraTerra;
   border: 2px solid colorAcquaProfonda;
   height: 60px;
+  cursor: pointer;
 }
 
 /* A ComponentCell that displays a component. */
@@ -234,7 +246,7 @@ body, table td, select, button {
 .wmt-ComponentCell-showingParameters:after {
   position: absolute;
   right: -20px;
-  top: 0px;
+  top: 2px;
   font-family: "FontAwesome";
   /* padding: 3px; */
   content: "\f0ad"; /* fa-wrench */
@@ -266,7 +278,6 @@ body, table td, select, button {
 .wmt-ComponentCell-MenuCell {
   padding: 2px;
   margin-right: 3px;
-  cursor: default; /* for Firefox */
 }
 
 /* Rules for WMT widgets derived from a GWT PopupPanel. */
@@ -353,6 +364,11 @@ body, table td, select, button {
   padding: 4px 2px;
 }
 
+/* Used by text/labels displayed in dialogs. */
+.wmt-Label {
+  cursor: default;
+}
+
 /* Used for all input widgets. ValueBoxen display numeric values. */
 .wmt-TextBoxen, .wmt-ValueBoxen {
   color: colorAbisso;
@@ -380,6 +396,7 @@ body, table td, select, button {
   width: 210px; /* calculated by comparison with ValueBoxen */
   height: 32px;
   background-color: colorTerraTerra;
+  cursor: pointer;
 }
 .wmt-DroplistBox-upload {
   width: 175px; /* calculated by comparison with DroplistBox */
@@ -390,9 +407,11 @@ body, table td, select, button {
   color: colorAbisso;
   background: white;
   border: 2px solid colorAcquaProfonda;
+  box-shadow: 2px 2px 1px lightgray;
 }
 .wmt-DialogBox .dialogTop {
   background: colorAbisso;
+  cursor: default;
 }
 .wmt-DialogBox .Caption {
   font-size: fontMedium;

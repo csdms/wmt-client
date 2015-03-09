@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui;
+package edu.colorado.csdms.wmt.client.ui.widgets;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,7 +40,6 @@ import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
-import edu.colorado.csdms.wmt.client.ui.widgets.LabelDialogBox;
 
 /**
  * Encapsulates an alphabetized, scrollable list of labels used to tag and
@@ -108,21 +107,32 @@ public class LabelsMenu extends PopupPanel {
       labelBox.setWordWrap(false);
       labelBox.setStyleName("wmt-PopupPanelCheckBoxItem");
       labelBox.setValue(entry.getValue().isSelected());
-      if (data.security.isLoggedIn()
-          && !data.security.getWmtUsername()
-              .equals(entry.getValue().getOwner())) {
+      if (!data.security.getWmtUsername().equals(entry.getValue().getOwner())) {
         labelBox.addStyleDependentName("public");
       }
       labelBox.addClickHandler(new LabelSelectionHandler(data, entry));
 
-      // Force the "public" and username labels to the top, in either order.
-      if (entry.getKey().equals("public")
-          || entry.getKey().equals(data.security.getWmtUsername())) {
+      // Add each labelBox to the labelPanel. Force the "public" label to the 
+      // top; suppress the username label.
+      if (entry.getKey().equals("public")) {
         labelBox.addStyleDependentName("header");
         labelPanel.insert(labelBox, 0);
       } else {
-        labelPanel.add(labelBox);
+        if (!entry.getKey().equals(data.security.getWmtUsername())) {
+          labelPanel.add(labelBox);
+        }
       }
+    }
+  }
+  
+  /**
+   * Deselects all labels except for the username label. This is the default
+   * state for the {@link LabelsMenu}.
+   */
+  public void resetSelections() {
+    for (Map.Entry<String, LabelJSO> entry : data.modelLabels.entrySet()) {
+      entry.getValue().isSelected(
+          entry.getKey().equals(data.security.getWmtUsername()));
     }
   }
 

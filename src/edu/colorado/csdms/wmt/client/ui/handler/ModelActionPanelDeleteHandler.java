@@ -29,6 +29,7 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.data.ModelListJSO;
 import edu.colorado.csdms.wmt.client.ui.widgets.DroplistDialogBox;
 
 /**
@@ -60,15 +61,17 @@ public class ModelActionPanelDeleteHandler implements ClickHandler {
     // Hide the MoreActionsMenu.
     data.getPerspective().getActionButtonPanel().getMoreMenu().hide();
 
+    // Display a droplist populated with models the user owns.
     deleteDialog = new DroplistDialogBox();
     deleteDialog.setText("Delete Model...");
     deleteDialog.getChoicePanel().getOkButton().setHTML(
         Constants.FA_DELETE + "Delete");
-
-    // Populate the ModelDroplist with the available models on the server.
-    for (int i = 0; i < data.modelNameList.size(); i++) {
-      deleteDialog.getDroplistPanel().getDroplist().addItem(
-          data.modelNameList.get(i));
+    for (int i = 0; i < data.modelList.getModels().length(); i++) {
+      ModelListJSO modelJso = data.modelList.getModels().get(i);
+      if (modelJso.getOwner().matches(data.security.getWmtUsername())) {
+        deleteDialog.getDroplistPanel().getDroplist().addItem(
+            modelJso.getName());
+      }
     }
 
     // Define handlers.

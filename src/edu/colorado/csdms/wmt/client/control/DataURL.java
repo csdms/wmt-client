@@ -23,6 +23,7 @@
  */
 package edu.colorado.csdms.wmt.client.control;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 
 import edu.colorado.csdms.wmt.client.Constants;
@@ -36,17 +37,9 @@ import edu.colorado.csdms.wmt.client.Constants;
  */
 public class DataURL {
 
-  /**
-   * A helper that returns the base URL for the selected API (development or
-   * production).
-   * 
-   * @param data the DataManager object for the WMT session
-   */
-  private static String getApiUrl(DataManager data) {
-    return data.isApiDevelopmentMode() ? Constants.API_DEV_URL
-        : Constants.API_URL;
-  }
-
+  // The base URL used in GWT development mode.
+  public static final String LOCAL_URL = GWT.getHostPageBaseURL();
+  
   /**
    * A wrapper around Window.Location that returns the application URL in either
    * development or production mode.
@@ -64,9 +57,9 @@ public class DataURL {
    */
   public static String newUserLogin(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/authenticate.json";
+      return LOCAL_URL + "save/authenticate.json";
     } else {
-      return getApiUrl(data) + Constants.NEW_USER_LOGIN_PATH;
+      return data.config.getApiUrl() + Constants.NEW_USER_LOGIN_PATH;
     }
   }
 
@@ -77,9 +70,9 @@ public class DataURL {
    */
   public static String login(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/authenticate.json";
+      return LOCAL_URL + "save/authenticate.json";
     } else {
-      return getApiUrl(data) + Constants.LOGIN_PATH;
+      return data.config.getApiUrl() + Constants.LOGIN_PATH;
     }
   }
 
@@ -90,9 +83,9 @@ public class DataURL {
    */
   public static String logout(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/authenticate.json";
+      return LOCAL_URL + "save/authenticate.json";
     } else {
-      return getApiUrl(data) + Constants.LOGOUT_PATH;
+      return data.config.getApiUrl() + Constants.LOGOUT_PATH;
     }
   }
 
@@ -104,9 +97,9 @@ public class DataURL {
    */
   public static String loginState(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/authenticate.json";
+      return LOCAL_URL + "save/authenticate.json";
     } else {
-      return getApiUrl(data) + Constants.USERNAME_PATH;
+      return data.config.getApiUrl() + Constants.USERNAME_PATH;
     }
   }
 
@@ -117,9 +110,9 @@ public class DataURL {
    */
   public static String addLabel(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/labels.json";
+      return LOCAL_URL + "save/labels.json";
     } else {
-      return getApiUrl(data) + Constants.LABELS_NEW_PATH;
+      return data.config.getApiUrl() + Constants.LABELS_NEW_PATH;
     }
   }
 
@@ -131,9 +124,9 @@ public class DataURL {
    */
   public static String deleteLabel(DataManager data, Integer labelId) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/labels.json";
+      return LOCAL_URL + "save/labels.json";
     } else {
-      return getApiUrl(data) + Constants.LABELS_DELETE_PATH
+      return data.config.getApiUrl() + Constants.LABELS_DELETE_PATH
           + labelId.toString();
     }
   }
@@ -146,9 +139,9 @@ public class DataURL {
    */
   public static String listLabels(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/labels.json";
+      return LOCAL_URL + "save/labels.json";
     } else {
-      return getApiUrl(data) + Constants.LABELS_LIST_PATH;
+      return data.config.getApiUrl() + Constants.LABELS_LIST_PATH;
     }
   }
 
@@ -159,9 +152,22 @@ public class DataURL {
    */
   public static String addModelLabel(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/labels.json";
+      return LOCAL_URL + "save/labels.json";
     } else {
-      return getApiUrl(data) + Constants.LABELS_MODEL_ADD_PATH;
+      return data.config.getApiUrl() + Constants.LABELS_MODEL_ADD_PATH;
+    }
+  }
+
+  /**
+   * Returns the API URL for detaching a label from a model.
+   * 
+   * @param data the DataManager object for the WMT session
+   */
+  public static String removeModelLabel(DataManager data) {
+    if (data.isDevelopmentMode()) {
+      return LOCAL_URL + "save/labels.json";
+    } else {
+      return data.config.getApiUrl() + Constants.LABELS_MODEL_REMOVE_PATH;
     }
   }
 
@@ -172,9 +178,9 @@ public class DataURL {
    */
   public static String queryModelLabel(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/labels.json";
+      return LOCAL_URL + "save/labels.json";
     } else {
-      return getApiUrl(data) + Constants.LABELS_MODEL_QUERY_PATH;
+      return data.config.getApiUrl() + Constants.LABELS_MODEL_QUERY_PATH;
     }
   }
 
@@ -186,9 +192,9 @@ public class DataURL {
    */
   public static String getModelLabel(DataManager data, Integer modelId) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/labels.json";
+      return LOCAL_URL + "save/labels.json";
     } else {
-      return getApiUrl(data) + Constants.LABELS_MODEL_GET_PATH
+      return data.config.getApiUrl() + Constants.LABELS_MODEL_GET_PATH
           + modelId.toString();
     }
   }
@@ -200,9 +206,9 @@ public class DataURL {
    */
   public static String listComponents(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "data/components.json";
+      return LOCAL_URL + "data/components.json";
     } else {
-      return getApiUrl(data) + Constants.COMPONENTS_LIST_PATH;
+      return data.config.getApiUrl() + Constants.COMPONENTS_LIST_PATH;
     }
   }
 
@@ -214,9 +220,10 @@ public class DataURL {
    */
   public static String showComponent(DataManager data, String componentId) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "data/" + componentId + ".json";
+      return LOCAL_URL + "data/" + componentId + ".json";
     } else {
-      return getApiUrl(data) + Constants.COMPONENTS_SHOW_PATH + componentId;
+      return data.config.getApiUrl() + Constants.COMPONENTS_SHOW_PATH 
+          + componentId;
     }
   }
 
@@ -231,14 +238,14 @@ public class DataURL {
   public static String formatComponent(DataManager data, String componentId,
       String format, Boolean useDefaults) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "data/" + componentId + ".json";
+      return LOCAL_URL + "data/" + componentId + ".json";
     } else {
       String modelId = ((Integer) data.getMetadata().getId()).toString();
       if (useDefaults) {
         modelId = "0";
       }
       String url =
-          getApiUrl(data) + "models/" + modelId + "/" + componentId
+          data.config.getApiUrl() + "models/" + modelId + "/" + componentId
               + "/format?format=" + format;
       return url;
     }
@@ -251,9 +258,9 @@ public class DataURL {
    */
   public static String listModels(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/model_list.json";
+      return LOCAL_URL + "save/model_list.json";
     } else {
-      return getApiUrl(data) + Constants.MODELS_LIST_PATH;
+      return data.config.getApiUrl() + Constants.MODELS_LIST_PATH;
     }
   }
 
@@ -265,9 +272,10 @@ public class DataURL {
    */
   public static String openModel(DataManager data, Integer modelId) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/open" + modelId.toString() + ".json";
+      return LOCAL_URL + "save/open" + modelId.toString() + ".json";
     } else {
-      return getApiUrl(data) + Constants.MODELS_OPEN_PATH + modelId.toString();
+      return data.config.getApiUrl() + Constants.MODELS_OPEN_PATH 
+          + modelId.toString();
     }
   }
 
@@ -280,9 +288,10 @@ public class DataURL {
    */
   public static String showModel(DataManager data, Integer modelId) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/show" + modelId.toString() + ".json";
+      return LOCAL_URL + "save/show" + modelId.toString() + ".json";
     } else {
-      return getApiUrl(data) + Constants.MODELS_SHOW_PATH + modelId.toString();
+      return data.config.getApiUrl() + Constants.MODELS_SHOW_PATH 
+          + modelId.toString();
     }
   }
 
@@ -295,9 +304,9 @@ public class DataURL {
    */
   public static String newModel(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/saved.json";
+      return LOCAL_URL + "save/saved.json";
     } else {
-      return getApiUrl(data) + Constants.MODELS_NEW_PATH;
+      return data.config.getApiUrl() + Constants.MODELS_NEW_PATH;
     }
   }
 
@@ -309,9 +318,26 @@ public class DataURL {
    */
   public static String editModel(DataManager data, Integer modelId) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/saved.json";
+      return LOCAL_URL + "save/saved.json";
     } else {
-      return getApiUrl(data) + Constants.MODELS_EDIT_PATH + modelId.toString();
+      return data.config.getApiUrl() + Constants.MODELS_EDIT_PATH 
+          + modelId.toString();
+    }
+  }
+
+  /**
+   * Returns the URL for duplicating an existing model on the server, given its
+   * id.
+   * 
+   * @param data the DataManager object for the WMT session
+   * @param modelId the id of the model, an Integer set by the API
+   */
+  public static String saveasModel(DataManager data, Integer modelId) {
+    if (data.isDevelopmentMode()) {
+      return LOCAL_URL + "save/saved.json";
+    } else {
+      return data.config.getApiUrl() + Constants.MODELS_SAVEAS_PATH 
+          + modelId.toString();
     }
   }
 
@@ -324,9 +350,9 @@ public class DataURL {
    */
   public static String deleteModel(DataManager data, Integer modelId) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/saved.json";
+      return LOCAL_URL + "save/saved.json";
     } else {
-      return getApiUrl(data) + Constants.MODELS_DELETE_PATH
+      return data.config.getApiUrl() + Constants.MODELS_DELETE_PATH
           + modelId.toString();
     }
   }
@@ -338,9 +364,9 @@ public class DataURL {
    */
   public static String uploadFile(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/saved.json";
+      return LOCAL_URL + "save/saved.json";
     } else {
-      return getApiUrl(data) + Constants.MODELS_UPLOAD_PATH;
+      return data.config.getApiUrl() + Constants.MODELS_UPLOAD_PATH;
     }
   }
 
@@ -351,9 +377,9 @@ public class DataURL {
    */
   public static String newModelRun(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/saved.json";
+      return LOCAL_URL + "save/saved.json";
     } else {
-      return getApiUrl(data) + Constants.RUN_NEW_PATH;
+      return data.config.getApiUrl() + Constants.RUN_NEW_PATH;
     }
   }
 
@@ -364,7 +390,7 @@ public class DataURL {
    * @param data the DataManager object for the WMT session
    */
   public static String showModelRun(DataManager data) {
-    return getApiUrl(data) + Constants.RUN_SHOW_PATH;
+    return data.config.getApiUrl() + Constants.RUN_SHOW_PATH;
   }
 
   /**
@@ -374,9 +400,9 @@ public class DataURL {
    */
   public static String stageModelRun(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/saved.json";
+      return LOCAL_URL + "save/saved.json";
     } else {
-      return getApiUrl(data) + Constants.RUN_STAGE_PATH;
+      return data.config.getApiUrl() + Constants.RUN_STAGE_PATH;
     }
   }
 
@@ -388,9 +414,9 @@ public class DataURL {
    */
   public static String launchModelRun(DataManager data) {
     if (data.isDevelopmentMode()) {
-      return Constants.LOCAL_URL + "save/saved.json";
+      return LOCAL_URL + "save/saved.json";
     } else {
-      return getApiUrl(data) + Constants.RUN_LAUNCH_PATH;
+      return data.config.getApiUrl() + Constants.RUN_LAUNCH_PATH;
     }
   }
 }

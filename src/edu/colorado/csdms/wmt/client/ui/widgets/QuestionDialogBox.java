@@ -51,14 +51,15 @@ public class QuestionDialogBox extends DialogBox {
     this.setStyleName("wmt-DialogBox");
     this.setText("Question");
     
-    setQuestionHtml(new HTML(question));
-    setChoicePanel(new ChoicePanel());
+    questionHtml = new HTML(question);
+    choicePanel = new ChoicePanel();
     
     VerticalPanel contents = new VerticalPanel();
     contents.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
     contents.add(questionHtml);
     contents.add(choicePanel);
 
+    questionHtml.setStyleName("wmt-Label");
     questionHtml.getElement().getStyle().setPadding(1, Unit.EM);
     
     this.setWidget(contents);    

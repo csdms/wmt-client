@@ -23,18 +23,18 @@
  */
 package edu.colorado.csdms.wmt.client;
 
-import com.google.gwt.core.client.GWT;
-
-import edu.colorado.csdms.wmt.client.control.DataManager;
-
 /**
  * A class that defines, as public static members, constants used in the WMT
- * client.
+ * client. In lieu of a configuration file, these constants can be edited 
+ * before building the module.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
 public class Constants {
 
+  // The location of the WMT client configuration file.
+  public static final String CONFIGURATION_FILE = "./config.json";
+  
   // The CSDMS website, email, and wiki articles.
   public static final String CSDMS_HOME = "http://csdms.colorado.edu/";
   public static final String WMT_HELP = CSDMS_HOME + "wiki/WMT_help";
@@ -42,17 +42,7 @@ public class Constants {
   public static final String CSDMS_EMAIL = "CSDMSsupport@colorado.edu";
   public static final String CSDMS_EMAIL_LINK = "<a href='mailto:" 
       + CSDMS_EMAIL + "'>CSDMS Support</a>";
-  public static final String WMT_TITLE = "<h2>WMT</h2><p><b>The CSDMS Web"
-      + " Modeling Tool</b></br>Version: " + DataManager.VERSION + "</p>";
-
-  // This switch toggles API development and public mode.
-  public static final Boolean USE_API_DEV_MODE = true;
-
-  // By same-origin policy, must use HTTPS consistently across all URLs.
-  public static final String BASE_URL = "https://csdms.colorado.edu/";
-  public static final String API_URL = BASE_URL + "wmt-server/";
-  public static final String API_DEV_URL = BASE_URL + "wmt/api-dev/";
-  public static final String LOCAL_URL = GWT.getHostPageBaseURL();
+  public static final String WMT_VIDEO = "http://youtu.be/hbfmxHRYbtA";
 
   // API URLs for user login, logout, and status. Also, a cookie.
   public static final String NEW_USER_LOGIN_PATH = "account/new";
@@ -67,6 +57,7 @@ public class Constants {
   public static final String LABELS_NEW_PATH = "tag/new";
   public static final String LABELS_DELETE_PATH = "tag/delete/";
   public static final String LABELS_MODEL_ADD_PATH = "tag/model/add";
+  public static final String LABELS_MODEL_REMOVE_PATH = "tag/model/remove";
   public static final String LABELS_MODEL_QUERY_PATH = "tag/model/query";
   public static final String LABELS_MODEL_GET_PATH = "tag/model/";
 
@@ -80,6 +71,7 @@ public class Constants {
   public static final String MODELS_SHOW_PATH = "models/show/";
   public static final String MODELS_NEW_PATH = "models/new";
   public static final String MODELS_EDIT_PATH = "models/edit/";
+  public static final String MODELS_SAVEAS_PATH = "models/saveas/";
   public static final String MODELS_DELETE_PATH = "models/delete/";
   public static final String MODELS_UPLOAD_PATH = "models/upload";
 
@@ -89,6 +81,9 @@ public class Constants {
   public static final String RUN_STAGE_PATH = "run/stage";
   public static final String RUN_LAUNCH_PATH = "run/launch";
 
+  // The list of available HPCC hosts with the CSDMS software stack installed.
+  public static final String HOSTS[] = {"beach.colorado.edu", "localhost"};
+  
   // Error, warning, and informational messages.
   public static String REQUEST_ERR_MSG = "Failed to send the request: ";
   public static String RESPONSE_ERR_MSG = "No match found in the response.";
@@ -101,6 +96,9 @@ public class Constants {
           + " asked to repeat your password.";
   public static String FORGOT_PASSWORD_INFO =
       "Please contact " + CSDMS_EMAIL_LINK + " for assistance.";
+  public static String SEE_VIDEO_INFO = "For an overview of WMT, and an example"
+      + " of its use, check out <a href='" + WMT_VIDEO + "'>this</a>"
+      + " short YouTube video.";
   public static String LOGIN_ERR = "Please sign in with an email address"
       + " and a password.";
   public static String PASSWORD_ERR = "This email address is registered,"
@@ -113,6 +111,9 @@ public class Constants {
           + " it is not owned by the current user.";
 
   // Questions
+  public static String QUESTION_WMT = "What is WMT?";
+  public static String QUESTION_NEW_USER = "New User?";  
+  public static String QUESTION_FORGOT_PASSWORD = "Forgot Password?";    
   public static final String QUESTION_START = "Are you sure you want to ";
   public static String QUESTION_SIGN_OUT = QUESTION_START
       + "sign out from WMT?";
@@ -190,8 +191,8 @@ public class Constants {
   public static String COMPONENT_INFO =
       "View information about this component.";
   public static String COMPONENT_INFO_1 = "View information about a component.";
-  public static String COMPONENT_DELETE =
-      "Delete this component from the model.";
+  public static String COMPONENT_CLOSE =
+      "Remove this component (and its children, if any) from the model.";
   public static String PARAMETER_RESET = "Reset all parameters for this"
       + " component to their default values.";
   public static String PARAMETER_VIEW_FILE = "View the input files for this"

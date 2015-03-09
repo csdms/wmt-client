@@ -50,23 +50,30 @@ public class ModelListJSO extends JavaScriptObject {
   }-*/;
 
   /**
-   * Sets the model name, a String. This is a JSNI method.
-   * 
-   * @param name the name of the model, a String
-   */
-  public final native void setName(String name) /*-{
-		this.name = name;
-  }-*/;
-
-  /**
    * A JSNI method to get the id of the model, an int used to uniquely
    * identify it in the database. The user can't modify this id -- it's set by
    * the API. 
    */
-  public final native int getModelId() /*-{
+  public final native int getId() /*-{
 		return this.id;
   }-*/;    
-  
+
+  /**
+   * Gets the owner of the model, a String. If an owner hasn't been set, null 
+   * is returned. This is a JSNI method.
+   */
+  public final native String getOwner() /*-{
+		return (typeof this.owner == 'undefined') ? null : this.owner;
+  }-*/;
+
+  /**
+   * Gets the ISO 8601 date of the model, a String. If a date hasn't been set, 
+   * null is returned. This is a JSNI method.
+   */
+  public final native String getDate() /*-{
+    return (typeof this.date == 'undefined') ? null : this.date;
+  }-*/;
+
   /**
    * Gets the JsArray of models. This is a JSNI method.
    */

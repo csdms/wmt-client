@@ -41,20 +41,22 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ClosingEvent;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
 import edu.colorado.csdms.wmt.client.data.ComponentListJSO;
+import edu.colorado.csdms.wmt.client.data.ConfigurationJSO;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
 import edu.colorado.csdms.wmt.client.data.LabelQueryJSO;
 import edu.colorado.csdms.wmt.client.data.ModelJSO;
 import edu.colorado.csdms.wmt.client.data.ModelListJSO;
 import edu.colorado.csdms.wmt.client.data.ModelMetadataJSO;
-import edu.colorado.csdms.wmt.client.ui.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.handler.AddNewUserHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.widgets.NewUserDialogBox;
 import edu.colorado.csdms.wmt.client.ui.widgets.RunInfoDialogBox;
 
@@ -66,23 +68,6 @@ import edu.colorado.csdms.wmt.client.ui.widgets.RunInfoDialogBox;
  * @author Mark Piper (mark.piper@colorado.edu)
  */
 public class DataTransfer {
-
-  // Labels. If I make a spelling error, at least it'll be consistent.
-  private static final String NEW = "new";
-  private static final String OPEN = "open";
-  private static final String SHOW = "show";
-  private static final String LOGIN = "login";
-  private static final String LOGOUT = "logout";
-  private static final String ADD = "add";
-  private static final String DELETE = "delete";
-  private static final String EDIT = "edit";
-  private static final String INIT = "init";
-  private static final String STAGE = "stage";
-  private static final String LAUNCH = "launch";
-  private static final String LIST = "list";
-  private static final String ATTACH = "attach";
-  private static final String QUERY = "query";
-  private static final String GET = "get";
 
   /**
    * A JSNI method for creating a String from a JavaScriptObject.
@@ -205,6 +190,42 @@ public class DataTransfer {
   }
 
   /**
+   * Makes an HTTP GET method call to load the client configuration file.
+   * 
+   * @param data the DataManager object for the WMT session
+   */
+  public static void getConfiguration(final DataManager data) {
+    try {
+      new RequestBuilder(RequestBuilder.GET, Constants.CONFIGURATION_FILE)
+          .sendRequest("", new RequestCallback() {
+
+            @Override
+            public void onResponseReceived(Request request, Response response) {
+              String rtxt = response.getText();
+              GWT.log(rtxt);
+              ConfigurationJSO jso = parse(rtxt);
+              data.config = jso;
+              
+              // Once the location of the API has been determined, retrieve 
+              // (asynchronously) and store the list of available components
+              // and models. Note that when #getComponentList completes, it 
+              // immediately starts pulling component data from the server with
+              // calls to #getComponent. Asynchronous requests are cool!              
+              getComponentList(data);
+              getModelList(data);
+            }
+
+            @Override
+            public void onError(Request request, Throwable exception) {
+              Window.alert(Constants.REQUEST_ERR_MSG + exception.getMessage());
+            }
+          });
+    } catch (RequestException e) {
+      Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
+    }
+  }
+  
+  /**
    * Makes an asynchronous HTTPS POST request to create a new user login to WMT.
    * 
    * @param data the DataManager object for the WMT session
@@ -228,7 +249,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(queryString, new AuthenticationRequestCallback(
-              data, url, NEW));
+              data, url, Constants.NEW_USER_LOGIN_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -257,7 +278,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(queryString, new AuthenticationRequestCallback(
-              data, url, LOGIN));
+              data, url, Constants.LOGIN_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -281,7 +302,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(null, new AuthenticationRequestCallback(data,
-              url, LOGOUT));
+              url, Constants.LOGOUT_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -306,7 +327,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(null, new AuthenticationRequestCallback(data,
-              url, LIST));
+              url, Constants.USERNAME_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -412,7 +433,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request openRequest =
           openBuilder.sendRequest(null, new ModelRequestCallback(data, openURL,
-              OPEN));
+              Constants.MODELS_OPEN_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -423,7 +444,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request showRequest =
           showBuilder.sendRequest(null, new ModelRequestCallback(data, showURL,
-              SHOW));
+              Constants.MODELS_SHOW_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -431,26 +452,29 @@ public class DataTransfer {
 
   /**
    * Makes an asynchronous HTTP POST request to save a new model, or edits to an
-   * existing model, to the server.
+   * existing model, or a duplicate of an existing model, to the server.
    * 
    * @param data the DataManager object for the WMT session
+   * @param saveType new model, edit existing model, or model save as
    */
-  public static void postModel(DataManager data) {
+  public static void postModel(DataManager data, String saveType) {
 
     Integer modelId = data.getMetadata().getId();
 
-    GWT.log("all model ids: " + data.modelIdList.toString());
     GWT.log("this model id: " + modelId.toString());
 
-    String url, type;
-    if (data.modelIdList.contains(modelId)) {
-      url = DataURL.editModel(data, modelId);
-      type = EDIT;
-    } else {
+    String url;
+    if (saveType.equals(Constants.MODELS_NEW_PATH)) {
       url = DataURL.newModel(data);
-      type = NEW;
+    } else if (saveType.equals(Constants.MODELS_EDIT_PATH)) {
+      url = DataURL.editModel(data, modelId);
+    } else if (saveType.equals(Constants.MODELS_SAVEAS_PATH)) {
+      url = DataURL.saveasModel(data, modelId);
+    } else {
+      Window.alert("No match found for save action.");
+      return;
     }
-    GWT.log(type + ": " + url);
+    GWT.log(url);
     GWT.log(data.getModelString());
 
     RequestBuilder builder =
@@ -466,7 +490,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(queryString, new ModelRequestCallback(data, url,
-              type));
+              saveType));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -490,8 +514,8 @@ public class DataTransfer {
     try {
       @SuppressWarnings("unused")
       Request request =
-          builder
-              .sendRequest(null, new ModelRequestCallback(data, url, DELETE));
+          builder.sendRequest(null, new ModelRequestCallback(data, url,
+              Constants.MODELS_DELETE_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -522,7 +546,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(queryString, new RunRequestCallback(data, url,
-              INIT));
+              Constants.RUN_NEW_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -551,7 +575,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(queryString, new RunRequestCallback(data, url,
-              STAGE));
+              Constants.RUN_STAGE_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -583,7 +607,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(queryString, new RunRequestCallback(data, url,
-              LAUNCH));
+              Constants.RUN_LAUNCH_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -612,7 +636,7 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(queryString, new LabelRequestCallback(data, url,
-              ADD));
+              Constants.LABELS_NEW_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -635,8 +659,8 @@ public class DataTransfer {
     try {
       @SuppressWarnings("unused")
       Request request =
-          builder
-              .sendRequest(null, new LabelRequestCallback(data, url, DELETE));
+          builder.sendRequest(null, new LabelRequestCallback(data, url,
+              Constants.LABELS_DELETE_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -659,14 +683,16 @@ public class DataTransfer {
     try {
       @SuppressWarnings("unused")
       Request request =
-          builder.sendRequest(null, new LabelRequestCallback(data, url, LIST));
+          builder.sendRequest(null, new LabelRequestCallback(data, url,
+              Constants.LABELS_LIST_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
   }
 
   /**
-   * Makes an asynchronous HTTPS POST request to attach a label to a model.
+   * Makes an asynchronous HTTPS POST request to attach a label to a model. The
+   * complement of {@link DataTransfer#removeModelLabel}.
    * 
    * @param data the DataManager object for the WMT session
    * @param modelId the id of the model, an Integer
@@ -691,12 +717,45 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(queryString, new LabelRequestCallback(data, url,
-              ATTACH));
+              Constants.LABELS_MODEL_ADD_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
   }
 
+  /**
+   * Makes an asynchronous HTTPS POST request to detach a label from a model.
+   * The complement of {@link DataTransfer#addModelLabel}.
+   * 
+   * @param data the DataManager object for the WMT session
+   * @param modelId the id of the model, an Integer
+   * @param labelId the id of the label to remove, an Integer
+   */
+  public static void removeModelLabel(DataManager data, Integer modelId,
+      Integer labelId) {
+
+    String url = DataURL.removeModelLabel(data);
+    GWT.log(url);
+
+    RequestBuilder builder =
+        new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+
+    HashMap<String, String> entries = new HashMap<String, String>();
+    entries.put("model", modelId.toString()); // type="text" in API
+    entries.put("tag", labelId.toString());
+    String queryString = buildQueryString(entries);
+    
+    try {
+      builder.setHeader("Content-Type", "application/x-www-form-urlencoded");
+      @SuppressWarnings("unused")
+      Request request =
+          builder.sendRequest(queryString, new LabelRequestCallback(data, url,
+              Constants.LABELS_MODEL_REMOVE_PATH));
+    } catch (RequestException e) {
+      Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
+    }
+  }
+  
   /**
    * Makes an asynchronous HTTPS GET request to query what models use the given
    * labels, input as an List of Integer ids.
@@ -724,7 +783,8 @@ public class DataTransfer {
     try {
       @SuppressWarnings("unused")
       Request request =
-          builder.sendRequest(null, new LabelRequestCallback(data, url, QUERY));
+          builder.sendRequest(null, new LabelRequestCallback(data, url,
+              Constants.LABELS_MODEL_QUERY_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -748,7 +808,8 @@ public class DataTransfer {
     try {
       @SuppressWarnings("unused")
       Request request =
-          builder.sendRequest(null, new LabelRequestCallback(data, url, GET));
+          builder.sendRequest(null, new LabelRequestCallback(data, url,
+              Constants.LABELS_MODEL_GET_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -779,6 +840,7 @@ public class DataTransfer {
       data.getPerspective().getUserPanel().getLoginName().setText(
           data.security.getWmtUsername());
       data.getSignInScreen().getErrorMessage().setText(null);
+      data.getSignInScreen().closeInfoPanels();
 
       // Replace the sign-in screen with the WMT GUI.
       RootLayoutPanel.get().remove(data.getSignInScreen());
@@ -849,14 +911,14 @@ public class DataTransfer {
         // Need to refresh the model list on login and logout.
         getModelList(data);
 
-        if (type.matches(NEW)) {
+        if (type.matches(Constants.NEW_USER_LOGIN_PATH)) {
           loginActions();
           addLabel(data, data.security.getWmtUsername());
-        } else if (type.matches(LOGIN)) {
+        } else if (type.matches(Constants.LOGIN_PATH)) {
           loginActions();
-        } else if (type.matches(LOGOUT)) {
+        } else if (type.matches(Constants.LOGOUT_PATH)) {
           logoutActions();
-        } else if (type.matches(LIST)) {
+        } else if (type.matches(Constants.USERNAME_PATH)) {
           String username = rtxt.replace("\"", ""); // strip quote marks
           if (username.isEmpty()) {
             logoutActions();
@@ -889,10 +951,13 @@ public class DataTransfer {
                 + "Response code: " + response.getStatusCode();
         Window.alert(msg);
       }
+      
+      data.showDefaultCursor();
     }
 
     @Override
     public void onError(Request request, Throwable exception) {
+      data.showDefaultCursor();
       Window.alert(Constants.REQUEST_ERR_MSG + exception.getMessage());
     }
   }
@@ -982,11 +1047,6 @@ public class DataTransfer {
         ComponentJSO jso = parse(rtxt);
         data.addComponent(jso); // "class" component
         data.addModelComponent(copy(jso)); // "instance" component, for model
-        data.nComponents++;
-
-        if (data.nComponents == data.componentIdList.size()) {
-          data.showDefaultCursor();
-        }
 
         // Replace the associated placeholder ComponentSelectionMenu item.
         ((ComponentSelectionMenu) data.getPerspective().getModelTree()
@@ -1002,10 +1062,9 @@ public class DataTransfer {
         if (attempt < Constants.RETRY_ATTEMPTS) {
           getComponent(data, componentId);
         } else {
-          data.nComponents++;
           String msg =
-              "The URL '" + url + "' did not give an 'OK' response. "
-                  + "Response code: " + response.getStatusCode();
+              "The URL '" + url + "' did not give an 'OK' response."
+                  + " Response code: " + response.getStatusCode();
           Window.alert(msg);
         }
       }
@@ -1040,17 +1099,8 @@ public class DataTransfer {
         String rtxt = response.getText();
         GWT.log(rtxt);
         ModelListJSO jso = parse(rtxt);
-
-        // Start with clean lists of model names and ids.
-        data.modelIdList.clear();
-        data.modelNameList.clear();
-
-        // Load the list of models into the DataManager.
-        for (int i = 0; i < jso.getModels().length(); i++) {
-          data.modelIdList.add(jso.getModels().get(i).getModelId());
-          data.modelNameList.add(jso.getModels().get(i).getName());
-        }
-
+        data.modelList = jso;
+        
       } else {
         String msg =
             "The URL '" + url + "' did not give an 'OK' response. "
@@ -1111,16 +1161,20 @@ public class DataTransfer {
     private void editActions() {
       data.updateModelSaveState(true);
       DataTransfer.getModelList(data);
-      addSelectedLabels(data.getMetadata().getId());
+      updateSelectedLabels(data.getMetadata().getId());
     }
 
     /*
-     * A helper for adding all selected labels to a model.
+     * A helper for attaching all selected labels to (and detaching all 
+     * unselected labels from) a model.
      */
-    private void addSelectedLabels(Integer modelId) {
+    private void updateSelectedLabels(Integer modelId) {
+      // XXX This may be slow.
       for (Map.Entry<String, LabelJSO> entry : data.modelLabels.entrySet()) {
         if (entry.getValue().isSelected()) {
           addModelLabel(data, modelId, entry.getValue().getId());
+        } else {
+          removeModelLabel(data, modelId, entry.getValue().getId());
         }
       }
     }
@@ -1134,18 +1188,23 @@ public class DataTransfer {
         String rtxt = response.getText();
         GWT.log(rtxt);
 
-        if (type.matches(SHOW)) {
+        if (type.matches(Constants.MODELS_SHOW_PATH)) {
           showActions(rtxt);
-        } else if (type.matches(OPEN)) {
+        } else if (type.matches(Constants.MODELS_OPEN_PATH)) {
           openActions(rtxt);
-        } else if (type.matches(NEW)) {
+        } else if (type.matches(Constants.MODELS_NEW_PATH)) {
           Integer modelId = Integer.valueOf(rtxt);
           data.getMetadata().setId(modelId);
           editActions();
-        } else if (type.matches(EDIT)) {
+        } else if (type.matches(Constants.MODELS_EDIT_PATH)) {
           editActions();
-        } else if (type.matches(DELETE)) {
+        } else if (type.matches(Constants.MODELS_SAVEAS_PATH)) {
+          Integer modelId = Integer.valueOf(rtxt);
+          data.getMetadata().setId(modelId);
+          editActions();
+        } else if (type.matches(Constants.MODELS_DELETE_PATH)) {
           DataTransfer.getModelList(data);
+          Window.alert("Model deleted.");
         } else {
           Window.alert(Constants.RESPONSE_ERR_MSG);
         }
@@ -1187,13 +1246,13 @@ public class DataTransfer {
         String rtxt = response.getText();
         GWT.log(rtxt);
 
-        if (type.matches(INIT)) {
+        if (type.matches(Constants.RUN_NEW_PATH)) {
           String uuid = rtxt.replaceAll("^\"|\"$", "");
           data.setSimulationId(uuid); // store the run's uuid
           DataTransfer.stageModelRun(data);
-        } else if (type.matches(STAGE)) {
+        } else if (type.matches(Constants.RUN_STAGE_PATH)) {
           DataTransfer.launchModelRun(data);
-        } else if (type.matches(LAUNCH)) {
+        } else if (type.matches(Constants.RUN_LAUNCH_PATH)) {
           RunInfoDialogBox runInfo = new RunInfoDialogBox(data);
           runInfo.center();
           runInfo.getChoicePanel().getOkButton().setFocus(true);
@@ -1277,21 +1336,24 @@ public class DataTransfer {
      */
     private void queryActions(String rtxt) {
       LabelQueryJSO jso = parse(rtxt);
-//       Window.alert(jso.getIds().join());
-
+      ListBox droplist =
+          data.getPerspective().getOpenDialogBox().getDroplistPanel()
+              .getDroplist();
+      
       // Populate the droplist with the restricted list of models.
-      data.getPerspective().getOpenDialogBox().getDroplistPanel().getDroplist()
-          .clear();
+      droplist.clear();
       for (int i = 0; i < jso.getIds().length(); i++) {
         Integer modelId = jso.getIds().get(i);
-        Integer modelIndex = data.modelIdList.indexOf(modelId);
-        if (modelIndex == -1) { // the API shouldn't return nonexistent models,
-          continue;             // but just in case...
-        }
-        String modelName = data.modelNameList.get(modelIndex);
-        data.getPerspective().getOpenDialogBox().getDroplistPanel()
-            .getDroplist().addItem(modelName);
+        String modelName = data.findModel(modelId).getName();
+        droplist.addItem(modelName);
       }
+
+      // Show metadata for the first model in the droplist.
+      String selectedModelName = droplist.getItemText(droplist.getSelectedIndex());
+      data.getPerspective().getOpenDialogBox().getMetadataPanel()
+          .setOwner(data.findModel(selectedModelName).getOwner());
+      data.getPerspective().getOpenDialogBox().getMetadataPanel()
+          .setDate(data.findModel(selectedModelName).getDate());
     }
 
     /*
@@ -1303,7 +1365,7 @@ public class DataTransfer {
         for (int i = 0; i < jso.getIds().length(); i++) {
 
           GWT.log("Entry : " + entry.getValue().getId());
-          GWT.log("JSO : " + jso.getIds().get(i));
+          GWT.log("JSO : " + jso.getIds().get(i)); // fails in dev mode, see LabelQueryJSOTest#testGetIds
           
           if (entry.getValue().getId() == jso.getIds().get(i)) {
             entry.getValue().isSelected(true);
@@ -1319,17 +1381,19 @@ public class DataTransfer {
         String rtxt = response.getText();
         GWT.log(rtxt);
 
-        if (type.matches(ADD)) {
+        if (type.matches(Constants.LABELS_NEW_PATH)) {
           addActions(rtxt);
-        } else if (type.matches(DELETE)) {
+        } else if (type.matches(Constants.LABELS_DELETE_PATH)) {
           deleteActions(rtxt);
-        } else if (type.matches(LIST)) {
+        } else if (type.matches(Constants.LABELS_LIST_PATH)) {
           listActions(rtxt);
-        } else if (type.matches(ATTACH)) {
+        } else if (type.matches(Constants.LABELS_MODEL_ADD_PATH)) {
           ; // Do nothing
-        } else if (type.matches(QUERY)) {
+        } else if (type.matches(Constants.LABELS_MODEL_REMOVE_PATH)) {
+          ; // Do nothing
+        } else if (type.matches(Constants.LABELS_MODEL_QUERY_PATH)) {
           queryActions(rtxt);
-        } else if (type.matches(GET)) {
+        } else if (type.matches(Constants.LABELS_MODEL_GET_PATH)) {
           getActions(rtxt);
         } else {
           Window.alert(Constants.RESPONSE_ERR_MSG);

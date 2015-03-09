@@ -28,9 +28,9 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.TreeItem;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.ComponentCell;
-import edu.colorado.csdms.wmt.client.ui.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.ModelTree;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentCell;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentSelectionMenu;
 
 /**
  * Defines the action for the "Delete" menu item in a {@link ComponentCell};
@@ -39,19 +39,19 @@ import edu.colorado.csdms.wmt.client.ui.ModelTree;
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class ComponentDeleteCommand implements Command {
+public class ComponentCloseCommand implements Command {
 
   private DataManager data;
   private ComponentCell cell;
   private String componentId;
 
   /**
-   * Creates a new instance of {@link ComponentDeleteCommand}.
+   * Creates a new instance of {@link ComponentCloseCommand}.
    * 
    * @param data the DataManager object for the WMT session
    * @param cell the {@link ComponentCell} this Command acts on
    */
-  public ComponentDeleteCommand(DataManager data, ComponentCell cell) {
+  public ComponentCloseCommand(DataManager data, ComponentCell cell) {
     this.data = data;
     this.cell = cell;
     this.componentId = cell.getComponentId();
@@ -80,8 +80,8 @@ public class ComponentDeleteCommand implements Command {
 
     // If this isn't the driver, delete the target TreeItem and replace it with
     // a new one sporting the appropriate open uses port. If it is the driver,
-    // reinitialize the ModelTree, update the available components and deselect
-    // the component label.
+    // reinitialize the ModelTree, update the available components, deselect all
+    // labels and rebuild the labels menu.
     if (target.getParentItem() != null) {
       TreeItem parent = target.getParentItem();
       Integer targetIndex = parent.getChildIndex(target);
@@ -89,11 +89,11 @@ public class ComponentDeleteCommand implements Command {
       tree.insertTreeItem(cell.getPortId(), parent, targetIndex);
     } else {
       tree.initializeTree();
+      data.resetModelComponents(); // revert any mods to params; issue #28
       ((ComponentSelectionMenu) tree.getDriverComponentCell()
           .getComponentMenu()).updateComponents();
       try {
-        data.modelLabels.get(data.getComponent(componentId).getName())
-            .isSelected(false);
+        data.getPerspective().getLabelsMenu().resetSelections(); // issue #27
         data.getPerspective().getLabelsMenu().populateMenu();
       } catch (Exception e) {
         GWT.log(e.toString());
@@ -110,7 +110,7 @@ public class ComponentDeleteCommand implements Command {
         if (alias == null) {
           keepLooping = false;
         } else {
-          ComponentDeleteCommand cmd = new ComponentDeleteCommand(data, alias);
+          ComponentCloseCommand cmd = new ComponentCloseCommand(data, alias);
           cmd.execute(); // recursive
         }
       }

@@ -21,50 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.obsolete;
+package edu.colorado.csdms.wmt.client.ui.widgets;
 
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 
+import edu.colorado.csdms.wmt.client.data.ParameterJSO;
+
 /**
- * A class for making the menu items that appear on the {@link ModelMenu}.
+ * A cell for the first column in a ParameterTable, holding the parameter
+ * description with its units.
  * 
- * @see http://fortawesome.github.io/Font-Awesome/
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-@Deprecated
-public class ModelMenuItem extends Grid {
+public class DescriptionCell extends HTML {
 
   /**
-   * The zero-element constructor makes a separator.
-   */
-  public ModelMenuItem() {
-    super(1, 1);
-    this.setWidget(0, 0, new HTML(""));
-    this.setStyleName("wmt-ModelMenuSeparator");
-  }
-
-  /**
-   * Makes a menu item for the Model menu.
+   * Makes a DescriptionCell from the information contained in the input
+   * ParameterJSO object.
    * 
-   * @param menuText the text to display in the menu item
+   * @param parameter a ParameterJSO object
    */
-  public ModelMenuItem(String menuText) {
-    super(1, 1);
-    this.setWidget(0, 0, new HTML(menuText));
-    this.setStyleName("wmt-ModelMenuItem");
-  }
+  public DescriptionCell(ParameterJSO parameter) {
 
-  /**
-   * Makes a menu item for the Model menu that includes an icon.
-   * 
-   * @param menuText the text to display in the menu item
-   * @param faIcon a Font Awesome icon name
-   */
-  public ModelMenuItem(String menuText, String faIcon) {
-    super(1, 2);
-    this.setWidget(0, 0, new HTML("<i class='fa " + faIcon + " fa-fw'>"));
-    this.setWidget(0, 1, new HTML(menuText));
-    this.setStyleName("wmt-ModelMenuItem");
+    String units = parameter.getValue().getUnits();
+    String description = parameter.getDescription();
+
+    if (units != null) {
+      description += " (" + units + ")";
+    }
+
+    this.setHTML(description);
   }
 }

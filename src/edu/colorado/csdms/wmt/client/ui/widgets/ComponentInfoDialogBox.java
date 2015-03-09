@@ -58,6 +58,7 @@ public class ComponentInfoDialogBox extends DialogBox {
     this.setStyleName("wmt-DialogBox");
         
     grid = new Grid(LABELS.length, 1);
+    grid.setStyleName("wmt-Label");
     grid.setCellPadding(5); // px
 
     closePanel = new ClosePanel();

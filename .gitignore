@@ -1,5 +1,12 @@
 /gwt-unitCache
 /www-test
 /test-classes
+/reports
 /.gwt
 /.settings
+/war/wmt
+/war/edu.colorado.csdms.wmt.WMT.JUnit
+/war/WEB-INF/classes
+/war/WEB-INF/deploy
+
+*.jar

@@ -45,6 +45,7 @@ public class ModelMetadataJSOTest extends GWTTestCase {
   private String owner;
   private int id;
   private String name;
+  private String date;
 
   /**
    * The module that sources this class. Must be present.
@@ -61,14 +62,16 @@ public class ModelMetadataJSOTest extends GWTTestCase {
    * @param owner
    * @param id
    * @param name
+   * @param date
    * @return
    */
   private native ModelMetadataJSO testModelMetadataJSO(String owner, int id,
-      String name) /*-{
+      String name, String date) /*-{
 		return {
 			"owner" : owner,
 			"id" : id,
-			"name" : name
+			"name" : name,
+			"date" : date
 		};
   }-*/;  
   
@@ -78,7 +81,8 @@ public class ModelMetadataJSOTest extends GWTTestCase {
     owner = "foo@bar.com";
     id = 42;
     name = "Test";
-    jso = testModelMetadataJSO(owner, id, name);
+    date = "2014-09-16"; // ISO 8601
+    jso = testModelMetadataJSO(owner, id, name, date);
   }
 
   @After
@@ -134,10 +138,17 @@ public class ModelMetadataJSOTest extends GWTTestCase {
    * Test setting name.
    */
   @Test
-  public void testSetLabel() {
+  public void testSetName() {
     String newName = "Tset";
     jso.setName(newName);
     assertEquals(newName, jso.getName());
   }
 
+  /*
+   * Test getting date.
+   */
+  @Test
+  public void testGetDate() {
+    assertEquals(date, jso.getDate());
+  }
 }

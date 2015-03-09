@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui;
+package edu.colorado.csdms.wmt.client.ui.widgets;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -81,17 +81,6 @@ public class MoreActionsMenu extends PopupPanel {
     saveAsButton.addClickHandler(new ModelActionPanelSaveHandler(data, true));
     menu.add(saveAsButton);
 
-    // Duplicate
-    HTML duplicateButton = new HTML(Constants.FA_COPY + "Duplicate model...");
-    duplicateButton.setStyleName("wmt-PopupPanelItem");
-    duplicateButton.setStyleDependentName("disabled", !data.modelIsSaved());
-    duplicateButton.setTitle(Constants.MODEL_DUPLICATE);
-    if (data.modelIsSaved()) {
-      duplicateButton.addClickHandler(new ModelActionPanelSaveHandler(data,
-          true));
-    }
-    menu.add(duplicateButton);
-    
     // Delete
     HTML deleteButton = new HTML(Constants.FA_DELETE + "Delete model...");
     deleteButton.setStyleName("wmt-PopupPanelItem");
