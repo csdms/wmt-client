@@ -203,7 +203,7 @@ public class Perspective extends DockLayoutPanel {
   public void setModelPanelTitle() {
     String tabTitle = Constants.TITLE_MODEL_PANEL;
     String modelName = data.getModel().getName();
-    if (modelName != Constants.DEFAULT_MODEL_NAME) {
+    if (!modelName.equals(Constants.DEFAULT_MODEL_NAME)) {
       String marker = data.modelIsSaved() ? "" : "*";
       tabTitle += " (" + marker + modelName + ")";
 
