@@ -140,7 +140,7 @@ public class Constants {
   public static String DRIVER = "driver";
 
   // The default model name and id.
-  public static String DEFAULT_MODEL_NAME = "Model 0";
+  public static String DEFAULT_MODEL_NAME = "Model/Tool 0";
   public static Integer DEFAULT_MODEL_ID = -1;
 
   // The number of characters to display in a ComponentCell.
@@ -177,7 +177,7 @@ public class Constants {
 
   // Panel titles.
   public static String TITLE_TOP_PANEL = "The CSDMS Web Modeling Tool";
-  public static String TITLE_MODEL_PANEL = Constants.FA_COGS + "Model";
+  public static String TITLE_MODEL_PANEL = Constants.FA_COGS + "Model/Tool";
   public static String TITLE_PARAMETERS_PANEL = Constants.FA_COGS + "Parameters";
 
   // Tooltip text strings.
