@@ -175,6 +175,11 @@ public class Constants {
   public static String FA_BEER = "<i class='fa fa-beer'></i> ";
   public static String FA_RARROW = "<i class='fa fa-arrow-right'></i> ";
 
+  // Panel titles.
+  public static String TITLE_TOP_PANEL = "The CSDMS Web Modeling Tool";
+  public static String TITLE_MODEL_PANEL = Constants.FA_COGS + "Model";
+  public static String TITLE_PARAMETERS_PANEL = Constants.FA_COGS + "Parameters";
+
   // Tooltip text strings.
   public static String MODEL_OPEN = "Open an existing model.";
   public static String MODEL_SAVE = "Save the current model to the server.";
