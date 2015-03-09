@@ -1,6 +1,7 @@
 package edu.colorado.csdms.wmt.client.data;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayString;
 
 /**
  * A GWT JavaScript overlay (JSO) type that describes the JSON returned on a
@@ -34,5 +35,13 @@ public class ConfigurationJSO extends JavaScriptObject {
    */
   public final native String getApiUrl() /*-{
 		return this.api_url;
+  }-*/;
+
+  /**
+   * Gets the JsArrayString of execution servers where the CSDMS software stack
+   * is installed. This is a JSNI method.
+   */
+  public final native JsArrayString getHosts() /*-{
+		return this.execution_servers;
   }-*/;
 }

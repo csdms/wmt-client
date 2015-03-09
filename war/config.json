@@ -1,7 +1,10 @@
 {
-  "__comment__":"Configuration values used by the WMT client",
+  "title":"Configuration values used by the WMT client",
   "source":"https://github.com/csdms/wmt-client",
   "version":"1.0-beta.1",
   "release_date":"2014-09-19",
-  "api_url":"https://csdms.colorado.edu/wmt/api-dev/"
+  "api_url":"https://csdms.colorado.edu/wmt/api-dev/",
+  "execution_servers":[
+    "beach.colorado.edu"
+  ]
 }

@@ -1,0 +1,17 @@
+{
+  "name":"Vector Parameter Study",
+  "parameters":[
+    
+  ],
+  "url":"https://dakota.sandia.gov/",
+  "author":"Sandia National Laboratories",
+  "uses":[
+    {
+      "id":"component"
+    }
+  ],
+  "provides":[
+    
+  ],
+  "id":"vector_parameter_study"
+}

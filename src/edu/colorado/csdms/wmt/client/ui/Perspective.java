@@ -136,7 +136,7 @@ public class Perspective extends DockLayoutPanel {
 
       this.setStyleName("wmt-NavBar");
 
-      HTML title = new HTML("The CSDMS Web Modeling Tool");
+      HTML title = new HTML(Constants.TITLE_TOP_PANEL);
       title.setStyleName("wmt-NavBarTitle");
 
       userPanel = new UserPanel();
@@ -165,7 +165,7 @@ public class Perspective extends DockLayoutPanel {
     public ViewWest() {
       super(Constants.TAB_BAR_HEIGHT, Unit.PX);
       setModelPanel(new ScrollPanel());
-      String tabTitle = data.tabPrefix("model") + "Model";
+      String tabTitle = Constants.TITLE_MODEL_PANEL;
       this.add(scrollModel, tabTitle, true);
     }
   } // end ViewWest
@@ -182,7 +182,7 @@ public class Perspective extends DockLayoutPanel {
     public ViewEast() {
       super(Constants.TAB_BAR_HEIGHT, Unit.PX);
       setParametersPanel(new ScrollPanel());
-      String tabTitle = data.tabPrefix("parameter") + "Parameters";
+      String tabTitle = Constants.TITLE_PARAMETERS_PANEL;
       this.add(scrollParameters, tabTitle, true);
     }
   } // end ViewEast
@@ -201,9 +201,9 @@ public class Perspective extends DockLayoutPanel {
    * owned by the current user, append "read-only" to its name.
    */
   public void setModelPanelTitle() {
-    String tabTitle = data.tabPrefix("model") + "Model";
+    String tabTitle = Constants.TITLE_MODEL_PANEL;
     String modelName = data.getModel().getName();
-    if (modelName != Constants.DEFAULT_MODEL_NAME) {
+    if (!modelName.equals(Constants.DEFAULT_MODEL_NAME)) {
       String marker = data.modelIsSaved() ? "" : "*";
       tabTitle += " (" + marker + modelName + ")";
 
@@ -257,7 +257,7 @@ public class Perspective extends DockLayoutPanel {
    * @param componentId the id of the component whose parameters are displayed
    */
   public void setParameterPanelTitle(String componentId) {
-    String tabTitle = data.tabPrefix("parameter") + "Parameters";
+    String tabTitle = Constants.TITLE_PARAMETERS_PANEL;
     if (componentId != null) {
       String componentName = data.getModelComponent(componentId).getName();
       tabTitle += " (" + componentName + ")";

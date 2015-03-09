@@ -31,7 +31,6 @@ import java.util.TreeMap;
 
 import com.google.gwt.dom.client.Style.Cursor;
 
-import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
 import edu.colorado.csdms.wmt.client.data.ConfigurationJSO;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
@@ -124,23 +123,6 @@ public class DataManager {
    */
   public void showDefaultCursor() {
     perspective.getElement().getStyle().setCursor(Cursor.DEFAULT);
-  }
-  
-  /**
-   * A convenience method that returns the prefix (a String) to be displayed
-   * before the name of the tab title in the WMT interface. Currently a Font
-   * Awesome icon.
-   * 
-   * @param tabName the name of the tab: "model" or "parameter"
-   */
-  public String tabPrefix(String tabName) {
-    String prefix = "";
-    if (tabName.matches("model")) {
-      prefix = Constants.FA_COGS;
-    } else if (tabName.matches("parameter")) {
-      prefix = Constants.FA_WRENCH;
-    }
-    return prefix;
   }
 
   public SignInScreen getSignInScreen() {

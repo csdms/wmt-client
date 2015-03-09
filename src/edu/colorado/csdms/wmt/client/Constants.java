@@ -80,9 +80,6 @@ public class Constants {
   public static final String RUN_SHOW_PATH = "run/show";
   public static final String RUN_STAGE_PATH = "run/stage";
   public static final String RUN_LAUNCH_PATH = "run/launch";
-
-  // The list of available HPCC hosts with the CSDMS software stack installed.
-  public static final String HOSTS[] = {"beach.colorado.edu", "localhost"};
   
   // Error, warning, and informational messages.
   public static String REQUEST_ERR_MSG = "Failed to send the request: ";
@@ -140,7 +137,7 @@ public class Constants {
   public static String DRIVER = "driver";
 
   // The default model name and id.
-  public static String DEFAULT_MODEL_NAME = "Model 0";
+  public static String DEFAULT_MODEL_NAME = "Model/Tool 0";
   public static Integer DEFAULT_MODEL_ID = -1;
 
   // The number of characters to display in a ComponentCell.
@@ -174,6 +171,11 @@ public class Constants {
   public static String FA_USER = "<i class='fa fa-user fa-fw'></i> ";
   public static String FA_BEER = "<i class='fa fa-beer'></i> ";
   public static String FA_RARROW = "<i class='fa fa-arrow-right'></i> ";
+
+  // Panel titles.
+  public static String TITLE_TOP_PANEL = "The CSDMS Web Modeling Tool";
+  public static String TITLE_MODEL_PANEL = Constants.FA_COGS + "Model/Tool";
+  public static String TITLE_PARAMETERS_PANEL = Constants.FA_COGS + "Parameters";
 
   // Tooltip text strings.
   public static String MODEL_OPEN = "Open an existing model.";
