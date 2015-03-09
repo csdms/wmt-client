@@ -8,5 +8,6 @@
   "plume",
   "sedflux2d",
   "sedflux3d",
-  "waves"
+  "waves",
+  "vector_parameter_study"
 ]
