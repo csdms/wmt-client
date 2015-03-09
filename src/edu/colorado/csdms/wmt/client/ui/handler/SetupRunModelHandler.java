@@ -28,7 +28,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.Window;
 
-import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.ui.widgets.RunDialogBox;
 
@@ -57,20 +56,20 @@ public class SetupRunModelHandler implements ClickHandler {
 
     if (!data.security.isLoggedIn()) {
       return;
-    }    
+    }
 
     if (!data.modelIsSaved()) {
-      String msg =
-          "The model must be saved before it can be run.";
+      String msg = "The model must be saved before it can be run.";
       Window.alert(msg);
       return;
     }
-    
+
     runDialog = new RunDialogBox();
 
     // Display the list of available HPCC hosts.
-    for (int i = 0; i < Constants.HOSTS.length; i++) {
-      runDialog.getHostPanel().getDroplist().addItem(Constants.HOSTS[i]);
+    for (int i = 0; i < data.config.getHosts().length(); i++) {
+      runDialog.getHostPanel().getDroplist().addItem(
+          data.config.getHosts().get(i));
     }
 
     // Define handlers.
@@ -80,8 +79,7 @@ public class SetupRunModelHandler implements ClickHandler {
 
     // Apply handlers to OK and Cancel buttons.
     runDialog.getChoicePanel().getOkButton().addClickHandler(runHandler);
-    runDialog.getChoicePanel().getCancelButton()
-        .addClickHandler(cancelHandler);
+    runDialog.getChoicePanel().getCancelButton().addClickHandler(cancelHandler);
 
     // Also apply handlers to "Enter" and "Esc" keys.
     runDialog.addDomHandler(new ModalKeyHandler(runHandler, cancelHandler),

@@ -80,9 +80,6 @@ public class Constants {
   public static final String RUN_SHOW_PATH = "run/show";
   public static final String RUN_STAGE_PATH = "run/stage";
   public static final String RUN_LAUNCH_PATH = "run/launch";
-
-  // The list of available HPCC hosts with the CSDMS software stack installed.
-  public static final String HOSTS[] = {"beach.colorado.edu", "localhost"};
   
   // Error, warning, and informational messages.
   public static String REQUEST_ERR_MSG = "Failed to send the request: ";
