@@ -107,19 +107,21 @@ public class ParameterTable extends FlexTable {
     for (int i = 0; i < nParameters; i++) {
       ParameterJSO parameter =
           data.getModelComponent(componentId).getParameters().get(i);
-      this.setWidget(tableRowIndex, 0, new DescriptionCell(parameter));
-      if (parameter.getKey().matches("separator")) {
-        this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 2);
-        this.getFlexCellFormatter().setStyleName(tableRowIndex, 0,
-            "wmt-ParameterSeparator");
-      } else {
-        this.setWidget(tableRowIndex, 1, new ValueCell(parameter));
-        this.getFlexCellFormatter().setStyleName(tableRowIndex, 0,
-            "wmt-ParameterDescription");
-        this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
-            HasHorizontalAlignment.ALIGN_RIGHT);
+      if (parameter.isVisible()) {
+        this.setWidget(tableRowIndex, 0, new DescriptionCell(parameter));
+        if (parameter.getKey().matches("separator")) {
+          this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 2);
+          this.getFlexCellFormatter().setStyleName(tableRowIndex, 0,
+              "wmt-ParameterSeparator");
+        } else {
+          this.setWidget(tableRowIndex, 1, new ValueCell(parameter));
+          this.getFlexCellFormatter().setStyleName(tableRowIndex, 0,
+              "wmt-ParameterDescription");
+          this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
+              HasHorizontalAlignment.ALIGN_RIGHT);
+        }
+        tableRowIndex++;
       }
-      tableRowIndex++;
     }
   }
 
