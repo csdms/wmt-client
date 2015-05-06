@@ -175,7 +175,7 @@ public class Constants {
   // Panel titles.
   public static String TITLE_TOP_PANEL = "The CSDMS Web Modeling Tool";
   public static String TITLE_MODEL_PANEL = Constants.FA_COGS + "Model/Tool";
-  public static String TITLE_PARAMETERS_PANEL = Constants.FA_COGS + "Parameters";
+  public static String TITLE_PARAMETERS_PANEL = Constants.FA_WRENCH + "Parameters";
 
   // Tooltip text strings.
   public static String MODEL_OPEN = "Open an existing model.";
