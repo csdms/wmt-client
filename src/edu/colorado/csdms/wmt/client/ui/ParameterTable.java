@@ -47,6 +47,7 @@ public class ParameterTable extends FlexTable {
   public DataManager data;
   private String componentId; // the id of the displayed component
   private ParameterActionPanel actionPanel;
+  private Integer tableRowIndex; // where we are in table
 
   /**
    * Initializes a table of parameters for a single WMT model component. The
@@ -57,6 +58,7 @@ public class ParameterTable extends FlexTable {
   public ParameterTable(DataManager data) {
 
     this.data = data;
+    this.tableRowIndex = 0;
     this.setWidth("100%");
   }
 
@@ -92,14 +94,8 @@ public class ParameterTable extends FlexTable {
     // Set the component name on the tab holding the ParameterTable.
     data.getPerspective().setParameterPanelTitle(componentId);
 
-    // Keep track of where we are in the table.
-    Integer tableRowIndex = 0;
-    
-    // Add the ParameterActionPanel. Align it with the ModelActionPanel.
-    actionPanel = new ParameterActionPanel(data, componentId);
-    actionPanel.getElement().getStyle().setMarginTop(-3.0, Unit.PX);
-    this.setWidget(tableRowIndex, 0, actionPanel);
-    tableRowIndex++;
+    // Add the ParameterActionPanel and align it with the ModelActionPanel.
+    addActionPanel();
     
     // Build the parameter table.
     Integer nParameters =
@@ -123,6 +119,17 @@ public class ParameterTable extends FlexTable {
         tableRowIndex++;
       }
     }
+  }
+
+  /**
+   * Adds the {@link ParameterActionPanel} to the top of the
+   * {@link ParameterTable}.
+   */
+  private void addActionPanel() {
+    actionPanel = new ParameterActionPanel(data, componentId);
+    actionPanel.getElement().getStyle().setMarginTop(-3.0, Unit.PX);
+    this.setWidget(tableRowIndex, 0, actionPanel);
+    tableRowIndex++;
   }
 
   /**
