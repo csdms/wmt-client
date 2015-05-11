@@ -34,9 +34,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.ui.menu.LabelsSaveModelMenu;
 import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
 import edu.colorado.csdms.wmt.client.ui.panel.FieldPanel;
-import edu.colorado.csdms.wmt.client.ui.widgets.LabelsSaveModelMenu;
 
 /**
  * A customized DialogBox with a field for setting the name/description of the

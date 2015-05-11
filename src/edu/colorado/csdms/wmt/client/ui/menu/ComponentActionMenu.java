@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui.widgets;
+package edu.colorado.csdms.wmt.client.ui.menu;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -35,6 +35,7 @@ import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentCloseCommand;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentGetInformationCommand;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentShowParametersCommand;
+import edu.colorado.csdms.wmt.client.ui.widgets.ComponentCell;
 
 /**
  * A {@link PopupPanel} menu that defines actions that can be performed on a

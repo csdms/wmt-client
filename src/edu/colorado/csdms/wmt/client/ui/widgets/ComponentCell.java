@@ -35,6 +35,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.ui.ModelTree;
+import edu.colorado.csdms.wmt.client.ui.menu.ComponentSelectionMenu;
 
 /**
  * A container for displaying a model component in the {@link ModelTree}.

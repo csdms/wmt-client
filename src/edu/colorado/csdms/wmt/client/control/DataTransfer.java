@@ -58,7 +58,7 @@ import edu.colorado.csdms.wmt.client.ui.dialog.NewUserDialogBox;
 import edu.colorado.csdms.wmt.client.ui.dialog.RunInfoDialogBox;
 import edu.colorado.csdms.wmt.client.ui.handler.AddNewUserHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
-import edu.colorado.csdms.wmt.client.ui.widgets.ComponentSelectionMenu;
+import edu.colorado.csdms.wmt.client.ui.menu.ComponentSelectionMenu;
 
 /**
  * A class that defines static methods for accessing, modifying and deleting,

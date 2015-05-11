@@ -37,7 +37,7 @@ import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelOpenHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelSaveHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.SetupRunModelHandler;
-import edu.colorado.csdms.wmt.client.ui.widgets.MoreActionsMenu;
+import edu.colorado.csdms.wmt.client.ui.menu.MoreActionsMenu;
 
 /**
  * Makes a row of action buttons ("Open", "Save", "Run", etc.) for working with
