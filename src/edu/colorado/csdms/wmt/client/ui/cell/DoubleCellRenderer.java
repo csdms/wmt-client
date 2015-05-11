@@ -21,42 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui.widgets;
-
-import java.text.ParseException;
+package edu.colorado.csdms.wmt.client.ui.cell;
 
 import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.text.shared.Parser;
+import com.google.gwt.text.shared.AbstractRenderer;
+import com.google.gwt.text.shared.Renderer;
 
 /**
- * A localized parser based on {@link NumberFormat#getDecimalFormat}.
+ * A localized renderer based on {@link NumberFormat#getDecimalFormat}.
  */
-public class DoubleCellParser implements Parser<Double> {
+public class DoubleCellRenderer extends AbstractRenderer<Double> {
 
-  private static DoubleCellParser INSTANCE;
+  private static DoubleCellRenderer INSTANCE;
 
   /**
-   * Returns the instance of the no-op renderer.
+   * Returns the instance.
    */
-  public static Parser<Double> instance() {
+  public static Renderer<Double> instance() {
     if (INSTANCE == null) {
-      INSTANCE = new DoubleCellParser();
+      INSTANCE = new DoubleCellRenderer();
     }
     return INSTANCE;
   }
 
-  protected DoubleCellParser() {
+  protected DoubleCellRenderer() {
   }
 
-  public Double parse(CharSequence object) throws ParseException {
-    if ("".equals(object.toString())) {
-      return null;
+  public String render(Double object) {
+    if (object == null) {
+      return "";
     }
-
-    try {
-      return NumberFormat.getDecimalFormat().parse(object.toString());
-    } catch (NumberFormatException e) {
-      throw new ParseException(e.getMessage(), 0);
-    }
+    return NumberFormat.getFormat("#,##0.0#####").format(object);
   }
 }

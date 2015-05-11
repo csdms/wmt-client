@@ -32,8 +32,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.ui.cell.ComponentCell;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentSelectionCommand;
-import edu.colorado.csdms.wmt.client.ui.widgets.ComponentCell;
 
 /**
  * A {@link PopupPanel} menu that shows a list of components. This is the

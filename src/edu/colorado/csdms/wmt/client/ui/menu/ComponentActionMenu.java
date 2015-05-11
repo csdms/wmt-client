@@ -32,10 +32,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.ui.cell.ComponentCell;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentCloseCommand;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentGetInformationCommand;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentShowParametersCommand;
-import edu.colorado.csdms.wmt.client.ui.widgets.ComponentCell;
 
 /**
  * A {@link PopupPanel} menu that defines actions that can be performed on a

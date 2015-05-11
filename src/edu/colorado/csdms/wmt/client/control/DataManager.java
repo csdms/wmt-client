@@ -41,7 +41,7 @@ import edu.colorado.csdms.wmt.client.security.Security;
 import edu.colorado.csdms.wmt.client.ui.ModelTree;
 import edu.colorado.csdms.wmt.client.ui.Perspective;
 import edu.colorado.csdms.wmt.client.ui.SignInScreen;
-import edu.colorado.csdms.wmt.client.ui.widgets.ComponentCell;
+import edu.colorado.csdms.wmt.client.ui.cell.ComponentCell;
 
 /**
  * A class for storing and sharing data, as well as the state of UI elements,
