@@ -38,6 +38,7 @@ import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataURL;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.ModalKeyHandler;
+import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
 
 /**
  * A dialog box that shows information about a successfully submitted model

@@ -32,6 +32,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
+import edu.colorado.csdms.wmt.client.ui.panel.ClosePanel;
 
 /**
  * A dialog box that shows information about WMT.

@@ -40,6 +40,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
+import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
 
 /**
  * A dialog box with a {@link FormPanel} that holds a {@link FileUpload}

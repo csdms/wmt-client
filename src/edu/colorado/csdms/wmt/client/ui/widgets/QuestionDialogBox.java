@@ -29,6 +29,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
+
 /**
  * A {@link DialogBox} that prompts the user with a yes/no question.
  * 

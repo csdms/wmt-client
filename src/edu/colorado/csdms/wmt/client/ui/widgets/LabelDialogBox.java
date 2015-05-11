@@ -33,6 +33,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
+import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
 
 /**
  * A customized DialogBox with a {@link SuggestBox} for entering a label and a

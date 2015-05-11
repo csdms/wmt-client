@@ -21,58 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui.widgets;
+package edu.colorado.csdms.wmt.client.ui.panel;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
-import edu.colorado.csdms.wmt.client.Constants;
-
 /**
- * A HorizontalPanel with a box for displaying a username and a "Sign Out"
- * button.
+ * Makes a {@link HorizontalPanel} with a centered "Close" button. Reusable!
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class UserPanel extends HorizontalPanel {
-  
-  private HTML loginName;
-  private Button signOutButton;
+public class ClosePanel extends HorizontalPanel {
+
+  private Button button;
   
   /**
-   * Makes a new {@link UserPanel}.
+   * Makes a new {@link ClosePanel} with a centered "Close" button.
    */
-  public UserPanel() {
+  public ClosePanel() {
 
-    this.setStyleName("wmt-UserPanel");
-    this.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
- 
-    loginName = new HTML();
-    loginName.setStyleName("wmt-UserPanelButton");
+    this.setWidth("100%");
+    this.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
-    signOutButton = new Button(Constants.SIGN_OUT);
-    signOutButton.setStyleName("wmt-UserPanelButton");
-    signOutButton.addStyleDependentName("signOut");
+    button = new Button("<i class='fa fa-times'></i> Close");
+    button.getElement().getStyle().setMarginTop(1, Unit.EM);
+    button.getElement().getStyle().setMarginBottom(0.5, Unit.EM);
+    button.setStyleName("wmt-Button");
 
-    this.add(loginName);
-    this.add(signOutButton);
+    this.add(button);
   }
 
-  public HTML getLoginName() {
-    return loginName;
+  public Button getButton() {
+    return button;
   }
 
-  public void setLoginName(HTML loginName) {
-    this.loginName = loginName;
-  }
-
-  public Button getSignOutButton() {
-    return signOutButton;
-  }
-
-  public void setSignOutButton(Button signOutButton) {
-    this.signOutButton = signOutButton;
+  public void setButton(Button button) {
+    this.button = button;
   }
 }

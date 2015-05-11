@@ -29,6 +29,10 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
+import edu.colorado.csdms.wmt.client.ui.panel.DroplistPanel;
+import edu.colorado.csdms.wmt.client.ui.panel.FieldPanel;
+
 /**
  * A customized DialogBox with a droplist for choosing the host to run the
  * model, as well as input fields for logging into the host.

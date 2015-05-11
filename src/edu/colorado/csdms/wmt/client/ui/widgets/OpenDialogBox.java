@@ -38,6 +38,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
+import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
+import edu.colorado.csdms.wmt.client.ui.panel.DroplistPanel;
+import edu.colorado.csdms.wmt.client.ui.panel.MetadataPanel;
 
 /**
  * A customized DialogBox with a droplist for selecting a model and a "Labels"

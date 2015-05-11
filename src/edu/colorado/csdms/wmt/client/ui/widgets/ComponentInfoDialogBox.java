@@ -34,6 +34,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
+import edu.colorado.csdms.wmt.client.ui.panel.ClosePanel;
 
 /**
  * A dialog box used to display metadata (id, url, author, etc.) about a WMT

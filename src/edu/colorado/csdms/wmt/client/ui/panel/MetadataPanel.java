@@ -1,4 +1,4 @@
-package edu.colorado.csdms.wmt.client.ui.widgets;
+package edu.colorado.csdms.wmt.client.ui.panel;
 
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;

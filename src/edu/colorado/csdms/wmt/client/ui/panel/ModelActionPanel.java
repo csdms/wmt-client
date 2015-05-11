@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui.widgets;
+package edu.colorado.csdms.wmt.client.ui.panel;
 
 import java.util.Iterator;
 
@@ -34,80 +34,86 @@ import com.google.gwt.user.client.ui.Widget;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.handler.ParameterActionPanelResetHandler;
+import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelOpenHandler;
+import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelSaveHandler;
+import edu.colorado.csdms.wmt.client.ui.handler.SetupRunModelHandler;
+import edu.colorado.csdms.wmt.client.ui.widgets.MoreActionsMenu;
 
 /**
- * Makes a row of action buttons ("Reset", "View input files", etc.) for working
- * with the parameters of a model component in WMT.
+ * Makes a row of action buttons ("Open", "Save", "Run", etc.) for working with
+ * the model built in WMT.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class ParameterActionPanel extends HorizontalPanel {
+public class ModelActionPanel extends HorizontalPanel {
 
   private DataManager data;
-  private String componentId;
-  private ViewInputFilesMenu inputFilesMenu;
-  
+  private MoreActionsMenu moreMenu;
+
   /**
-   * Makes a new {@link ParameterActionPanel}.
+   * Makes a new {@link ModelActionPanel}.
    * 
    * @param data the DataManager instance for the WMT session
    */
-  public ParameterActionPanel(DataManager data, String componentId) {
+  public ModelActionPanel(DataManager data) {
 
     this.data = data;
-    this.componentId = componentId;
     this.setStyleName("wmt-ActionPanel");
 
-    // Reset
-    Button resetButton = new Button("<i class='fa fa-bolt'></i>");
-    resetButton.setTitle(Constants.PARAMETER_RESET);
-    resetButton.addClickHandler(new ParameterActionPanelResetHandler(this.data,
-        this.componentId));
-    this.add(resetButton);
+    // Open
+    Button openButton = new Button(Constants.FA_OPEN);
+    openButton.setTitle(Constants.MODEL_OPEN);
+    openButton.addClickHandler(new ModelActionPanelOpenHandler(data));
+    this.add(openButton);
 
-    // View input files
-    final Button viewFilesButton =
-        new Button("<i class='fa fa-external-link'></i>");
-    viewFilesButton.setTitle(Constants.PARAMETER_VIEW_FILE);
-    this.add(viewFilesButton);
-    inputFilesMenu = new ViewInputFilesMenu(this.data, this.componentId);
-    viewFilesButton.addClickHandler(new ClickHandler() {
+    // Save
+    Button saveButton = new Button(Constants.FA_SAVE);
+    saveButton.setTitle(Constants.MODEL_SAVE);
+    saveButton.addClickHandler(new ModelActionPanelSaveHandler(data));
+    this.add(saveButton);
+
+    // Run
+    Button runButton = new Button(Constants.FA_RUN);
+    runButton.setTitle(Constants.MODEL_RUN);
+    runButton.addClickHandler(new SetupRunModelHandler(data));
+    this.add(runButton);
+
+    // More
+    final Button moreButton = new Button("More" + Constants.FA_MORE);
+    moreButton.setTitle(Constants.MODEL_MORE);
+    this.add(moreButton);
+    moreMenu = new MoreActionsMenu(data);
+    moreButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
-        inputFilesMenu.populateMenu();
-        inputFilesMenu.setPopupPositionAndShow(new PositionCallback() {
-          final Integer x = viewFilesButton.getElement().getAbsoluteLeft();
-          final Integer y = viewFilesButton.getElement().getAbsoluteBottom();
+        if (!ModelActionPanel.this.data.security.isLoggedIn()) {
+          return;
+        }
+        moreMenu.populateMenu();
+        moreMenu.setPopupPositionAndShow(new PositionCallback() {
+          final Integer x = moreButton.getElement().getAbsoluteLeft();
+          final Integer y = moreButton.getElement().getAbsoluteBottom();
           @Override
           public void setPosition(int offsetWidth, int offsetHeight) {
-            inputFilesMenu.setPopupPosition(x, y);
+            moreMenu.setPopupPosition(x, y);
           }
         });
       }
     });
 
-    // Component help
-    Button helpButton = new Button(Constants.FA_HELP);
-    helpButton.setTitle(Constants.COMPONENT_INFO);
-    helpButton.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent event) {
-        ComponentInfoDialogBox componentInfoDialogBox =
-            ParameterActionPanel.this.data.getPerspective()
-                .getComponentInfoBox();
-        componentInfoDialogBox.update(ParameterActionPanel.this.data
-            .getComponent(ParameterActionPanel.this.componentId));
-        componentInfoDialogBox.center();
-      }
-    });
-    this.add(helpButton);
-    
     // Apply a style to each button.
     Iterator<Widget> iter = this.iterator();
     while (iter.hasNext()) {
       Button button = (Button) iter.next();
       button.setStyleName("wmt-ActionPanelButton");
     }
+  }
+
+  public MoreActionsMenu getMoreMenu() {
+    return moreMenu;
+  }
+
+  public void setMoreMenu(MoreActionsMenu moreMenu) {
+    this.moreMenu = moreMenu;
   }
 }

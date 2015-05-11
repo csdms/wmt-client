@@ -27,6 +27,9 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
+import edu.colorado.csdms.wmt.client.ui.panel.DroplistPanel;
+
 /**
  * A customized DialogBox with a {@link DroplistPanel} for choosing an item
  * and a {@link ChoicePanel} displaying "OK" and "Cancel" buttons.

@@ -32,8 +32,8 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
+import edu.colorado.csdms.wmt.client.ui.panel.ParameterActionPanel;
 import edu.colorado.csdms.wmt.client.ui.widgets.DescriptionCell;
-import edu.colorado.csdms.wmt.client.ui.widgets.ParameterActionPanel;
 import edu.colorado.csdms.wmt.client.ui.widgets.ValueCell;
 
 /**
