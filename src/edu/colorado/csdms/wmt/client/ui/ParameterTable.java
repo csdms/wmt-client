@@ -113,6 +113,7 @@ public class ParameterTable extends FlexTable {
    * {@link ParameterTable}.
    */
   private void addActionPanel() {
+    Window.alert("Row index = " + tableRowIndex);
     actionPanel = new ParameterActionPanel(data, componentId);
     actionPanel.getElement().getStyle().setMarginTop(-3.0, Unit.PX);
     this.setWidget(tableRowIndex, 0, actionPanel);
@@ -176,6 +177,7 @@ public class ParameterTable extends FlexTable {
   public void clearTable() {
     this.setComponentId(null);
     data.getPerspective().setParameterPanelTitle(null);
+    this.tableRowIndex = 0;
     this.removeAllRows();
     this.clear(true);
   }
