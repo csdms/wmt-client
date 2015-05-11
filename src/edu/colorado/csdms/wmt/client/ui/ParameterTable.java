@@ -65,6 +65,7 @@ public class ParameterTable extends FlexTable {
   /**
    * A worker that displays an informational message in the ParameterTable.
    */
+  @Deprecated
   public void showInfoMessage() {
     HTML infoMessage =
         new HTML("Select a model component to view and edit its parameters");
