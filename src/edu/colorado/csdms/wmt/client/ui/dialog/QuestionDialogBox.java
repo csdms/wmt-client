@@ -21,67 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui.widgets;
+package edu.colorado.csdms.wmt.client.ui.dialog;
 
-import java.util.Map;
-
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
-import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.data.LabelJSO;
 import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
 
 /**
- * A customized DialogBox with a {@link SuggestBox} for entering a label and a
- * {@link ChoicePanel} displaying "OK" and "Cancel" buttons.
+ * A {@link DialogBox} that prompts the user with a yes/no question.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class LabelDialogBox extends DialogBox {
+public class QuestionDialogBox extends DialogBox {
 
-  @SuppressWarnings("unused")
-  private DataManager data;
-  private SuggestBox suggestBox;
+  private HTML questionHtml;
   private ChoicePanel choicePanel;
   
   /**
-   * Makes a new {@link LabelDialogBox}.
+   * Makes a new {@link QuestionDialogBox}.
    * 
-   * @param data the DataManager object for the WMT session
+   * @param question the question to be displayed, a String
    */
-  public LabelDialogBox(DataManager data) {
+  public QuestionDialogBox(String question) {
 
     super(false); // autohide
     this.setModal(true);
-    this.data = data;
-
-    // OMG is this fun!
-    MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-    for (Map.Entry<String, LabelJSO> entry : data.modelLabels.entrySet()) {
-      oracle.add(entry.getKey());
-    }
+    this.setStyleName("wmt-DialogBox");
+    this.setText("Question");
     
-    suggestBox = new SuggestBox(oracle);
+    questionHtml = new HTML(question);
     choicePanel = new ChoicePanel();
-
+    
     VerticalPanel contents = new VerticalPanel();
     contents.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-    contents.add(suggestBox);
+    contents.add(questionHtml);
     contents.add(choicePanel);
 
-    this.setWidget(contents);
+    questionHtml.setStyleName("wmt-Label");
+    questionHtml.getElement().getStyle().setPadding(1, Unit.EM);
+    
+    this.setWidget(contents);    
   }
 
-  public SuggestBox getSuggestBox() {
-    return suggestBox;
+  public HTML getQuestionHtml() {
+    return questionHtml;
   }
 
-  public void setSuggestBox(SuggestBox box) {
-    this.suggestBox = box;
+  public void setQuestionHtml(HTML questionHtml) {
+    this.questionHtml = questionHtml;
   }
 
   public ChoicePanel getChoicePanel() {

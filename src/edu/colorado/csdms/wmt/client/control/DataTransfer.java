@@ -54,11 +54,11 @@ import edu.colorado.csdms.wmt.client.data.LabelQueryJSO;
 import edu.colorado.csdms.wmt.client.data.ModelJSO;
 import edu.colorado.csdms.wmt.client.data.ModelListJSO;
 import edu.colorado.csdms.wmt.client.data.ModelMetadataJSO;
+import edu.colorado.csdms.wmt.client.ui.dialog.NewUserDialogBox;
+import edu.colorado.csdms.wmt.client.ui.dialog.RunInfoDialogBox;
 import edu.colorado.csdms.wmt.client.ui.handler.AddNewUserHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
 import edu.colorado.csdms.wmt.client.ui.widgets.ComponentSelectionMenu;
-import edu.colorado.csdms.wmt.client.ui.widgets.NewUserDialogBox;
-import edu.colorado.csdms.wmt.client.ui.widgets.RunInfoDialogBox;
 
 /**
  * A class that defines static methods for accessing, modifying and deleting,

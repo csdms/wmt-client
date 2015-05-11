@@ -39,6 +39,7 @@ import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
+import edu.colorado.csdms.wmt.client.ui.dialog.LabelDialogBox;
 import edu.colorado.csdms.wmt.client.ui.handler.DialogCancelHandler;
 
 /**

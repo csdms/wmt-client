@@ -42,12 +42,12 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
+import edu.colorado.csdms.wmt.client.ui.dialog.ComponentInfoDialogBox;
+import edu.colorado.csdms.wmt.client.ui.dialog.OpenDialogBox;
 import edu.colorado.csdms.wmt.client.ui.panel.ModelActionPanel;
 import edu.colorado.csdms.wmt.client.ui.panel.UserPanel;
-import edu.colorado.csdms.wmt.client.ui.widgets.ComponentInfoDialogBox;
 import edu.colorado.csdms.wmt.client.ui.widgets.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.widgets.LabelsMenu;
-import edu.colorado.csdms.wmt.client.ui.widgets.OpenDialogBox;
 
 /**
  * Defines the initial layout of views (a perspective, in Eclipse parlance)

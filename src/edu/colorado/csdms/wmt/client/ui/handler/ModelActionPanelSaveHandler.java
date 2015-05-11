@@ -31,7 +31,7 @@ import com.google.gwt.user.client.Window;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
-import edu.colorado.csdms.wmt.client.ui.widgets.SaveDialogBox;
+import edu.colorado.csdms.wmt.client.ui.dialog.SaveDialogBox;
 
 /**
  * Handles click on the "Save" or "Save As..." buttons in the ModelActionPanel.

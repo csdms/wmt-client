@@ -21,58 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui.widgets;
+package edu.colorado.csdms.wmt.client.ui.dialog;
 
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
+import edu.colorado.csdms.wmt.client.ui.panel.DroplistPanel;
 
 /**
- * A {@link DialogBox} that prompts the user with a yes/no question.
+ * A customized DialogBox with a {@link DroplistPanel} for choosing an item
+ * and a {@link ChoicePanel} displaying "OK" and "Cancel" buttons.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class QuestionDialogBox extends DialogBox {
+public class DroplistDialogBox extends DialogBox {
 
-  private HTML questionHtml;
+  private DroplistPanel itemPanel;
   private ChoicePanel choicePanel;
   
   /**
-   * Makes a new {@link QuestionDialogBox}.
-   * 
-   * @param question the question to be displayed, a String
+   * Makes a new DroplistDialogBox with default settings in the
+   * {@link DroplistPanel} and {@link ChoicePanel}.
    */
-  public QuestionDialogBox(String question) {
+  public DroplistDialogBox() {
 
     super(false); // autohide
     this.setModal(true);
     this.setStyleName("wmt-DialogBox");
-    this.setText("Question");
-    
-    questionHtml = new HTML(question);
+
+    itemPanel = new DroplistPanel();
     choicePanel = new ChoicePanel();
-    
+
     VerticalPanel contents = new VerticalPanel();
     contents.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-    contents.add(questionHtml);
+    contents.add(itemPanel);
     contents.add(choicePanel);
 
-    questionHtml.setStyleName("wmt-Label");
-    questionHtml.getElement().getStyle().setPadding(1, Unit.EM);
-    
-    this.setWidget(contents);    
+    this.setWidget(contents);
   }
 
-  public HTML getQuestionHtml() {
-    return questionHtml;
+  public DroplistPanel getDroplistPanel() {
+    return itemPanel;
   }
 
-  public void setQuestionHtml(HTML questionHtml) {
-    this.questionHtml = questionHtml;
+  public void setDroplistPanel(DroplistPanel itemPanel) {
+    this.itemPanel = itemPanel;
   }
 
   public ChoicePanel getChoicePanel() {

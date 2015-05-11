@@ -21,71 +21,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui.widgets;
+package edu.colorado.csdms.wmt.client.ui.dialog;
 
-import com.google.gwt.dom.client.Style.Unit;
+import java.util.Map;
+
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import edu.colorado.csdms.wmt.client.Constants;
+import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.data.LabelJSO;
 import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
-import edu.colorado.csdms.wmt.client.ui.panel.FieldPanel;
 
 /**
- * A {@link DialogBox} that prompts a user to reenter their password when
- * creating a new WMT sign in.
+ * A customized DialogBox with a {@link SuggestBox} for entering a label and a
+ * {@link ChoicePanel} displaying "OK" and "Cancel" buttons.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class NewUserDialogBox extends DialogBox {
+public class LabelDialogBox extends DialogBox {
 
-  private FieldPanel passwordPanel;
+  @SuppressWarnings("unused")
+  private DataManager data;
+  private SuggestBox suggestBox;
   private ChoicePanel choicePanel;
   
   /**
-   * Creates a {@link NewUserDialogBox}.
+   * Makes a new {@link LabelDialogBox}.
    * 
    * @param data the DataManager object for the WMT session
    */
-  public NewUserDialogBox() {
+  public LabelDialogBox(DataManager data) {
 
     super(false); // autohide
     this.setModal(true);
-    this.setText("New User");
-    this.setStyleName("wmt-DialogBox");
+    this.data = data;
+
+    // OMG is this fun!
+    MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+    for (Map.Entry<String, LabelJSO> entry : data.modelLabels.entrySet()) {
+      oracle.add(entry.getKey());
+    }
     
-    String msg = "This email address is not registered with WMT."
-        + " If you would like to use this address as your sign in,"
-        + " please reenter your password below and click \"New User\";"
-        + " if not, click \"Cancel\".";
-    HTML msgHtml = new HTML(msg);
-    
-    passwordPanel = new FieldPanel(true); // uses PasswordTextBox
-    passwordPanel.getLabel().setText("Reenter password:");
-    
+    suggestBox = new SuggestBox(oracle);
     choicePanel = new ChoicePanel();
-    choicePanel.getOkButton().setHTML(Constants.FA_USER + "New User");
-    
+
     VerticalPanel contents = new VerticalPanel();
-    contents.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-    contents.setWidth("30em");
-    contents.setSpacing(5); // px
-    contents.getElement().getStyle().setPaddingTop(5.0, Unit.PX);
-    contents.add(msgHtml);
-    contents.add(passwordPanel);
+    contents.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+    contents.add(suggestBox);
     contents.add(choicePanel);
 
     this.setWidget(contents);
   }
 
-  public FieldPanel getPasswordPanel() {
-    return passwordPanel;
+  public SuggestBox getSuggestBox() {
+    return suggestBox;
   }
 
-  public void setPasswordPanel(FieldPanel passwordPanel) {
-    this.passwordPanel = passwordPanel;
+  public void setSuggestBox(SuggestBox box) {
+    this.suggestBox = box;
   }
 
   public ChoicePanel getChoicePanel() {

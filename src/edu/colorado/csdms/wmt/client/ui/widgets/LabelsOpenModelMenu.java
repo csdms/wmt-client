@@ -37,6 +37,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
+import edu.colorado.csdms.wmt.client.ui.dialog.OpenDialogBox;
 
 /**
  * Encapsulates an alphabetized, scrollable list of labels used to tag and

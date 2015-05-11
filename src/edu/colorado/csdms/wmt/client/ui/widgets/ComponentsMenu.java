@@ -33,6 +33,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
+import edu.colorado.csdms.wmt.client.ui.dialog.ComponentInfoDialogBox;
 
 /**
  * Encapsulates an alphabetized, scrollable list of components.

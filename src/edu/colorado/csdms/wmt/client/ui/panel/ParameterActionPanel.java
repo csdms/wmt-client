@@ -34,8 +34,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.ui.dialog.ComponentInfoDialogBox;
 import edu.colorado.csdms.wmt.client.ui.handler.ParameterActionPanelResetHandler;
-import edu.colorado.csdms.wmt.client.ui.widgets.ComponentInfoDialogBox;
 import edu.colorado.csdms.wmt.client.ui.widgets.ViewInputFilesMenu;
 
 /**

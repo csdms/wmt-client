@@ -29,7 +29,7 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.Window;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.widgets.RunDialogBox;
+import edu.colorado.csdms.wmt.client.ui.dialog.RunDialogBox;
 
 /**
  * Displays the {@link RunDialogBox}, which allows a user to login to a 

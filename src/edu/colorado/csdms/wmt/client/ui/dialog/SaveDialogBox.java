@@ -21,10 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package edu.colorado.csdms.wmt.client.ui.widgets;
+package edu.colorado.csdms.wmt.client.ui.dialog;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -32,60 +30,57 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.control.DataTransfer;
 import edu.colorado.csdms.wmt.client.ui.panel.ChoicePanel;
-import edu.colorado.csdms.wmt.client.ui.panel.DroplistPanel;
-import edu.colorado.csdms.wmt.client.ui.panel.MetadataPanel;
+import edu.colorado.csdms.wmt.client.ui.panel.FieldPanel;
+import edu.colorado.csdms.wmt.client.ui.widgets.LabelsSaveModelMenu;
 
 /**
- * A customized DialogBox with a droplist for selecting a model and a "Labels"
- * button for selecting labels, used to filter the list of models displayed in
- * the droplist. "OK" and "Cancel" buttons are shown on the bottom of the
- * dialog.
+ * A customized DialogBox with a field for setting the name/description of the
+ * model, and a "Labels" button for applying labels to the model (used for
+ * filtering). "OK" and "Cancel" buttons are shown on the bottom of the dialog.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
-public class OpenDialogBox extends DialogBox {
-
+public class SaveDialogBox extends DialogBox {
+  
+  @SuppressWarnings("unused")
   private DataManager data;
-  private DroplistPanel droplistPanel;
+  private FieldPanel namePanel;
   private ChoicePanel choicePanel;
-  private MetadataPanel metadataPanel;
-  private LabelsOpenModelMenu labelsMenu;
+  private LabelsSaveModelMenu labelsMenu;
   
   /**
-   * Makes an {@link OpenDialogBox}.
+   * Makes a {@link SaveDialogBox} with a default name.
    * 
    * @param data the DataManager object for the WMT session
    */
-  public OpenDialogBox(DataManager data) {
-    
+  public SaveDialogBox(DataManager data) {
+    this(data, Constants.DEFAULT_MODEL_NAME);
+  }
+  
+  /**
+   * Makes a SaveDialogBox with a user-supplied name.
+   * 
+   * @param data the DataManager object for the WMT session
+   * @param modelName a descriptive name for the model
+   */
+  public SaveDialogBox(DataManager data, String modelName) {
+
     super(false); // autohide
     this.setModal(true);
+    this.setText("Save Model As...");
     this.setStyleName("wmt-DialogBox");
-    this.setText("Open Model...");
     this.data = data;
-    data.getPerspective().setOpenDialogBox(this);
-    
-    droplistPanel = new DroplistPanel();
-    droplistPanel.getDroplist().addChangeHandler(new ChangeHandler() {
-      @Override
-      public void onChange(ChangeEvent event) {
-        ListBox droplist = (ListBox) event.getSource();
-        String modelName = droplist.getItemText(droplist.getSelectedIndex());
-        metadataPanel.setOwner(OpenDialogBox.this.data.findModel(modelName).getOwner());
-        metadataPanel.setDate(OpenDialogBox.this.data.findModel(modelName).getDate());
-      }
-    });
+
+    namePanel = new FieldPanel(modelName);
 
     final Button labelsButton = new Button(Constants.FA_TAGS + "Labels");
     labelsButton.setStyleName("wmt-Button");
-    labelsMenu = new LabelsOpenModelMenu(data, this);
+    labelsMenu = new LabelsSaveModelMenu(data);
     labelsButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
@@ -99,42 +94,31 @@ public class OpenDialogBox extends DialogBox {
         });
       }
     });
-    
+
     HorizontalPanel row = new HorizontalPanel();
     row.setSpacing(5); // px
-    row.add(droplistPanel);
+    row.add(namePanel);
     row.add(labelsButton);
     row.setCellVerticalAlignment(labelsButton,
         HasVerticalAlignment.ALIGN_MIDDLE);
 
-    metadataPanel = new MetadataPanel();
-    
     choicePanel = new ChoicePanel();
-    choicePanel.getOkButton().setHTML(Constants.FA_OPEN + "Open");
+    choicePanel.getOkButton().setHTML(Constants.FA_SAVE + "Save");
 
     VerticalPanel contents = new VerticalPanel();
     contents.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
     contents.add(row);
-    contents.add(metadataPanel);
     contents.add(choicePanel);
 
     this.setWidget(contents);
   }
 
-  /**
-   * A helper that loads the {@link OpenDialogBox} droplist with model names.
-   * By default, only models that are owned by the current user are displayed.
-   */
-  public void populateDroplist() {
-    DataTransfer.queryModelLabels(data, labelsMenu.getSelectedLabelIds());
-  }
-  
-  public DroplistPanel getDroplistPanel() {
-    return droplistPanel;
+  public FieldPanel getNamePanel() {
+    return namePanel;
   }
 
-  public void setDroplistPanel(DroplistPanel droplistPanel) {
-    this.droplistPanel = droplistPanel;
+  public void setNamePanel(FieldPanel namePanel) {
+    this.namePanel = namePanel;
   }
 
   public ChoicePanel getChoicePanel() {
@@ -143,21 +127,5 @@ public class OpenDialogBox extends DialogBox {
 
   public void setChoicePanel(ChoicePanel choicePanel) {
     this.choicePanel = choicePanel;
-  }
-
-  public LabelsOpenModelMenu getLabelsMenu() {
-    return labelsMenu;
-  }
-
-  public void setLabelsMenu(LabelsOpenModelMenu labelsMenu) {
-    this.labelsMenu = labelsMenu;
-  }
-
-  public MetadataPanel getMetadataPanel() {
-    return metadataPanel;
-  }
-
-  public void setMetadataPanel(MetadataPanel metadataPanel) {
-    this.metadataPanel = metadataPanel;
   }
 }
