@@ -28,7 +28,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.widgets.OpenDialogBox;
+import edu.colorado.csdms.wmt.client.ui.dialog.OpenDialogBox;
 
 /**
  * Handles click on the "Open Model..." button in the ModelActionPanel. Displays

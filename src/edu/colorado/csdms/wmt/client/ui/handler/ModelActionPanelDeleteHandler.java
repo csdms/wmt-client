@@ -30,7 +30,7 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ModelListJSO;
-import edu.colorado.csdms.wmt.client.ui.widgets.DroplistDialogBox;
+import edu.colorado.csdms.wmt.client.ui.dialog.DroplistDialogBox;
 
 /**
  * Handles click on the "Delete" button in the ModelActionPanel. It presents an

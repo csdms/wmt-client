@@ -28,7 +28,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
-import edu.colorado.csdms.wmt.client.ui.widgets.OpenDialogBox;
+import edu.colorado.csdms.wmt.client.ui.dialog.OpenDialogBox;
 
 /**
  * Handles click on the "OK" button in the open dialog that appears when the

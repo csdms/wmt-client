@@ -27,7 +27,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.widgets.HelpDialogBox;
+import edu.colorado.csdms.wmt.client.ui.dialog.HelpDialogBox;
 
 /**
  * Handles click on "Help" button in the ModelActionPanel.

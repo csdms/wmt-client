@@ -29,7 +29,7 @@ import com.google.gwt.user.client.Window;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
-import edu.colorado.csdms.wmt.client.ui.widgets.NewUserDialogBox;
+import edu.colorado.csdms.wmt.client.ui.dialog.NewUserDialogBox;
 
 /**
  * Handles adding a new user login to WMT.
