@@ -14,7 +14,8 @@
   ],
   "provides":[
     {
-      "id":"discharge"
+      "id":"discharge",
+      "id":"component"
     }
   ],
   "parameters":[
