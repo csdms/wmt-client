@@ -1,7 +1,39 @@
 {
   "name":"Vector Parameter Study",
   "parameters":[
-    
+    {
+      "value":{
+        "default":"",
+        "type":"string"
+      },
+      "name":"Run Parameters",
+      "key":"separator",
+      "description":"Run Parameters"
+    },
+    {
+      "value":{
+        "default":"Vector Parameter Study",
+        "type":"string"
+      },
+      "name":"Simulation name",
+      "key":"simulation_name",
+      "description":"Name of the simulation",
+      "visible":false
+    },
+    {
+      "value":{
+        "default":100,
+        "units":"yr",
+        "range":{
+          "max":100000,
+          "min":0
+        },
+        "type":"int"
+      },
+      "name":"Run duration",
+      "key":"run_duration",
+      "description":"Simulation run time"
+    }
   ],
   "url":"https://dakota.sandia.gov/",
   "author":"Sandia National Laboratories",
