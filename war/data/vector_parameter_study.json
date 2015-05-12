@@ -61,6 +61,11 @@
       "key":"parameter1",
       "name":"Parameter 1",
       "description":"Parameter name",
+      "group":{
+        "name":"parameter1",
+        "leader":true,
+        "members":2
+      },
       "value":{
         "type":"choice",
         "default":"starting_mean_annual_temperature",
@@ -80,7 +85,9 @@
       "key":"initial_point1",
       "name":"Parameter 1 initial value",
       "description":"initial value",
-      "group":"parameter1",
+      "group":{
+        "name":"parameter1"
+      },
       "value":{
         "type":"float",
         "default":0.0,
@@ -94,7 +101,9 @@
       "key":"final_point1",
       "name":"Parameter 1 final value",
       "description":"final value",
-      "group":"parameter1",
+      "group":{
+        "name":"parameter1"
+      },
       "value":{
         "type":"float",
         "default":0.0,
@@ -108,11 +117,16 @@
       "key":"parameter2",
       "name":"Parameter 2",
       "description":"Parameter name",
+      "group":{
+        "name":"parameter2",
+        "leader":true,
+        "members":2
+      },
       "value":{
         "type":"choice",
-        "default":"---",
+        "default":"",
         "choices":[
-          "---",
+          "",
           "starting_mean_annual_temperature",
           "standard_deviation_of_mean_annual_temperature",
           "total_annual_precipitation",
@@ -127,7 +141,10 @@
     {
       "key":"initial_point2",
       "name":"Parameter 2 initial value",
-      "description":"Initial value",
+      "description":"initial value",
+      "group":{
+        "name":"parameter2"
+      },
       "value":{
         "type":"float",
         "default":0.0,
@@ -140,7 +157,10 @@
     {
       "key":"final_point2",
       "name":"Parameter 2 final value",
-      "description":"Final value",
+      "description":"final value",
+      "group":{
+        "name":"parameter2"
+      },
       "value":{
         "type":"float",
         "default":0.0,
@@ -163,6 +183,11 @@
       "key":"response1",
       "name":"Output 1",
       "description":"Parameter name",
+      "group":{
+        "name":"response1",
+        "leader":true,
+        "members":1
+      },
       "value":{
         "type":"choice",
         "default":"channel_outflow_end_water__discharge",
@@ -176,7 +201,10 @@
     {
       "key":"statistic1",
       "name":"Statistic 1",
-      "description":"Statistic",
+      "description":"computed statistic",
+      "group":{
+        "name":"response1"
+      },
       "value":{
         "type":"choice",
         "default":"mean",
@@ -193,11 +221,16 @@
       "key":"response2",
       "name":"Output 2",
       "description":"Parameter name",
+      "group":{
+        "name":"response2",
+        "leader":true,
+        "members":1
+      },
       "value":{
         "type":"choice",
-        "default":"---",
+        "default":"<choose parameter>",
         "choices":[
-          "---",
+          "<choose parameter>",
           "channel_outflow_end_water__discharge",
           "channel_outflow_end_suspended_sediment__discharge",
           "channel_outflow_end_bed_load_sediment__mass_flow_rate"
@@ -207,7 +240,10 @@
     {
       "key":"statistic2",
       "name":"Statistic 2",
-      "description":"Statistic",
+      "description":"computed statistic",
+      "group":{
+        "name":"response1"
+      },
       "value":{
         "type":"choice",
         "default":"mean",
