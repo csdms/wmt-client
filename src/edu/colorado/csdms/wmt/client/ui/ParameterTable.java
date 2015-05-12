@@ -1,7 +1,11 @@
 package edu.colorado.csdms.wmt.client.ui;
 
+import java.util.ArrayList;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
@@ -104,19 +108,52 @@ public class ParameterTable extends FlexTable {
    */
   private void addTableEntry(ParameterJSO parameter) {
 
+    // Short-circuit if the parameter isn't visible.
     if (!parameter.isVisible()) {
       return;
     }
 
+    // Short circuit if the parameter is a separator.
     if (parameter.getKey().matches("separator")) {
       this.setWidget(tableRowIndex, 0, new SeparatorCell(parameter));
       this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 2);
-    } else {
-      this.setWidget(tableRowIndex, 0, new DescriptionCell(parameter));
-      this.setWidget(tableRowIndex, 1, new ValueCell(parameter));
-      this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
-          HasHorizontalAlignment.ALIGN_RIGHT);
+      tableRowIndex++;
+      return;
     }
+
+    final DescriptionCell descriptionCell = new DescriptionCell(parameter);
+    this.setWidget(tableRowIndex, 0, descriptionCell);
+    this.setWidget(tableRowIndex, 1, new ValueCell(parameter));
+    this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
+        HasHorizontalAlignment.ALIGN_RIGHT);
+
+    if ((parameter.hasGroup()) && (!parameter.isGroupLeader())) {
+      this.getRowFormatter().setVisible(tableRowIndex, false);
+    }
+
+    if (parameter.isGroupLeader()) {
+      ArrayList<Integer> groupRows = new ArrayList<Integer>();
+      for (int i = 0; i < parameter.nGroupMembers(); i++) {
+        groupRows.add(tableRowIndex + i + 1);
+      }
+      descriptionCell.setGroupRows(groupRows);
+
+      descriptionCell.addDomHandler(new ClickHandler() {
+        @Override
+        public void onClick(ClickEvent event) {
+          RowFormatter rowFormatter = ParameterTable.this.getRowFormatter();
+          ArrayList<Integer> theRows = descriptionCell.getGroupRows();
+          for (Integer row : theRows) {
+            rowFormatter.setVisible(row, !rowFormatter.isVisible(row));
+          }
+          descriptionCell.areGroupRowsVisible(!descriptionCell
+              .areGroupRowsVisible());
+          descriptionCell.setStyleDependentName("groupLeader-open",
+              descriptionCell.areGroupRowsVisible());
+        }
+      }, ClickEvent.getType());
+    }
+
     tableRowIndex++;
   }
 
