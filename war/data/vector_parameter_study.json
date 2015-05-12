@@ -79,7 +79,7 @@
     {
       "key":"initial_point1",
       "name":"Parameter 1 initial value",
-      "description":"- initial value",
+      "description":"initial value",
       "group":"parameter1",
       "value":{
         "type":"float",
@@ -93,7 +93,7 @@
     {
       "key":"final_point1",
       "name":"Parameter 1 final value",
-      "description":"- final value",
+      "description":"final value",
       "group":"parameter1",
       "value":{
         "type":"float",

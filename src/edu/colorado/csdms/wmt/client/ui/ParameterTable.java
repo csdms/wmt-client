@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
 import edu.colorado.csdms.wmt.client.ui.cell.DescriptionCell;
+import edu.colorado.csdms.wmt.client.ui.cell.SeparatorCell;
 import edu.colorado.csdms.wmt.client.ui.cell.ValueCell;
 import edu.colorado.csdms.wmt.client.ui.panel.ParameterActionPanel;
 
@@ -107,19 +108,12 @@ public class ParameterTable extends FlexTable {
       return;
     }
 
-    this.setWidget(tableRowIndex, 0, new DescriptionCell(parameter));
     if (parameter.getKey().matches("separator")) {
+      this.setWidget(tableRowIndex, 0, new SeparatorCell(parameter));
       this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 2);
-      this.getFlexCellFormatter().setStyleName(tableRowIndex, 0,
-          "wmt-ParameterSeparator");
     } else {
+      this.setWidget(tableRowIndex, 0, new DescriptionCell(parameter));
       this.setWidget(tableRowIndex, 1, new ValueCell(parameter));
-      this.getFlexCellFormatter().setStyleName(tableRowIndex, 0,
-          "wmt-ParameterDescription");
-      if (parameter.getGroup() != null) {
-        this.getFlexCellFormatter().addStyleName(tableRowIndex, 0,
-            "wmt-ParameterDescription-group");
-      }
       this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
           HasHorizontalAlignment.ALIGN_RIGHT);
     }

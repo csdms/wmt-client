@@ -349,8 +349,15 @@ body, table td, select, button {
    padding: 0 1em 0 1.5em;
    color: colorAcquaProfonda;
 }
+.wmt-ParameterDescription-group:before {
+   font-family: "FontAwesome";
+   font-style: normal;
+   content: "\f101"; /* fa- */
+   margin-right: 5px;
+}
 .wmt-ParameterDescription-group {
-   padding-left: 3.5em
+   padding-left: 3.5em;
+   vertical-align: middle;
 }
 
 /* Separates parameter groups in the ParameterTable. */
