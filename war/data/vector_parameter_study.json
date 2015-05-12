@@ -2,44 +2,234 @@
   "name":"Vector Parameter Study",
   "parameters":[
     {
-      "value":{
-        "default":"",
-        "type":"string"
-      },
-      "name":"Run Parameters",
       "key":"separator",
-      "description":"Run Parameters"
-    },
-    {
+      "name":"Run Parameters",
+      "description":"Run Parameters",
       "value":{
-        "default":"Vector Parameter Study",
-        "type":"string"
+        "type":"string",
+        "default":""
       },
-      "name":"Simulation name",
-      "key":"simulation_name",
-      "description":"Name of the simulation",
       "visible":false
     },
     {
-      "value":{
-        "default":100,
-        "units":"yr",
-        "range":{
-          "max":100000,
-          "min":0
-        },
-        "type":"int"
-      },
-      "name":"Run duration",
       "key":"run_duration",
-      "description":"Simulation run time"
+      "name":"Run duration",
+      "description":"Simulation run time",
+      "value":{
+        "type":"float",
+        "default":365.0,
+        "range":{
+          "min":1.0,
+          "max":36500.0
+        },
+        "units":"d"
+      },
+      "visible":false
+    },
+    {
+      "key":"separator",
+      "name":"Method Parameters",
+      "description":"Method Parameters",
+      "value":{
+        "type":"string",
+        "default":""
+      }
+    },
+    {
+      "key":"n_steps",
+      "name":"Steps",
+      "description":"Number of steps along vector",
+      "value":{
+        "type":"int",
+        "default":4,
+        "range":{
+          "min":1,
+          "max":1000
+        }
+      }
+    },
+    {
+      "key":"separator",
+      "name":"Input Parameters",
+      "description":"Inputs",
+      "value":{
+        "type":"string",
+        "default":""
+      }
+    },
+    {
+      "key":"parameter1",
+      "name":"Parameter 1",
+      "description":"Parameter name",
+      "value":{
+        "type":"choice",
+        "default":"starting_mean_annual_temperature",
+        "choices":[
+          "starting_mean_annual_temperature",
+          "standard_deviation_of_mean_annual_temperature",
+          "total_annual_precipitation",
+          "standard_deviation_of_total_annual_precipitation",
+          "base_flow",
+          "river_mean_velocity",
+          "hydraulic_conductivity",
+          "bqrt_anthropogenic_factor"
+        ]
+      }
+    },
+    {
+      "key":"initial_point1",
+      "name":"Parameter 1 initial value",
+      "description":"- initial value",
+      "group":"parameter1",
+      "value":{
+        "type":"float",
+        "default":0.0,
+        "range":{
+          "min":0.0,
+          "max":1000.0
+        }
+      }
+    },
+    {
+      "key":"final_point1",
+      "name":"Parameter 1 final value",
+      "description":"- final value",
+      "group":"parameter1",
+      "value":{
+        "type":"float",
+        "default":0.0,
+        "range":{
+          "min":0.0,
+          "max":1000.0
+        }
+      }
+    },
+    {
+      "key":"parameter2",
+      "name":"Parameter 2",
+      "description":"Parameter name",
+      "value":{
+        "type":"choice",
+        "default":"---",
+        "choices":[
+          "---",
+          "starting_mean_annual_temperature",
+          "standard_deviation_of_mean_annual_temperature",
+          "total_annual_precipitation",
+          "standard_deviation_of_total_annual_precipitation",
+          "base_flow",
+          "river_mean_velocity",
+          "hydraulic_conductivity",
+          "bqrt_anthropogenic_factor"
+        ]
+      }
+    },
+    {
+      "key":"initial_point2",
+      "name":"Parameter 2 initial value",
+      "description":"Initial value",
+      "value":{
+        "type":"float",
+        "default":0.0,
+        "range":{
+          "min":0.0,
+          "max":1000.0
+        }
+      }
+    },
+    {
+      "key":"final_point2",
+      "name":"Parameter 2 final value",
+      "description":"Final value",
+      "value":{
+        "type":"float",
+        "default":0.0,
+        "range":{
+          "min":0.0,
+          "max":1000.0
+        }
+      }
+    },
+    {
+      "key":"separator",
+      "name":"Output Parameters",
+      "description":"Outputs",
+      "value":{
+        "type":"string",
+        "default":""
+      }
+    },
+    {
+      "key":"response1",
+      "name":"Output 1",
+      "description":"Parameter name",
+      "value":{
+        "type":"choice",
+        "default":"channel_outflow_end_water__discharge",
+        "choices":[
+          "channel_outflow_end_water__discharge",
+          "channel_outflow_end_suspended_sediment__discharge",
+          "channel_outflow_end_bed_load_sediment__mass_flow_rate"
+        ]
+      }
+    },
+    {
+      "key":"statistic1",
+      "name":"Statistic 1",
+      "description":"Statistic",
+      "value":{
+        "type":"choice",
+        "default":"mean",
+        "choices":[
+          "mean",
+          "median",
+          "sum",
+          "std",
+          "max"
+        ]
+      }
+    },
+    {
+      "key":"response2",
+      "name":"Output 2",
+      "description":"Parameter name",
+      "value":{
+        "type":"choice",
+        "default":"---",
+        "choices":[
+          "---",
+          "channel_outflow_end_water__discharge",
+          "channel_outflow_end_suspended_sediment__discharge",
+          "channel_outflow_end_bed_load_sediment__mass_flow_rate"
+        ]
+      }
+    },
+    {
+      "key":"statistic2",
+      "name":"Statistic 2",
+      "description":"Statistic",
+      "value":{
+        "type":"choice",
+        "default":"mean",
+        "choices":[
+          "mean",
+          "median",
+          "sum",
+          "std",
+          "max"
+        ]
+      }
     }
   ],
   "url":"https://dakota.sandia.gov/",
   "author":"Sandia National Laboratories",
   "uses":[
     {
-      "id":"component"
+      "id":"component",
+      "required":true,
+      "exchange_items":[
+        
+      ]
     }
   ],
   "provides":[
