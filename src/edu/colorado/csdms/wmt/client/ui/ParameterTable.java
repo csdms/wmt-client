@@ -116,6 +116,10 @@ public class ParameterTable extends FlexTable {
       this.setWidget(tableRowIndex, 1, new ValueCell(parameter));
       this.getFlexCellFormatter().setStyleName(tableRowIndex, 0,
           "wmt-ParameterDescription");
+      if (parameter.getGroup() != null) {
+        this.getFlexCellFormatter().addStyleName(tableRowIndex, 0,
+            "wmt-ParameterDescription-group");
+      }
       this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
           HasHorizontalAlignment.ALIGN_RIGHT);
     }

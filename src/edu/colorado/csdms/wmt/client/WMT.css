@@ -349,6 +349,9 @@ body, table td, select, button {
    padding: 0 1em 0 1.5em;
    color: colorAcquaProfonda;
 }
+.wmt-ParameterDescription-group {
+   padding-left: 3.5em
+}
 
 /* Separates parameter groups in the ParameterTable. */
 .wmt-ParameterSeparator {
