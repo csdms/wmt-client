@@ -370,7 +370,7 @@ body, table td, select, button {
    font-family: "FontAwesome";
    font-style: normal;
    content: "\f0d7"; /* fa-caret-down */
-   margin-right: 5px;
+   margin-right: 2.5px;
 }
 
 /* Separates parameter groups in the ParameterTable. */
