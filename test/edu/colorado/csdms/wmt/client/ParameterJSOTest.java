@@ -47,6 +47,7 @@ public class ParameterJSOTest extends GWTTestCase {
   private String name;
   private String description;
   private Boolean visible;
+  private String group;
   private ValueJSO value;
 
   /**
@@ -66,11 +67,12 @@ public class ParameterJSOTest extends GWTTestCase {
    * @param description
    */
   private native ParameterJSO testParameterJSO(String key, String name,
-      String description, Boolean visible, ValueJSO value) /*-{
+      String description, String group, Boolean visible, ValueJSO value) /*-{
 		return {
 			"key" : key,
 			"name" : name,
 			"description" : description,
+			"group" : group,
 			"visible": visible,
 			"value" : value
 		};
@@ -97,9 +99,10 @@ public class ParameterJSOTest extends GWTTestCase {
     key = "number_of_rows";
     name = "Number of rows";
     description = "Number of rows in the computational grid";
+    group = "parameter1";
     visible = true;
     value = testValueJSO();
-    jso = testParameterJSO(key, name, description, visible, value);
+    jso = testParameterJSO(key, name, description, group, visible, value);
   }
 
   @After
@@ -129,6 +132,14 @@ public class ParameterJSOTest extends GWTTestCase {
   @Test
   public void testGetDescription() {
     assertEquals(description, jso.getDescription());
+  }
+
+  /*
+   * Test getting group.
+   */
+  @Test
+  public void testGetGroup() {
+    assertEquals(group, jso.getGroup());
   }
 
   /*

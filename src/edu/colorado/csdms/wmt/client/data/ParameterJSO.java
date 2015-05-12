@@ -55,6 +55,10 @@ public class ParameterJSO extends JavaScriptObject {
 		return (typeof this.visible == 'undefined') ? true : this.visible;
   }-*/;
 
+  public final native String getGroup() /*-{
+		return this.group;
+  }-*/;
+
   /**
    * JSNI method to get the "value" attribute of a ParameterJSO. This attribute
    * is a ValueJSO object. It's always present, but it may be empty.
