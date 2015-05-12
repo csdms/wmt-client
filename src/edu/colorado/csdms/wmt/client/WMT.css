@@ -349,15 +349,28 @@ body, table td, select, button {
    padding: 0 1em 0 1.5em;
    color: colorAcquaProfonda;
 }
+/*
 .wmt-ParameterDescription-group:before {
-   font-family: "FontAwesome";
-   font-style: normal;
-   content: "\f101"; /* fa- */
+   font-family: fontFamily;
+   content: "-";
    margin-right: 5px;
 }
+*/
 .wmt-ParameterDescription-group {
    padding-left: 3.5em;
    vertical-align: middle;
+}
+.wmt-ParameterDescription-groupLeader:before {
+   font-family: "FontAwesome";
+   font-style: normal;
+   content: "\f0da"; /* fa-caret-right */
+   margin-right: 5px;
+}
+.wmt-ParameterDescription-groupLeader-open:before {
+   font-family: "FontAwesome";
+   font-style: normal;
+   content: "\f0d7"; /* fa-caret-down */
+   margin-right: 5px;
 }
 
 /* Separates parameter groups in the ParameterTable. */
