@@ -1,41 +1,26 @@
 /* 
-The MIT License (MIT)
-
-Copyright (c) 2014 mcflugen
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-/* 
    CSS rules for the WMT client.
    
    These rules are injected into the client through a GWT CssResource. See:
    http://www.gwtproject.org/doc/latest/DevGuideClientBundle.html#CssResource
-   
-   Color palette adapted from http://www.colourlovers.com/palette/292482/Terra.
 */
 
 /* Variables. */
-@def colorAbisso rgb(3,22,52);
-@def colorAcquaProfonda rgb(3,54,73);
-@def colorAcqua rgb(3,101,100);
-@def colorTerra rgb(205,179,128);
-@def colorTerraTerra rgb(232,221,203);
+
+/* A palette adapted from http://www.colourlovers.com/palette/292482/Terra. */
+/* @def colorDark rgb(3,22,52); */
+/* @def colorMediumDark rgb(3,54,73); */
+/* @def colorMedium rgb(3,101,100); */
+/* @def colorMediumLight rgb(205,179,128); */
+/* @def colorLight rgb(232,221,203); */
+
+@def colorDark rgb(26,51,81);
+@def colorMediumDark rgb(88,67,62);
+@def colorMedium rgb(109,99,97);
+@def colorMediumLight rgb(198,217,234);
+@def colorLight rgb(246,251,255);
 @def colorWarning rgb(203,73,54);
+
 @def fontFamily "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 @def fontSmall 13px;
 @def fontMedium 14px;
@@ -53,7 +38,7 @@ body, table td, select, button {
 .wmt-SignInScreen {
   width: 100%;
   height: 100%;
-  background-color: colorAbisso;
+  background-color: colorDark;
 }
 .wmt-SignInScreenTitle {
   color: white;
@@ -62,7 +47,7 @@ body, table td, select, button {
   cursor: default;
 }
 .wmt-SignInScreenBox {
-  color: colorAcquaProfonda;
+  color: colorMediumDark;
   width: 80%;
   max-width: 400px;
   font-size: fontMedium;
@@ -71,13 +56,13 @@ body, table td, select, button {
 }
 .wmt-SignInScreenButton {
   color: white;
-  background-color: colorAcqua;
+  background-color: colorMedium;
   font-size: fontMedium;
   line-height: 1.25;
   padding: 6px 12px;
   cursor: pointer;
   margin-top: 14px;
-  border: 2px solid colorAcqua;
+  border: 2px solid colorMedium;
 }
 .wmt-SignInScreenError {
   color: colorWarning;
@@ -92,7 +77,7 @@ body, table td, select, button {
   cursor: pointer;
 }
 .wmt-SignInScreenLinks:hover {
-  color: colorTerra;
+  color: colorMediumLight;
 }
 .wmt-SignInScreenLinksInfo {
   color: white;
@@ -124,7 +109,7 @@ body, table td, select, button {
 */
 .wmt-NavBar {
   width: 100%;
-  background-color: colorAbisso;
+  background-color: colorDark;
 }
 .wmt-NavBarTitle {
   color: white;
@@ -141,13 +126,13 @@ body, table td, select, button {
 .wmt-UserPanelButton {
   display: inline-block;
   color: white;
-  background-color: colorAcqua;
+  background-color: colorMedium;
   font-size: fontMedium;
   line-height: 1.25;
   padding: 6px 12px;
   cursor: default;
   margin: 2px;
-  border: 2px solid colorAcqua;
+  border: 2px solid colorMedium;
 }
 .wmt-UserPanelButton-signOut {
   cursor: pointer;
@@ -160,7 +145,7 @@ body, table td, select, button {
 }
 .gwt-SplitLayoutPanel .gwt-SplitLayoutPanel-HDragger {
   background-color: white;
-  border-left: 1px solid colorAbisso;
+  border-left: 1px solid colorDark;
 }
 
 /*
@@ -181,22 +166,22 @@ body, table td, select, button {
 }
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected {
   font-weight: normal !important;
-  color: colorAbisso !important;
+  color: colorDark !important;
 }
 
 /*
    A consistent style for all buttons.
 */
 .wmt-Button, .wmt-ActionPanelButton {
-  color: colorAbisso;
-  background-color: colorTerraTerra;
+  color: colorDark;
+  background-color: colorLight;
   padding: 5px 7px;
-  border: 1px solid colorAcquaProfonda;
-  border-bottom: 1px solid colorAbisso;
+  border: 1px solid colorMediumDark;
+  border-bottom: 1px solid colorDark;
   cursor: pointer;
 }
 .wmt-Button:hover {
-  background-color: colorTerra;
+  background-color: colorMediumLight;
 }
 
 /*
@@ -210,7 +195,7 @@ body, table td, select, button {
   margin-right: 5px; /* provides inter-button spacing */
 }
 .wmt-ActionPanelButton:hover {
-  background-color: colorTerra;
+  background-color: colorMediumLight;
 }
 
 /*
@@ -227,9 +212,9 @@ body, table td, select, button {
 .wmt-ComponentCell {
   font-style: italic;
   text-align: center;
-  color: colorAbisso;
-  background-color: colorTerraTerra;
-  border: 2px solid colorAcquaProfonda;
+  color: colorDark;
+  background-color: colorLight;
+  border: 2px solid colorMediumDark;
   height: 60px;
   cursor: pointer;
 }
@@ -238,7 +223,7 @@ body, table td, select, button {
 .wmt-ComponentCell-connected {  
   font-style: normal;
   color: white;
-  background-color: colorAcqua;
+  background-color: colorMedium;
   position: relative;  
 }
 
@@ -250,7 +235,7 @@ body, table td, select, button {
   font-family: "FontAwesome";
   /* padding: 3px; */
   content: "\f0ad"; /* fa-wrench */
-  color: colorAbisso;
+  color: colorDark;
 }
 
 /* The name (port or component) shown inside the ComponentCell. */
@@ -271,7 +256,7 @@ body, table td, select, button {
    font-family: "FontAwesome";
    padding: 3px;
    content: "\f112"; /* fa-reply */
-   color: colorTerraTerra;
+   color: colorLight;
 }
 
 /* For the menuCell inside the ComponentCell. */
@@ -291,7 +276,7 @@ body, table td, select, button {
 
 /* Items shown in a WMT PopupPanel. */
 .wmt-PopupPanelItem, .wmt-ComponentSelectionMenuItem, .wmt-PopupPanelCheckBoxItem {
-  color: colorAcquaProfonda;
+  color: colorMediumDark;
   padding: 5px 40px 5px 5px;
 }
 .wmt-PopupPanelItem, .wmt-ComponentSelectionMenuItem {
@@ -299,7 +284,7 @@ body, table td, select, button {
   min-width: 150px;
 }
 .wmt-PopupPanelItem:hover {
-  background-color: colorTerraTerra;
+  background-color: colorLight;
 }
 .wmt-PopupPanelItem-disabled {
   color: lightgray;
@@ -311,14 +296,14 @@ body, table td, select, button {
   line-height: 2.0; /* Don't use :hover, set line-height. */
 }
 .wmt-PopupPanelCheckBoxItem-header {
-  color: colorAcqua;
+  color: colorMedium;
   font-weight: bold;
 }
 .wmt-PopupPanelCheckBoxItem-public:after {
   content: "public";
   font-variant: small-caps;
   float: right;
-  color: colorTerra;
+  color: colorMediumLight;
   margin-right: 1em;
 }
 
@@ -326,7 +311,7 @@ body, table td, select, button {
 .wmt-PopupPanelSeparator {
   width: 100%;
   height: 1px;
-  border-top: 1px solid colorTerraTerra;
+  border-top: 1px solid colorLight;
 }
 
 /* Items in the ComponentSelectionMenu. */
@@ -334,11 +319,11 @@ body, table td, select, button {
   font-family: "FontAwesome";
   font-style: normal;
   content: "\f013"; /* fa-cog */
-  color: colorAcquaProfonda;
+  color: colorMediumDark;
   margin-right: 0.5em;
 }
 .wmt-ComponentSelectionMenuItem:hover {
-  background-color: colorTerraTerra;
+  background-color: colorLight;
 }
 .wmt-ComponentSelectionMenuItem-missing {
   background-color: colorWarning;
@@ -347,15 +332,8 @@ body, table td, select, button {
 /* Text used in a parameter description. */
 .wmt-ParameterDescription {
    padding: 0 1em 0 1.5em;
-   color: colorAcquaProfonda;
+   color: colorMediumDark;
 }
-/*
-.wmt-ParameterDescription-group:before {
-   font-family: fontFamily;
-   content: "-";
-   margin-right: 5px;
-}
-*/
 .wmt-ParameterDescription-group {
    padding-left: 3.5em;
    vertical-align: middle;
@@ -363,12 +341,14 @@ body, table td, select, button {
 .wmt-ParameterDescription-groupLeader:before {
    font-family: "FontAwesome";
    font-style: normal;
+   color: colorDark;
    content: "\f0da"; /* fa-caret-right */
    margin-right: 5px;
 }
 .wmt-ParameterDescription-groupLeader-open:before {
    font-family: "FontAwesome";
    font-style: normal;
+   color: colorDark;
    content: "\f0d7"; /* fa-caret-down */
    margin-right: 2.5px;
 }
@@ -377,8 +357,8 @@ body, table td, select, button {
 .wmt-ParameterSeparator {
    font-style: oblique;
    padding: 10px 0 5px 0;
-   color: colorAcquaProfonda;
-   border: solid colorAcquaProfonda;
+   color: colorMediumDark;
+   border: solid colorMediumDark;
    border-width: 0 0 1px 0;
 }
 
@@ -394,11 +374,11 @@ body, table td, select, button {
 
 /* Used for all input widgets. ValueBoxen display numeric values. */
 .wmt-TextBoxen, .wmt-ValueBoxen {
-  color: colorAbisso;
-  background-color: colorTerraTerra;
+  color: colorDark;
+  background-color: colorLight;
   padding: 7px 4px;
-  border: 1px solid colorAcquaProfonda;
-  border-top: 1px solid colorAbisso;
+  border: 1px solid colorMediumDark;
+  border-top: 1px solid colorDark;
   font-size: fontSmall;
   width: 200px;
 }
@@ -415,10 +395,10 @@ body, table td, select, button {
   font-size: fontSmall;
   margin: 2px 0px;
   padding: 2px 0px; /* centers text on Firefox; does nothing on Chrome */
-  border: 1px solid colorAcquaProfonda; /* adding this changes the font?!? */
+  border: 1px solid colorMediumDark; /* adding this changes the font?!? */
   width: 210px; /* calculated by comparison with ValueBoxen */
   height: 32px;
-  background-color: colorTerraTerra;
+  background-color: colorLight;
   cursor: pointer;
 }
 .wmt-DroplistBox-upload {
@@ -427,13 +407,13 @@ body, table td, select, button {
 
 /* Styles for use by all DialogBoxes. */
 .wmt-DialogBox {
-  color: colorAbisso;
+  color: colorDark;
   background: white;
-  border: 2px solid colorAcquaProfonda;
+  border: 2px solid colorMediumDark;
   box-shadow: 2px 2px 1px lightgray;
 }
 .wmt-DialogBox .dialogTop {
-  background: colorAbisso;
+  background: colorDark;
   cursor: default;
 }
 .wmt-DialogBox .Caption {
