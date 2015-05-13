@@ -1,26 +1,3 @@
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 mcflugen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package edu.colorado.csdms.wmt.client;
 
 import org.junit.After;
@@ -47,7 +24,9 @@ public class ParameterJSOTest extends GWTTestCase {
   private String name;
   private String description;
   private Boolean visible;
-  private String group;
+  private String groupName;
+  private Boolean groupLeader;
+  private Integer groupMembers;
   private ValueJSO value;
 
   /**
@@ -61,19 +40,20 @@ public class ParameterJSOTest extends GWTTestCase {
   /**
    * A JSNI method that defines a fixture for the tests. Returns a
    * {@link ParameterJSO} object for testing.
-   *
-   * @param key
-   * @param name
-   * @param description
    */
   private native ParameterJSO testParameterJSO(String key, String name,
-      String description, String group, Boolean visible, ValueJSO value) /*-{
+      String description, String groupName, Boolean groupLeader,
+      Integer groupMembers, Boolean visible, ValueJSO value) /*-{
 		return {
 			"key" : key,
 			"name" : name,
 			"description" : description,
-			"group" : group,
-			"visible": visible,
+			"group" : {
+				"name" : groupName,
+				"leader" : groupLeader,
+				"members" : groupMembers
+			},
+			"visible" : visible,
 			"value" : value
 		};
   }-*/;
@@ -99,10 +79,14 @@ public class ParameterJSOTest extends GWTTestCase {
     key = "number_of_rows";
     name = "Number of rows";
     description = "Number of rows in the computational grid";
-    group = "parameter1";
+    groupName = "parameter1";
+    groupLeader = true;
+    groupMembers = 3;
     visible = true;
     value = testValueJSO();
-    jso = testParameterJSO(key, name, description, group, visible, value);
+    jso =
+        testParameterJSO(key, name, description, groupName, groupLeader,
+            groupMembers, visible, value);
   }
 
   @After
@@ -110,49 +94,46 @@ public class ParameterJSOTest extends GWTTestCase {
   protected void gwtTearDown() throws Exception {
   }
 
-  /*
-   * Test getting key.
-   */
   @Test
   public void testGetKey() {
     assertEquals(key, jso.getKey());
   }
 
-  /*
-   * Test getting name.
-   */
   @Test
   public void testGetName() {
     assertEquals(name, jso.getName());
   }
 
-  /*
-   * Test getting description.
-   */
   @Test
   public void testGetDescription() {
     assertEquals(description, jso.getDescription());
   }
 
-  /*
-   * Test getting group.
-   */
   @Test
-  public void testGetGroup() {
-    assertEquals(group, jso.getGroup());
+  public void testHasGroup() {
+    assertTrue(jso.hasGroup());
   }
 
-  /*
-   * Test getting visibility.
-   */
+  @Test
+  public void testGetGroupName() {
+    assertEquals(groupName, jso.getGroupName());
+  }
+
+  @Test
+  public void testIsGroupLeader() {
+    assertEquals(groupLeader, (Boolean) jso.isGroupLeader());
+  }
+
+  @Test
+  public void testNGroupMembers() {
+    assertEquals(groupMembers, (Integer) jso.nGroupMembers());
+  }
+
   @Test
   public void testIsVisible() {
     assertTrue(jso.isVisible());
   }
 
-  /*
-   * Test getting value.
-   */
   @Test
   public void testGetValue() {
     assertSame(value, jso.getValue());
