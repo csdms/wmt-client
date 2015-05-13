@@ -55,8 +55,36 @@ public class ParameterJSO extends JavaScriptObject {
 		return (typeof this.visible == 'undefined') ? true : this.visible;
   }-*/;
 
-  public final native String getGroup() /*-{
-		return this.group;
+  /**
+   * A JSNI method for checking whether a ParameterJSO has a "group" attribute.
+   * Note that the return is a JS boolean, not a J Boolean.
+   */
+  public final native boolean hasGroup() /*-{
+		return 'group' in this;
+  }-*/;
+
+  /**
+   * A JSNI method to get the "name" attribute of a group, a String. If the
+   * group or the name doesn't exist, null is returned.
+   */
+  public final native String getGroupName() /*-{
+		return this.group && this.group.name || null;
+  }-*/;
+
+  /**
+   * A JSNI method to get the "leader" attribute of a group, a JS boolean. If
+   * the group or the leader doesn't exist, false is returned.
+   */
+  public final native boolean isGroupLeader() /*-{
+		return this.group && this.group.leader || false;
+  }-*/;
+
+  /**
+   * A JSNI method to get the number of members in a group, a JS int. If the
+   * group or the members atribute doesn't exist, 0 is returned.
+   */
+  public final native int nGroupMembers() /*-{
+		return this.group && this.group.members || 0;
   }-*/;
 
   /**
