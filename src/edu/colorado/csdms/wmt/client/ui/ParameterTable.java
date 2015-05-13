@@ -64,29 +64,29 @@ public class ParameterTable extends FlexTable {
    */
   public void loadTable(String componentId) {
 
-    // The component whose parameters are to be displayed.
-    this.setComponentId(componentId);
+    // Always clear the table before building it.
+    this.clearTable();
 
     // Return if the selected component doesn't have parameters.
     if (data.getModelComponent(componentId).getParameters() == null) {
-      this.clearTable();
       Window.alert("No parameters defined for this component.");
       return;
     }
+
+    // The component whose parameters are to be displayed.
+    this.setComponentId(componentId);
 
     // Set the component name on the tab holding the ParameterTable.
     data.getPerspective().setParameterPanelTitle(componentId);
 
     // Add the ParameterActionPanel and align it with the ModelActionPanel.
     addActionPanel();
-    
+
     // Build the parameter table.
     Integer nParameters =
         data.getModelComponent(componentId).getParameters().length();
     for (int i = 0; i < nParameters; i++) {
-      ParameterJSO parameter =
-          data.getModelComponent(componentId).getParameters().get(i);
-      addTableEntry(parameter);
+      addTableEntry(data.getModelComponent(componentId).getParameters().get(i));
     }
   }
 
