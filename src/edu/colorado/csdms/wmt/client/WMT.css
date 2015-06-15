@@ -338,19 +338,21 @@ body, table td, select, button {
    padding-left: 3.5em;
    vertical-align: middle;
 }
-.wmt-ParameterDescription-groupLeader:before {
+.wmt-ParameterDescription-groupLeader:after {
    font-family: "FontAwesome";
-   font-style: normal;
+   font-size: smaller;
    color: colorDark;
-   content: "\f0da"; /* fa-caret-right */
-   margin-right: 5px;
+/*    content: "\f0da"; fa-caret-right */
+   content: "\f054"; /* fa-chevron-right */
+   margin-left: 5px;
 }
-.wmt-ParameterDescription-groupLeader-open:before {
+.wmt-ParameterDescription-groupLeader-open:after {
    font-family: "FontAwesome";
-   font-style: normal;
+   font-size: smaller;
    color: colorDark;
-   content: "\f0d7"; /* fa-caret-down */
-   margin-right: 2.5px;
+/*    content: "\f0d7"; fa-caret-down */
+   content: "\f078"; /* fa-chevron-down */
+   margin-left: 5px;
 }
 
 /* Separates parameter groups in the ParameterTable. */

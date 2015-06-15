@@ -57,7 +57,6 @@ public class ComponentShowParametersCommand implements Command {
   @Override
   public void execute() {
     GWT.log("Show parameters for: " + data.getComponent(componentId).getName());
-    data.getPerspective().getParameterTable().clearTable();
     data.getPerspective().getParameterTable().loadTable(componentId);
     ComponentCell wasShowingParameters = data.getShowingParameters();
     wasShowingParameters.removeStyleDependentName("showingParameters");
