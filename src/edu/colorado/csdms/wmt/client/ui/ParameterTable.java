@@ -1,30 +1,11 @@
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 mcflugen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package edu.colorado.csdms.wmt.client.ui;
+
+import java.util.ArrayList;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
@@ -33,6 +14,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
 import edu.colorado.csdms.wmt.client.ui.cell.DescriptionCell;
+import edu.colorado.csdms.wmt.client.ui.cell.SeparatorCell;
 import edu.colorado.csdms.wmt.client.ui.cell.ValueCell;
 import edu.colorado.csdms.wmt.client.ui.panel.ParameterActionPanel;
 
@@ -82,29 +64,29 @@ public class ParameterTable extends FlexTable {
    */
   public void loadTable(String componentId) {
 
-    // The component whose parameters are to be displayed.
-    this.setComponentId(componentId);
+    // Always clear the table before building it.
+    this.clearTable();
 
     // Return if the selected component doesn't have parameters.
     if (data.getModelComponent(componentId).getParameters() == null) {
-      this.clearTable();
       Window.alert("No parameters defined for this component.");
       return;
     }
+
+    // The component whose parameters are to be displayed.
+    this.setComponentId(componentId);
 
     // Set the component name on the tab holding the ParameterTable.
     data.getPerspective().setParameterPanelTitle(componentId);
 
     // Add the ParameterActionPanel and align it with the ModelActionPanel.
     addActionPanel();
-    
+
     // Build the parameter table.
     Integer nParameters =
         data.getModelComponent(componentId).getParameters().length();
     for (int i = 0; i < nParameters; i++) {
-      ParameterJSO parameter =
-          data.getModelComponent(componentId).getParameters().get(i);
-      addTableEntry(parameter);
+      addTableEntry(data.getModelComponent(componentId).getParameters().get(i));
     }
   }
 
@@ -113,7 +95,6 @@ public class ParameterTable extends FlexTable {
    * {@link ParameterTable}.
    */
   private void addActionPanel() {
-    Window.alert("Row index = " + tableRowIndex);
     actionPanel = new ParameterActionPanel(data, componentId);
     actionPanel.getElement().getStyle().setMarginTop(-3.0, Unit.PX);
     this.setWidget(tableRowIndex, 0, actionPanel);
@@ -127,22 +108,52 @@ public class ParameterTable extends FlexTable {
    */
   private void addTableEntry(ParameterJSO parameter) {
 
+    // Short-circuit if the parameter isn't visible.
     if (!parameter.isVisible()) {
       return;
     }
 
-    this.setWidget(tableRowIndex, 0, new DescriptionCell(parameter));
+    // Short circuit if the parameter is a separator.
     if (parameter.getKey().matches("separator")) {
+      this.setWidget(tableRowIndex, 0, new SeparatorCell(parameter));
       this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 2);
-      this.getFlexCellFormatter().setStyleName(tableRowIndex, 0,
-          "wmt-ParameterSeparator");
-    } else {
-      this.setWidget(tableRowIndex, 1, new ValueCell(parameter));
-      this.getFlexCellFormatter().setStyleName(tableRowIndex, 0,
-          "wmt-ParameterDescription");
-      this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
-          HasHorizontalAlignment.ALIGN_RIGHT);
+      tableRowIndex++;
+      return;
     }
+
+    final DescriptionCell descriptionCell = new DescriptionCell(parameter);
+    this.setWidget(tableRowIndex, 0, descriptionCell);
+    this.setWidget(tableRowIndex, 1, new ValueCell(parameter));
+    this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
+        HasHorizontalAlignment.ALIGN_RIGHT);
+
+    if ((parameter.hasGroup()) && (!parameter.isGroupLeader())) {
+      this.getRowFormatter().setVisible(tableRowIndex, false);
+    }
+
+    if (parameter.isGroupLeader()) {
+      ArrayList<Integer> groupRows = new ArrayList<Integer>();
+      for (int i = 0; i < parameter.nGroupMembers(); i++) {
+        groupRows.add(tableRowIndex + i + 1);
+      }
+      descriptionCell.setGroupRows(groupRows);
+
+      descriptionCell.addDomHandler(new ClickHandler() {
+        @Override
+        public void onClick(ClickEvent event) {
+          RowFormatter rowFormatter = ParameterTable.this.getRowFormatter();
+          ArrayList<Integer> theRows = descriptionCell.getGroupRows();
+          for (Integer row : theRows) {
+            rowFormatter.setVisible(row, !rowFormatter.isVisible(row));
+          }
+          descriptionCell.areGroupRowsVisible(!descriptionCell
+              .areGroupRowsVisible());
+          descriptionCell.setStyleDependentName("groupLeader-open",
+              descriptionCell.areGroupRowsVisible());
+        }
+      }, ClickEvent.getType());
+    }
+
     tableRowIndex++;
   }
 
