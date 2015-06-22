@@ -78,6 +78,12 @@ public class ComponentSelectionMenu extends PopupPanel {
     item.setStyleName("wmt-ComponentSelectionMenuItem");
     item.addClickHandler(new ComponentSelectionHandler(componentId));
     componentSelectionPanel.insert(item, index);
+
+    // If the number of components in the componentSelectionPanel exceeds
+    // a threshold value, turn on the scrollPanel.
+    if (componentSelectionPanel.getWidgetCount() > Constants.SCROLL_THRESHOLD) {
+      scroller.setSize(Constants.MENU_WIDTH, Constants.MENU_HEIGHT);
+    }
   }
 
   /**
@@ -143,12 +149,6 @@ public class ComponentSelectionMenu extends PopupPanel {
       item.addStyleDependentName("missing");
       componentSelectionPanel.add(item);
     };
-    
-    // If the number of components in the componentSelectionPanel exceeds
-    // a threshold value, turn on the scrollPanel.
-    if (data.componentIdList.size() > Constants.SCROLL_THRESHOLD) {
-      scroller.setSize(Constants.MENU_WIDTH, Constants.MENU_HEIGHT);
-    }
   }
   
   /**
