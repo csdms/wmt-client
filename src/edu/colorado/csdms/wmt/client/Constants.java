@@ -1,32 +1,8 @@
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 mcflugen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package edu.colorado.csdms.wmt.client;
 
 /**
  * A class that defines, as public static members, constants used in the WMT
- * client. In lieu of a configuration file, these constants can be edited 
- * before building the module.
+ * client.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
@@ -130,8 +106,12 @@ public class Constants {
   public static Double TAB_BAR_HEIGHT = 40.0;
 
   // Standard dimensions for PopupPanels.
-  public static String MENU_WIDTH = "220px"; // arbitrary, aesthetic
+  public static String MENU_WIDTH = "240px"; // arbitrary, aesthetic
   public static String MENU_HEIGHT = "20em";
+
+  // The number of components displayed in a ComponentSelectionMenu before
+  // the scrollbar appears. (aesthetic)
+  public static Integer SCROLL_THRESHOLD = 10;
 
   // The default text displayed in the driver ComponentCell.
   public static String DRIVER = "driver";

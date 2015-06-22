@@ -215,7 +215,7 @@ body, table td, select, button {
   color: colorDark;
   background-color: colorLight;
   border: 2px solid colorMediumDark;
-  height: 60px;
+  height: 70px;
   cursor: pointer;
 }
 
@@ -242,9 +242,7 @@ body, table td, select, button {
 .wmt-ComponentCell-NameCell {
   font-size: fontMedium;  
   text-align: center;
-  width: 100px;
-  max-width: 100px;
-  min-width: 100px;
+  width: 114px;
   margin-left: 5px;
 }
 
@@ -274,10 +272,11 @@ body, table td, select, button {
   cursor: pointer;
 }
 
-/* Items shown in a WMT PopupPanel. */
+/* Items shown in a WMT PopupPanel. The padding on the right fills the
+   backgound color across the width of the panel. */
 .wmt-PopupPanelItem, .wmt-ComponentSelectionMenuItem, .wmt-PopupPanelCheckBoxItem {
   color: colorMediumDark;
-  padding: 5px 40px 5px 5px;
+  padding: 5px 36px 5px 5px;
 }
 .wmt-PopupPanelItem, .wmt-ComponentSelectionMenuItem {
   cursor: pointer;

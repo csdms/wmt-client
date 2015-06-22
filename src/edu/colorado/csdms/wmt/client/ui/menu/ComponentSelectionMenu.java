@@ -1,26 +1,3 @@
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 mcflugen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package edu.colorado.csdms.wmt.client.ui.menu;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -28,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
@@ -36,8 +14,9 @@ import edu.colorado.csdms.wmt.client.ui.cell.ComponentCell;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentSelectionCommand;
 
 /**
- * A {@link PopupPanel} menu that shows a list of components. This is the
- * initial menu displayed in a {@link ComponentCell}.
+ * A {@link PopupPanel} menu that displays a scrollable list of components
+ * available in WMT. This is the initial menu displayed in a
+ * {@link ComponentCell}.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
@@ -45,7 +24,8 @@ public class ComponentSelectionMenu extends PopupPanel {
 
   private DataManager data;
   private ComponentCell cell;
-  private VerticalPanel menu;
+  private VerticalPanel componentSelectionPanel;
+  private ScrollPanel scroller;
   private MenuItem componentItem;
 
   /**
@@ -56,15 +36,22 @@ public class ComponentSelectionMenu extends PopupPanel {
    * @param cell the {@link ComponentCell} this menu depends on
    */
   public ComponentSelectionMenu(DataManager data, ComponentCell cell) {
+
     super(true); // autohide
     this.data = data;
     this.cell = cell;
     this.setStyleName("wmt-PopupPanel");
     
     // A VerticalPanel for the menu items. (PopupPanels have only one child.)
-    menu = new VerticalPanel();
+    VerticalPanel menu = new VerticalPanel();
     this.add(menu);
-    
+
+    // Components are listed on the componentSelectionPanel, situated on a
+    // ScrollPanel.
+    componentSelectionPanel = new VerticalPanel();
+    scroller = new ScrollPanel(componentSelectionPanel);
+    menu.add(scroller);
+
     updateComponents(cell.getPortId());
   }
 
@@ -75,7 +62,7 @@ public class ComponentSelectionMenu extends PopupPanel {
    * @param componentId the id of the component to add to the menu
    */
   private void insertComponentMenuItem(String componentId) {
-    insertComponentMenuItem(componentId, menu.getWidgetCount());
+    insertComponentMenuItem(componentId, componentSelectionPanel.getWidgetCount());
   }
 
   /**
@@ -86,10 +73,17 @@ public class ComponentSelectionMenu extends PopupPanel {
    * @param index where to add the component to the menu
    */
   private void insertComponentMenuItem(String componentId, Integer index) {
+
     HTML item = new HTML(data.getComponent(componentId).getName());
     item.setStyleName("wmt-ComponentSelectionMenuItem");
     item.addClickHandler(new ComponentSelectionHandler(componentId));
-    menu.insert(item, index);
+    componentSelectionPanel.insert(item, index);
+
+    // If the number of components in the componentSelectionPanel exceeds
+    // a threshold value, turn on the scrollPanel.
+    if (componentSelectionPanel.getWidgetCount() > Constants.SCROLL_THRESHOLD) {
+      scroller.setSize(Constants.MENU_WIDTH, Constants.MENU_HEIGHT);
+    }
   }
 
   /**
@@ -100,12 +94,12 @@ public class ComponentSelectionMenu extends PopupPanel {
    */
   public void updateComponents(String portId) {
 
-    menu.clear();
+    componentSelectionPanel.clear();
 
     // Display a wait message in the componentMenu.
     if (portId.matches(Constants.DRIVER)) {
       HTML item = new HTML("Loading...");
-      menu.add(item);
+      componentSelectionPanel.add(item);
       return;
     }
 
@@ -148,12 +142,12 @@ public class ComponentSelectionMenu extends PopupPanel {
    * when their associated component is successfully loaded from the server.
    */
   public void initializeComponents() {
-    menu.clear();
+    componentSelectionPanel.clear();
     for (int i = 0; i < data.componentIdList.size(); i++) {
       HTML item = new HTML(data.componentIdList.get(i));
       item.setStyleName("wmt-ComponentSelectionMenuItem");
       item.addStyleDependentName("missing");
-      menu.add(item);
+      componentSelectionPanel.add(item);
     };
   }
   
@@ -167,11 +161,11 @@ public class ComponentSelectionMenu extends PopupPanel {
    *          replace
    */
   public void replaceMenuItem(String componentId) {
-    for (int i = 0; i < menu.getWidgetCount(); i++) {
-      HTML currentItem = (HTML) menu.getWidget(i);
+    for (int i = 0; i < componentSelectionPanel.getWidgetCount(); i++) {
+      HTML currentItem = (HTML) componentSelectionPanel.getWidget(i);
       if (currentItem.getText().matches(componentId)) {
         insertComponentMenuItem(componentId, i);
-        menu.remove(currentItem);
+        componentSelectionPanel.remove(currentItem);
         return;
       }
     }
