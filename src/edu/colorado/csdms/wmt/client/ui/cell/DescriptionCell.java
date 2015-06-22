@@ -28,7 +28,7 @@ public class DescriptionCell extends HTML {
     String units = parameter.getValue().getUnits();
     String description = parameter.getDescription();
 
-    if (units != null)  {
+    if ((units != null) && (!units.equals("-")))  {
       description += " [" + units + "]";
     }
 
