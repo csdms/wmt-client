@@ -106,7 +106,7 @@ public class Constants {
   public static Double TAB_BAR_HEIGHT = 40.0;
 
   // Standard dimensions for PopupPanels.
-  public static String MENU_WIDTH = "220px"; // arbitrary, aesthetic
+  public static String MENU_WIDTH = "240px"; // arbitrary, aesthetic
   public static String MENU_HEIGHT = "20em";
 
   // The number of components displayed in a ComponentSelectionMenu before
