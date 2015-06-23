@@ -23,6 +23,8 @@
  */
 package edu.colorado.csdms.wmt.client.ui.handler;
 
+import java.util.Map;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
@@ -31,6 +33,7 @@ import com.google.gwt.user.client.Window;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.control.DataTransfer;
+import edu.colorado.csdms.wmt.client.data.LabelJSO;
 import edu.colorado.csdms.wmt.client.ui.dialog.SaveDialogBox;
 
 /**
@@ -76,14 +79,16 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
       if (!data.modelIsSaved()) {
 
         // Don't allow a user to save a model that doesn't belong to them.
-        // Give them the option to save a copy with their username.
+        // Give them the option to save a copy with their username. If they so
+        // choose, be sure to deselect the 'public' label.
         if (data.getMetadata().getOwner() != data.security.getWmtUsername()) {
-          String msg =
-              "This model cannot be saved because the current user is not"
-                  + " the model owner. Would you like to save a copy of"
-                  + " this model with the current user as the owner?";
-          Boolean saveCopy = Window.confirm(msg);
+          Boolean saveCopy = Window.confirm(Constants.NOT_MODEL_OWNER);
           if (saveCopy) {
+            for (Map.Entry<String, LabelJSO> entry : data.modelLabels.entrySet()) {
+              if (entry.getKey().equals("public")) {
+                entry.getValue().isSelected(false);
+              }
+            }
             showSaveDialogBox(Constants.MODELS_NEW_PATH);
           }
         } else {

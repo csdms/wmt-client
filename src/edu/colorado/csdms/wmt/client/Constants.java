@@ -82,6 +82,10 @@ public class Constants {
   public static String DELETE_LABEL_ERR =
       "This label cannot be deleted because"
           + " it is not owned by the current user.";
+  public static String NOT_MODEL_OWNER =
+      "This model cannot be saved because the current user is not"
+          + " the model owner. Would you like to save a copy of"
+          + " this model with the current user as the owner?";
 
   // Questions
   public static String QUESTION_WMT = "What is WMT?";
