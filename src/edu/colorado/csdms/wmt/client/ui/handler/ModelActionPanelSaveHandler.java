@@ -78,11 +78,7 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
         // Don't allow a user to save a model that doesn't belong to them.
         // Give them the option to save a copy with their username.
         if (data.getMetadata().getOwner() != data.security.getWmtUsername()) {
-          String msg =
-              "This model cannot be saved because the current user is not"
-                  + " the model owner. Would you like to save a copy of"
-                  + " this model with the current user as the owner?";
-          Boolean saveCopy = Window.confirm(msg);
+          Boolean saveCopy = Window.confirm(Constants.NOT_MODEL_OWNER);
           if (saveCopy) {
             showSaveDialogBox(Constants.MODELS_NEW_PATH);
           }
