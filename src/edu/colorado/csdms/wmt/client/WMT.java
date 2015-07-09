@@ -15,9 +15,6 @@ import edu.colorado.csdms.wmt.client.ui.SignInScreen;
  * @author Mark Piper (mark.piper@colorado.edu)
  */
 public class WMT implements EntryPoint {
-  
-  private Perspective perspective;
-  private DataManager data;
 
   /**
    * This is the entry point method. Initially, it displays the
@@ -30,7 +27,7 @@ public class WMT implements EntryPoint {
   public void onModuleLoad() {
 
     // Initialize the DataManager object.
-    data = new DataManager();
+    DataManager data = new DataManager();
 
     // Get the WMT client configuration values.
     DataTransfer.getConfiguration(data);
@@ -47,7 +44,7 @@ public class WMT implements EntryPoint {
     
     // Set up the basic framework of views for the GUI. However, don't show the
     // GUI until the user passes through the sign-in screen.
-    perspective = new Perspective(data);
+    Perspective perspective = new Perspective(data);
     perspective.initializeModel();
     perspective.initializeParameterTable();
   }
