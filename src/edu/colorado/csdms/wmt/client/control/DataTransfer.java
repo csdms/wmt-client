@@ -1195,6 +1195,7 @@ public class DataTransfer {
         } else if (type.matches(Constants.MODELS_NEW_PATH)) {
           Integer modelId = Integer.valueOf(rtxt);
           data.getMetadata().setId(modelId);
+          data.getMetadata().setOwner(data.security.getWmtUsername());
           editActions();
         } else if (type.matches(Constants.MODELS_EDIT_PATH)) {
           editActions();

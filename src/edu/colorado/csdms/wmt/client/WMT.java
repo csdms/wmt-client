@@ -1,26 +1,3 @@
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 mcflugen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package edu.colorado.csdms.wmt.client;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -38,9 +15,6 @@ import edu.colorado.csdms.wmt.client.ui.SignInScreen;
  * @author Mark Piper (mark.piper@colorado.edu)
  */
 public class WMT implements EntryPoint {
-  
-  private Perspective perspective;
-  private DataManager data;
 
   /**
    * This is the entry point method. Initially, it displays the
@@ -53,7 +27,7 @@ public class WMT implements EntryPoint {
   public void onModuleLoad() {
 
     // Initialize the DataManager object.
-    data = new DataManager();
+    DataManager data = new DataManager();
 
     // Get the WMT client configuration values.
     DataTransfer.getConfiguration(data);
@@ -70,12 +44,8 @@ public class WMT implements EntryPoint {
     
     // Set up the basic framework of views for the GUI. However, don't show the
     // GUI until the user passes through the sign-in screen.
-    perspective = new Perspective(data);
+    Perspective perspective = new Perspective(data);
     perspective.initializeModel();
     perspective.initializeParameterTable();
-    
-    // Check whether the user is already logged in.
-    // XXX Consider permanently removing this?
-//    DataTransfer.getLoginState(data);
   }
 }
