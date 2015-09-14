@@ -79,6 +79,18 @@
       "description":"Asymmetry of incoming wave angles"
     },
     {
+      "key":"file_test",
+      "name":"Test file droplist",
+      "description":"(MP) Test file droplist with one value",
+      "value":{
+        "type":"file",
+        "default":"waipaoa.hyps",
+        "files":[
+          "waipaoa.hyps"
+        ]
+      }
+    },
+    {
       "value":{
         "default":"netcdf",
         "type":"choice",
