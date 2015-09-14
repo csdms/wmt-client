@@ -50,6 +50,11 @@ public class ValueJSOFilesTest extends GWTTestCase {
   private String type = "files";
   private String defaultValue;
   private JsArrayString files;
+  private static final String[] FILENAMES1 = {"danube.hyps"};
+  private static final int ARRAY_LENGTH1 = FILENAMES1.length;
+  private ValueJSO jso1;
+  private String defaultValue1;
+  private JsArrayString files1;
 
   /**
    * The module that sources this class. Must be present.
@@ -86,6 +91,15 @@ public class ValueJSOFilesTest extends GWTTestCase {
     }
     defaultValue = FILENAMES[0];
     jso = testValueJSO(defaultValue, files, type);
+    
+    // Recreate a subset of tests for an array of length = 1.
+    files1 = JsArrayString.createObject().cast();
+    files1.setLength(ARRAY_LENGTH1);
+    for (String file : FILENAMES1) {
+      files.push(file);
+    }
+    defaultValue1 = FILENAMES1[0];
+    jso1 = testValueJSO(defaultValue1, files1, type);
   }
 
   @After
@@ -107,6 +121,14 @@ public class ValueJSOFilesTest extends GWTTestCase {
   @Test
   public void testLength() {
     assertEquals(ARRAY_LENGTH, jso.getFiles().length());
+  }
+
+  /*
+   * Test the length of the single-element files1 array.
+   */
+  @Test
+  public void testLength1() {
+    assertEquals(ARRAY_LENGTH1, jso1.getFiles().length());
   }
 
   /*
@@ -165,6 +187,14 @@ public class ValueJSOFilesTest extends GWTTestCase {
   @Test
   public void testGetFiles() {
     assertEquals(files, jso.getFiles());
+  }
+
+  /*
+   * Test getting files from the single-element list.
+   */
+  @Test
+  public void testGetFiles1() {
+    assertEquals(files1, jso1.getFiles());
   }
 
   /*
