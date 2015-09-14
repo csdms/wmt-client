@@ -330,28 +330,28 @@ body, table td, select, button {
 
 /* Text used in a parameter description. */
 .wmt-ParameterDescription {
-   padding: 0 1em 0 1.5em;
+   margin: 0 1em 0 25px; /* top right bottom left */
    color: colorMediumDark;
 }
 .wmt-ParameterDescription-group {
-   padding-left: 3.5em;
+   padding-left: 20px;
    vertical-align: middle;
 }
-.wmt-ParameterDescription-groupLeader:after {
+.wmt-ParameterDescription-groupLeader:before {
    font-family: "FontAwesome";
    font-size: smaller;
    color: colorDark;
-/*    content: "\f0da"; fa-caret-right */
-   content: "\f054"; /* fa-chevron-right */
-   margin-left: 5px;
-}
-.wmt-ParameterDescription-groupLeader-open:after {
-   font-family: "FontAwesome";
-   font-size: smaller;
-   color: colorDark;
-/*    content: "\f0d7"; fa-caret-down */
    content: "\f078"; /* fa-chevron-down */
-   margin-left: 5px;
+   margin-right: 5px;
+   margin-left: -15px;
+   width: 5px;
+}
+.wmt-ParameterDescription-groupLeader-open:before {
+   font-family: "FontAwesome";
+   font-size: smaller;
+   color: colorDark;
+   content: "\f077"; /* fa-chevron-up */
+   margin-right: 5px;
 }
 
 /* Separates parameter groups in the ParameterTable. */
