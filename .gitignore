@@ -10,3 +10,6 @@
 /war/WEB-INF/deploy
 
 *.jar
+
+# Ignore Emacs backups
+*~
