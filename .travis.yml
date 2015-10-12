@@ -1,13 +1,20 @@
 language: java
-
 jdk:
   - oraclejdk7
 
+cache:
+  directories:
+    - $HOME/gwt-2.5.1
+
+sudo: false
+
 before_script:
-  - wget http://google-web-toolkit.googlecode.com/files/gwt-2.5.1.zip -O /tmp/gwt-2.5.1.zip
-  - unzip -qq /tmp/gwt-2.5.1.zip
-  - export GWT_HOME=$PWD/gwt-2.5.1/
+  - bash .travis/install_gwt.sh
+  - export GWT_HOME=$HOME/gwt-2.5.1
   - export PATH=$PATH:$GWT_HOME
+  - echo "GWT_HOME = $GWT_HOME"
+  - ls -l $GWT_HOME
 
 script:
+  - echo "PWD = $PWD"
   - ant test.prod
