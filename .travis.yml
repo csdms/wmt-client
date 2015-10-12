@@ -12,6 +12,9 @@ before_script:
   - bash .travis/install_gwt.sh
   - export GWT_HOME=$HOME/gwt-2.5.1
   - export PATH=$PATH:$GWT_HOME
+  - echo "GWT_HOME = $GWT_HOME"
+  - ls -l $GWT_HOME
 
 script:
+  - echo "PWD = $PWD"
   - ant test.prod
