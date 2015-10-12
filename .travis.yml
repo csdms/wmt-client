@@ -8,7 +8,7 @@ cache:
 
 sudo: false
 
-before_install:
+before_script:
   - bash .travis/install_gwt.sh
   - export GWT_HOME=$HOME/gwt-2.5.1
   - export PATH=$PATH:$GWT_HOME
