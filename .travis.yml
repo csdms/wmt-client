@@ -1,12 +1,13 @@
 language: java
-
 jdk:
   - oraclejdk7
 
+sudo: false
+
 before_script:
-  - wget http://google-web-toolkit.googlecode.com/files/gwt-2.5.1.zip -O /tmp/gwt-2.5.1.zip
-  - unzip -qq /tmp/gwt-2.5.1.zip
-  - export GWT_HOME=$PWD/gwt-2.5.1/
+  - wget http://google-web-toolkit.googlecode.com/files/gwt-2.5.1.zip
+  - unzip -qq gwt-2.5.1.zip
+  - export GWT_HOME=$PWD/gwt-2.5.1
   - export PATH=$PATH:$GWT_HOME
 
 script:
