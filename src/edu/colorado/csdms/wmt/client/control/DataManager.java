@@ -79,6 +79,7 @@ public class DataManager {
   public ModelListJSO modelList;
   public TreeMap<String, LabelJSO> modelLabels; // maintains sort
   public Integer saveAttempts = 0;
+  public String userAgent = null;
 
   /**
    * Initializes the DataManager object used in a WMT session.
