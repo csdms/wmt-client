@@ -81,7 +81,7 @@ public class ComponentSelectionMenu extends PopupPanel {
 
     // If the number of components in the componentSelectionPanel exceeds
     // a threshold value, turn on the scrollPanel.
-    if (componentSelectionPanel.getWidgetCount() > Constants.SCROLL_THRESHOLD) {
+    if (componentSelectionPanel.getWidgetCount() >= Constants.SCROLL_THRESHOLD) {
       scroller.setSize(Constants.MENU_WIDTH, Constants.MENU_HEIGHT);
     }
   }
