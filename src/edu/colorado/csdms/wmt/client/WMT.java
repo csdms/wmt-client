@@ -2,7 +2,6 @@ package edu.colorado.csdms.wmt.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
@@ -32,9 +31,6 @@ public class WMT implements EntryPoint {
 
     // Get the WMT client configuration values.
     DataTransfer.getConfiguration(data);
-
-    // What browser is being used?
-    data.userAgent = Window.Navigator.getUserAgent();
     
     // Is GWT in development or production mode?
     data.isDevelopmentMode(!GWT.isProdMode() && GWT.isClient());
