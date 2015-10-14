@@ -409,6 +409,7 @@ body, table td, select, button {
   width: 210px; /* calculated by comparison with ValueBoxen */
   height: 32px;
   background-color: colorLight;
+  color: colorDark;
   cursor: pointer;
 }
 .wmt-DroplistBox-upload {
