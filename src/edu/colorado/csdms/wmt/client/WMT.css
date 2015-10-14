@@ -121,18 +121,17 @@ body, table td, select, button {
 }
 .wmt-UserPanel {
   float: right;
-  margin: 8px 10px 8px 0px;
+  margin-right: 10px;
 }
 .wmt-UserPanelButton {
-  display: inline-block;
   color: white;
   background-color: colorMedium;
   font-size: fontMedium;
-  line-height: 1.25;
-  padding: 6px 12px;
+  padding: 0px 12px;
   cursor: default;
   margin: 2px;
-  border: 2px solid colorMedium;
+  height: 35px;
+  border: 1px solid colorMedium;
 }
 .wmt-UserPanelButton-signOut {
   cursor: pointer;
