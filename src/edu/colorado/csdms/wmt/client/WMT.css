@@ -121,18 +121,17 @@ body, table td, select, button {
 }
 .wmt-UserPanel {
   float: right;
-  margin: 8px 10px 8px 0px;
+  margin-right: 10px;
 }
 .wmt-UserPanelButton {
-  display: inline-block;
   color: white;
   background-color: colorMedium;
   font-size: fontMedium;
-  line-height: 1.25;
-  padding: 6px 12px;
+  padding: 0px 12px;
   cursor: default;
   margin: 2px;
-  border: 2px solid colorMedium;
+  height: 35px;
+  border: 1px solid colorMedium;
 }
 .wmt-UserPanelButton-signOut {
   cursor: pointer;
@@ -172,7 +171,7 @@ body, table td, select, button {
 /*
    A consistent style for all buttons.
 */
-.wmt-Button, .wmt-ActionPanelButton {
+.wmt-Button, .wmt-ActionPanelButton, .wmt-UploadButton {
   color: colorDark;
   background-color: colorLight;
   padding: 5px 7px;
@@ -182,6 +181,15 @@ body, table td, select, button {
 }
 .wmt-Button:hover {
   background-color: colorMediumLight;
+}
+
+/*
+   The button shown for file uploads. Explicitly setting its size solves
+   a problem with Firefox versus Chrome and Safari.
+*/
+.wmt-UploadButton {
+  width: 32px;
+  height: 32px;
 }
 
 /*
@@ -400,6 +408,7 @@ body, table td, select, button {
   width: 210px; /* calculated by comparison with ValueBoxen */
   height: 32px;
   background-color: colorLight;
+  color: colorDark;
   cursor: pointer;
 }
 .wmt-DroplistBox-upload {
