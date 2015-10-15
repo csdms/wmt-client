@@ -103,7 +103,7 @@ public class DoubleCell extends ValueBox<Double> {
           return;
         }
         setValue(value); // formats contents
-        parent.setValue(value.toString());
+        parent.setParameterValue(value.toString());
         setStyleDependentName("outofrange", !isInRange());
       } catch (ParseException e) {
         addStyleDependentName("outofrange");

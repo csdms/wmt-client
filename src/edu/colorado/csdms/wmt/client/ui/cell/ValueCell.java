@@ -177,7 +177,7 @@ public class ValueCell extends HorizontalPanel {
    * 
    * @param value the value read from the ValueCell
    */
-  public void setValue(String value) {
+  public void setParameterValue(String value) {
     ParameterTable pt = (ParameterTable) ValueCell.this.getParent();
     pt.setValue(parameter, value);
   }
@@ -200,7 +200,7 @@ public class ValueCell extends HorizontalPanel {
       GWT.log("(onChange)");
       ListBox listBox = (ListBox) event.getSource();
       String value = listBox.getValue(listBox.getSelectedIndex());
-      setValue(value);
+      setParameterValue(value);
     }
   }
   
@@ -216,7 +216,7 @@ public class ValueCell extends HorizontalPanel {
       GWT.log("(onKeyUp:text)");
       TextBox textBox = (TextBox) event.getSource();
       String value = textBox.getText();
-      setValue(value);
+      setParameterValue(value);
     }
   }
 
@@ -284,7 +284,7 @@ public class ValueCell extends HorizontalPanel {
         }
         
         // Like, important.
-        setValue(fileName);
+        setParameterValue(fileName);
         
         // Say everything is alright.
         Window.alert("File uploaded!");

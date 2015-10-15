@@ -115,7 +115,7 @@ public class IntegerCell extends ValueBox<Integer> {
           return;
         }
         setValue(value); // formats contents
-        parent.setValue(value.toString());
+        parent.setParameterValue(value.toString());
         setStyleDependentName("outofrange", !isInRange());
       } catch (ParseException e) {
         addStyleDependentName("outofrange");
