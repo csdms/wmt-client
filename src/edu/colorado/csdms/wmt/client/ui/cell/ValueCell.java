@@ -54,9 +54,8 @@ public class ValueCell extends HorizontalPanel {
     String range = "";
 
     // Make a cell to match the type -- choice, file or other.
-    // TODO Make classes for ChoiceCell, FileCell and TextCell.
     if (type.matches("choice")) {
-      makeChoiceCell(value);
+      this.add(new ChoiceCell(this));
     } else if (type.matches("file")) {
       makeFileCell(value);
     } else if (type.matches("int")) {
@@ -85,28 +84,6 @@ public class ValueCell extends HorizontalPanel {
 
   public void setParameter(ParameterJSO parameter) {
     this.parameter = parameter;
-  }
-
-  /**
-   * A worker that makes the {@link ValueCell} display a droplist for the
-   * "choice" parameter type.
-   * 
-   * @param value the value of the parameter, a String
-   */
-  private void makeChoiceCell(String value) {
-    ListBox choiceDroplist = new ListBox(false); // no multi select
-    choiceDroplist.addChangeHandler(new ListSelectionHandler());
-    choiceDroplist.setStyleName("wmt-DroplistBox");
-
-    Integer nChoices = this.parameter.getValue().getChoices().length();
-    for (int i = 0; i < nChoices; i++) {
-      choiceDroplist.addItem(this.parameter.getValue().getChoices().get(i));
-      if (choiceDroplist.getItemText(i).matches(value)) {
-        choiceDroplist.setSelectedIndex(i);
-      }
-    }
-    choiceDroplist.setVisibleItemCount(1); // show one item -- a droplist
-    this.add(choiceDroplist);
   }
   
   /**
