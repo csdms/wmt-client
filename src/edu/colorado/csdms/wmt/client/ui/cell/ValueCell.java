@@ -6,15 +6,12 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextBox;
 
 import edu.colorado.csdms.wmt.client.control.DataURL;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
@@ -69,7 +66,7 @@ public class ValueCell extends HorizontalPanel {
       DoubleCell dbox = new DoubleCell(this);
       this.add(dbox);
     } else {
-      makeTextCell(value);
+      this.add(new TextCell(this));
     }
 
     // If the parameter type is numeric, add a tooltip showing the valid range
@@ -155,21 +152,6 @@ public class ValueCell extends HorizontalPanel {
   }
 
   /**
-   * A worker that makes the {@link ValueCell} display a text box. This is the
-   * default for the "string" parameter type.
-   * 
-   * @param value the value of the parameter.
-   */
-  private void makeTextCell(String value) {
-    TextBox valueTextBox = new TextBox();
-    valueTextBox.addKeyUpHandler(new TextEditHandler());
-    valueTextBox.setStyleName("wmt-TextBoxen");
-    valueTextBox.setWidth("200px");
-    valueTextBox.setText(value);
-    this.add(valueTextBox);
-  }
-
-  /**
    * Passes the modified value up to
    * {@link ParameterTable#setValue(ParameterJSO, String)}. This isn't an
    * elegant solution, but ParameterTable knows the component this parameter
@@ -200,22 +182,6 @@ public class ValueCell extends HorizontalPanel {
       GWT.log("(onChange)");
       ListBox listBox = (ListBox) event.getSource();
       String value = listBox.getValue(listBox.getSelectedIndex());
-      setParameterValue(value);
-    }
-  }
-  
-  /**
-   * A class to handle keyboard events in the TextBox.
-   * <p>
-   * Note that every key press generates an event. It might be worth considering
-   * acting on only Tab or Enter key presses.
-   */
-  public class TextEditHandler implements KeyUpHandler {
-    @Override
-    public void onKeyUp(KeyUpEvent event) {
-      GWT.log("(onKeyUp:text)");
-      TextBox textBox = (TextBox) event.getSource();
-      String value = textBox.getText();
       setParameterValue(value);
     }
   }
