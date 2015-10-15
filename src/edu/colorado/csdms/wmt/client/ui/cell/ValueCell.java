@@ -51,7 +51,6 @@ public class ValueCell extends HorizontalPanel {
     // Helpful locals.
     String type = this.parameter.getValue().getType();
     String value = this.parameter.getValue().getDefault();
-    String range = "";
 
     // Make a cell to match the type -- choice, file or other.
     if (type.matches("choice")) {
@@ -66,15 +65,6 @@ public class ValueCell extends HorizontalPanel {
       this.add(dbox);
     } else {
       this.add(new TextCell(this));
-    }
-
-    // If the parameter type is numeric, add a tooltip showing the valid range
-    // of its value.
-    if (isParameterTypeNumeric()) {
-      range +=
-          "Valid range: (" + parameter.getValue().getMin() + ", "
-              + parameter.getValue().getMax() + ")";
-      this.setTitle(range);
     }
   }
 
@@ -139,15 +129,6 @@ public class ValueCell extends HorizontalPanel {
   public void setParameterValue(String value) {
     ParameterTable pt = (ParameterTable) ValueCell.this.getParent();
     pt.setValue(parameter, value);
-  }
-
-  /**
-   * Checks whether the current {@link ValueCell} parameter uses a numeric type
-   * value (e.g., float or int). Returns a Boolean.
-   */
-  private Boolean isParameterTypeNumeric() {
-    String type = parameter.getValue().getType();
-    return (type.matches("float") || type.matches("int"));
   }
 
   /**
