@@ -2,6 +2,7 @@
   "avulsion",
   "baselevel",
   "cem",
+  "centered_parameter_study",
   "channels_diff_wave",
   "child",
   "coastal_environment",
@@ -9,6 +10,6 @@
   "plume",
   "sedflux2d",
   "sedflux3d",
-  "waves",
-  "vector_parameter_study"
+  "vector_parameter_study",
+  "waves"
 ]
