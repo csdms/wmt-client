@@ -48,21 +48,16 @@ public class ValueCell extends HorizontalPanel {
       return;
     }
 
-    // Helpful locals.
-    String type = this.parameter.getValue().getType();
-    String value = this.parameter.getValue().getDefault();
-
     // Make a cell to match the type -- choice, file or other.
+    String type = this.parameter.getValue().getType();
     if (type.matches("choice")) {
       this.add(new ChoiceCell(this));
     } else if (type.matches("file")) {
-      makeFileCell(value);
+      makeFileCell(this.parameter.getValue().getDefault());
     } else if (type.matches("int")) {
-      IntegerCell ibox = new IntegerCell(this);
-      this.add(ibox);
+      this.add(new IntegerCell(this));
     } else if (type.matches("float")) {
-      DoubleCell dbox = new DoubleCell(this);
-      this.add(dbox);
+      this.add(new DoubleCell(this));
     } else {
       this.add(new TextCell(this));
     }
