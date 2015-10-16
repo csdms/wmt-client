@@ -28,11 +28,6 @@ public class ValueCell extends HorizontalPanel {
     this.parameter = parameter;
     this.setStyleName("wmt-ValueCell");
 
-    // If the parameter is a separator, short-circuit the method and return.
-    if (this.parameter.getKey().matches("separator")) {
-      return;
-    }
-
     // Add a cell to match the parameter type.
     String type = this.parameter.getValue().getType();
     if (type.matches("choice")) {
