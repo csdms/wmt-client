@@ -67,6 +67,9 @@ public class FileCell extends HorizontalPanel {
     if (selectedIndex > 0) {
       fileDroplist.setSelectedIndex(selectedIndex);
     } else {
+      if (nFiles > 1) {
+        fileDroplist.addItem(parameter.getValue().getDefault());
+      }
       fileDroplist.setSelectedIndex(fileDroplist.getItemCount() - 1);
     }
     fileDroplist.setVisibleItemCount(1);  // show one item -- a droplist
