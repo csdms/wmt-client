@@ -130,8 +130,14 @@ public class ParameterJSOTest extends GWTTestCase {
   }
 
   @Test
-  public void testIsVisible() {
+  public void testGetIsVisible() {
     assertTrue(jso.isVisible());
+  }
+
+  @Test
+  public void testSetIsVisible() {
+    jso.isVisible(false);
+    assertFalse(jso.isVisible());
   }
 
   @Test
