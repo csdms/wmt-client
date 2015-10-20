@@ -56,6 +56,16 @@ public class ParameterJSO extends JavaScriptObject {
   }-*/;
 
   /**
+   * A JSNI method for setting the "visible" attribute of a ParameterJSO,
+   * controlling whether the parameter is shown in the WMT Parameters panel.
+   * 
+   * @param visible JS boolean, true if visible
+   */
+  public final native void isVisible(boolean visible) /*-{
+		this.visible = visible;
+  }-*/;
+
+  /**
    * A JSNI method for checking whether a ParameterJSO has a "group" attribute.
    * Note that the return is a JS boolean, not a J Boolean.
    */

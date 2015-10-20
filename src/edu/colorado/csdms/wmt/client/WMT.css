@@ -190,6 +190,7 @@ body, table td, select, button {
 .wmt-UploadButton {
   width: 32px;
   height: 32px;
+  margin-left: 3px;
 }
 
 /*

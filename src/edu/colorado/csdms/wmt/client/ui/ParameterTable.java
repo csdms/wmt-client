@@ -8,7 +8,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
@@ -44,17 +43,6 @@ public class ParameterTable extends FlexTable {
     this.setWidth("100%");
   }
 
-  /**
-   * A worker that displays an informational message in the ParameterTable.
-   */
-  @Deprecated
-  public void showInfoMessage() {
-    HTML infoMessage =
-        new HTML("Select a model component to view and edit its parameters");
-    infoMessage.setStyleName("wmt-ParameterTableMessage");
-    this.setWidget(0, 0, infoMessage);
-  }
-  
   /**
    * A worker that loads the ParameterTable with parameter values for the
    * selected model component. Displays a {@link ViewInputFilesPanel} at the
