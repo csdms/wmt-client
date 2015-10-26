@@ -29,6 +29,11 @@ class cd(object):
         os.chdir(self._starting_dir)
 
 
+def check_output(*args, **kwds):
+    kwds.setdefault('stdout', subprocess.PIPE)
+    return subprocess.Popen(*args, **kwds).communicate()[0]
+
+
 def system(*args, **kwds):
     verbose = kwds.pop('verbose', True)
 
@@ -44,6 +49,49 @@ def system(*args, **kwds):
     except subprocess.CalledProcessError:
         status('Error')
         raise
+
+
+def which(prog, env=None):
+    prog = os.environ.get(env or prog.upper(), prog)
+
+    try:
+        prog = check_output(['which', prog],
+                            stderr=open('/dev/null', 'w')).strip()
+    except subprocess.CalledProcessError:
+        return None
+    else:
+        return prog
+
+
+def git_clone(url, git=None, dir='.'):
+    git = git or which('git')
+
+    with cd(dir):
+        system([git, 'init', '-q'])
+        system([git, 'config', 'remote.origin.url', url])
+        system([git, 'config', 'remote.origin.fetch',
+                '+refs/head/*:refs/remotes/origin/*'])
+        system([git, 'fetch', 'origin',
+                'master:refs/remotes/origin/master', '-n', '--depth=1'])
+        system([git, 'reset', '--hard', 'origin/master'])
+
+
+def git_pull(url, git=None, dir='.'):
+    git = git or which('git')
+
+    with cd(dir):
+        system([git, 'checkout', '-q', 'master'])
+        system([git, 'pull', 'origin', '-q',
+                'refs/heads/master:refs/remotes/origin/master'])
+
+
+def git_clone_or_update(url, dir='.'):
+    if os.path.isdir(os.path.join(dir, '.git')):
+        status('Updating %s' % url)
+        git_pull(url, dir=dir)
+    else:
+        status('Cloning %s' % url)
+        git_clone(url, dir=dir)
 
 
 def checksum_matches(path, md5):
@@ -88,10 +136,10 @@ def download_url(url, dest, md5=None, cache='.'):
     return os.path.abspath(dest)
 
 
-def download_gwt(dest='.', cache='.'):
+def download_gwt():
     dest = os.path.basename(GWT_URL)
     md5 = '6ada64bdd849abd0d954c44d42187340'
-    return download_url(GWT_URL, dest, cache=cache, md5=md5)
+    return download_url(GWT_URL, dest, md5=md5)
 
 
 def install_gwt(prefix='.'):
@@ -107,6 +155,11 @@ def install_gwt(prefix='.'):
         os.environ['PATH']])
 
     status('GWT installed to %s' % os.environ['GWT_HOME'])
+
+
+def fetch_wmt_client(dir='.', url=None):
+    dir = 'wmt-client'
+    git_clone_or_update(url or 'https://github.com/csdms/wmt-client', dir=dir)
 
 
 if __name__ == '__main__':
@@ -131,5 +184,6 @@ if __name__ == '__main__':
     with cd(build) as _:
         download_gwt()
         install_gwt()
+        fetch_wmt_client()
 
     # shutil.rmtree(build)
