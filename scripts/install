@@ -1,0 +1,135 @@
+#!/usr/bin/env python
+
+import os
+import shutil
+import subprocess
+import urllib2
+import tempfile
+import zipfile
+from distutils.dir_util import mkpath
+
+
+API_URL="https://csdms.colorado.edu/wmt/api-dev/"
+EXECUTION_SERVERS=["beach.colorado.edu"]
+GWT_URL="http://google-web-toolkit.googlecode.com/files/gwt-2.5.1.zip"
+
+
+class cd(object):
+    def __init__(self, dir):
+        self._dir = dir
+
+    def __enter__(self):
+        self._starting_dir = os.path.abspath(os.getcwd())
+        if not os.path.isdir(self._dir):
+            mkpath(self._dir)
+        os.chdir(self._dir)
+        return os.path.abspath(os.getcwd())
+
+    def __exit__(self, type, value, traceback):
+        os.chdir(self._starting_dir)
+
+
+def system(*args, **kwds):
+    verbose = kwds.pop('verbose', True)
+
+    status(' '.join(args[0]))
+
+    if verbose:
+        call = subprocess.check_call
+    else:
+        call = check_output
+
+    try:
+        call(*args, **kwds)
+    except subprocess.CalledProcessError:
+        status('Error')
+        raise
+
+
+def checksum_matches(path, md5):
+    import hashlib
+
+    if md5 is None:
+        return False
+
+    hasher = hashlib.md5()
+    with open(path, 'r') as contents:
+        hasher.update(contents.read())
+
+    return hasher.hexdigest() == md5
+
+
+def status(message):
+    print ' '.join(['==>', message])
+
+
+def download_url(url, dest, md5=None, cache='.'):
+    dest = os.path.abspath(os.path.join(cache, dest))
+
+    if os.path.exists(dest):
+        if checksum_matches(dest, md5):
+            status('md5 %s' % url)
+            return dest
+        else:
+            os.remove(dest)
+
+    status('Fetching %s' % url)
+
+    try:
+        response = urllib2.urlopen(url)
+    except urllib2.HTTPError as error:
+        raise
+    except urllib2.URLError as error:
+        raise
+    else:
+        with open(dest, 'w') as destination:
+            shutil.copyfileobj(response, destination)
+
+    return os.path.abspath(dest)
+
+
+def download_gwt(dest='.', cache='.'):
+    dest = os.path.basename(GWT_URL)
+    md5 = '6ada64bdd849abd0d954c44d42187340'
+    return download_url(GWT_URL, dest, cache=cache, md5=md5)
+
+
+def install_gwt(prefix='.'):
+    gwt_file = os.path.basename(GWT_URL)
+    gwt_version = os.path.splitext(gwt_file)[0]
+    with zipfile.ZipFile(gwt_file, 'r') as zf:
+        zf.extractall(prefix)
+
+    os.environ['GWT_HOME'] = os.path.abspath(os.path.join(prefix, gwt_version))
+
+    os.environ['PATH'] = os.pathsep.join([
+        os.environ['GWT_HOME'],
+        os.environ['PATH']])
+
+    status('GWT installed to %s' % os.environ['GWT_HOME'])
+
+
+if __name__ == '__main__':
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('prefix', help='Install prefix for wmt-client')
+    parser.add_argument('--verbose', action='store_true',
+                        help='Be verbose')
+
+    parser.add_argument('--api-url', default=API_URL,
+                        type=str,
+                        help='URL for WMT API server')
+    parser.add_argument('--execution-servers', default=EXECUTION_SERVERS,
+                        type=str,
+                        help='List of hostnames of WMT execution servers')
+
+    args = parser.parse_args()
+
+    # build = tempfile.mkdtemp()
+    build = 'build'
+    with cd(build) as _:
+        download_gwt()
+        install_gwt()
+
+    # shutil.rmtree(build)
