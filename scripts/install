@@ -181,25 +181,31 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('prefix', help='Install prefix for wmt-client')
-    parser.add_argument('--verbose', action='store_true',
-                        help='Be verbose')
+    parser.add_argument('prefix', help='install prefix for wmt-client')
 
     parser.add_argument('--api-url', default=API_URL,
                         type=str,
                         help='URL for WMT API server')
+    parser.add_argument('--build-directory',
+                        default=tempfile.mkdtemp(prefix='wmt_', suffix='.d'),
+                        type=str,
+                        help='specify directory for building wmt-client')
     parser.add_argument('--execution-servers', default=EXECUTION_SERVERS,
                         type=str,
-                        help='List of hostnames of WMT execution servers')
+                        help='list of hostnames of WMT execution servers')
+    parser.add_argument('--keep-build-directory', default=False,
+                        action='store_true',
+                        help='don\'t delete build directory when finished')
 
     args = parser.parse_args()
 
-    # build = tempfile.mkdtemp()
-    build = 'build'
-    with cd(build) as _:
+    status('Build directory is %s' % os.path.abspath(args.build_directory))
+
+    with cd(args.build_directory) as _:
         download_gwt()
         install_gwt()
         build_wmt_client()
         install_wmt_client(args.prefix)
 
-    # shutil.rmtree(build)
+    if args.keep_build_directory is False:
+        shutil.rmtree(args.build_directory)
