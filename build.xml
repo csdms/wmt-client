@@ -138,6 +138,11 @@
 
 	<target name="hosted" depends="devmode" description="Run development mode (NOTE: the 'hosted' target is deprecated)" />
 
+	<target name="buildclean" description="Removes testing files from build of this project">
+		<delete dir="war/data" failonerror="false" />
+		<delete dir="war/save" failonerror="false" />
+	</target>
+
 	<target name="build" depends="gwtc" description="Build this project" />
 
 	<target name="war" depends="build" description="Create a war file">
