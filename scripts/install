@@ -165,7 +165,6 @@ def build_wmt_client(dest='.'):
     dest = os.path.abspath(dest)
     with cd(os.path.join(dest, 'wmt-client')):
         fetch_wmt_client()
-<<<<<<< HEAD
         system([which('ant'), 'build'])
         system([which('ant'), 'buildclean'])
 
@@ -177,27 +176,17 @@ def install_wmt_client(prefix):
         shutil.copytree(src, dest)
     except EnvironmentError as err:
         status('Installing wmt-client failed with %s' % err)
-=======
-        system([which('ant'), 'war'])
->>>>>>> a794f333130d9c8c72bdb3c36225a671d78b8a85
 
 
 if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-<<<<<<< HEAD
     parser.add_argument('prefix', help='install prefix for wmt-client')
-=======
-    parser.add_argument('prefix', help='Install prefix for wmt-client')
-    parser.add_argument('--verbose', action='store_true',
-                        help='Be verbose')
->>>>>>> a794f333130d9c8c72bdb3c36225a671d78b8a85
 
     parser.add_argument('--api-url', default=API_URL,
                         type=str,
                         help='URL for WMT API server')
-<<<<<<< HEAD
     parser.add_argument('--build-directory',
                         default=tempfile.mkdtemp(prefix='wmt_', suffix='.d'),
                         type=str,
@@ -221,19 +210,3 @@ if __name__ == '__main__':
 
     if args.keep_build_directory is False:
         shutil.rmtree(args.build_directory)
-=======
-    parser.add_argument('--execution-servers', default=EXECUTION_SERVERS,
-                        type=str,
-                        help='List of hostnames of WMT execution servers')
-
-    args = parser.parse_args()
-
-    # build = tempfile.mkdtemp()
-    build = 'build'
-    with cd(build) as _:
-        download_gwt()
-        install_gwt()
-        build_wmt_client()
-
-    # shutil.rmtree(build)
->>>>>>> a794f333130d9c8c72bdb3c36225a671d78b8a85
