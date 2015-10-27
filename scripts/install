@@ -168,6 +168,15 @@ def build_wmt_client(dest='.'):
         system([which('ant'), 'war'])
 
 
+def install_wmt_client(prefix):
+    prefix = os.path.abspath(prefix)
+    war_file = os.path.join('wmt-client', 'wmt.war')
+    try:
+        shutil.copy(war_file, prefix)
+    except IOError as err:
+        print err
+
+
 if __name__ == '__main__':
     import argparse
 
@@ -191,5 +200,6 @@ if __name__ == '__main__':
         download_gwt()
         install_gwt()
         build_wmt_client()
+        install_wmt_client(args.prefix)
 
     # shutil.rmtree(build)
