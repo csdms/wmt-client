@@ -158,8 +158,14 @@ def install_gwt(prefix='.'):
 
 
 def fetch_wmt_client(url=None):
-    dest = 'wmt-client'
-    git_clone_or_update(url or 'https://github.com/csdms/wmt-client', dest=dest)
+    git_clone_or_update(url or 'https://github.com/csdms/wmt-client')
+
+
+def build_wmt_client(dest='.'):
+    dest = os.path.abspath(dest)
+    with cd(os.path.join(dest, 'wmt-client')):
+        fetch_wmt_client()
+        system([which('ant'), 'war'])
 
 
 if __name__ == '__main__':
@@ -184,6 +190,6 @@ if __name__ == '__main__':
     with cd(build) as _:
         download_gwt()
         install_gwt()
-        fetch_wmt_client()
+        build_wmt_client()
 
     # shutil.rmtree(build)
