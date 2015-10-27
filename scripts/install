@@ -63,10 +63,10 @@ def which(prog, env=None):
         return prog
 
 
-def git_clone(url, git=None, dir='.'):
+def git_clone(url, git=None, dest='.'):
     git = git or which('git')
 
-    with cd(dir):
+    with cd(dest):
         system([git, 'init', '-q'])
         system([git, 'config', 'remote.origin.url', url])
         system([git, 'config', 'remote.origin.fetch',
@@ -76,22 +76,22 @@ def git_clone(url, git=None, dir='.'):
         system([git, 'reset', '--hard', 'origin/master'])
 
 
-def git_pull(url, git=None, dir='.'):
+def git_pull(url, git=None, dest='.'):
     git = git or which('git')
 
-    with cd(dir):
+    with cd(dest):
         system([git, 'checkout', '-q', 'master'])
         system([git, 'pull', 'origin', '-q',
                 'refs/heads/master:refs/remotes/origin/master'])
 
 
-def git_clone_or_update(url, dir='.'):
-    if os.path.isdir(os.path.join(dir, '.git')):
+def git_clone_or_update(url, dest='.'):
+    if os.path.isdir(os.path.join(dest, '.git')):
         status('Updating %s' % url)
-        git_pull(url, dir=dir)
+        git_pull(url, dest=dest)
     else:
         status('Cloning %s' % url)
-        git_clone(url, dir=dir)
+        git_clone(url, dest=dest)
 
 
 def checksum_matches(path, md5):
@@ -157,9 +157,9 @@ def install_gwt(prefix='.'):
     status('GWT installed to %s' % os.environ['GWT_HOME'])
 
 
-def fetch_wmt_client(dir='.', url=None):
-    dir = 'wmt-client'
-    git_clone_or_update(url or 'https://github.com/csdms/wmt-client', dir=dir)
+def fetch_wmt_client(url=None):
+    dest = 'wmt-client'
+    git_clone_or_update(url or 'https://github.com/csdms/wmt-client', dest=dest)
 
 
 if __name__ == '__main__':
