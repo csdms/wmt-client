@@ -9,8 +9,8 @@ import zipfile
 from distutils.dir_util import mkpath
 
 
-API_URL="https://csdms.colorado.edu/wmt/api-dev/"
-EXECUTION_SERVERS=["beach.colorado.edu"]
+DEFAULT_API_URL="https://csdms.colorado.edu/wmt/api-dev/"
+DEFAULT_EXECUTION_SERVERS="beach.colorado.edu"
 GWT_URL="http://google-web-toolkit.googlecode.com/files/gwt-2.5.1.zip"
 
 
@@ -169,6 +169,24 @@ def build_wmt_client(dest='.'):
         system([which('ant'), 'buildclean'])
 
 
+def update_config_file(api_url, execution_servers, dest='.'):
+    import json
+    import posixpath
+
+    dest = os.path.abspath(dest)
+    config_file = 'config.json'
+    with cd(os.path.join(dest, 'wmt-client', 'war')):
+
+        with open(config_file, 'r') as ifp:
+            config = json.load(ifp)
+
+        config['api_url'] = posixpath.join(api_url, '')  # needs trailing /
+        config['execution_servers'] = execution_servers.split()
+
+        with open(config_file, 'w') as ofp:
+            json.dump(config, ofp, indent=4)
+
+
 def install_wmt_client(prefix):
     src = os.path.join('wmt-client', 'war')
     dest = os.path.join(os.path.abspath(prefix), 'wmt')
@@ -184,17 +202,20 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('prefix', help='install prefix for wmt-client')
 
-    parser.add_argument('--api-url', default=API_URL,
+    parser.add_argument('--api-url',
+                        default=DEFAULT_API_URL,
                         type=str,
                         help='URL for WMT API server')
     parser.add_argument('--build-directory',
                         default=tempfile.mkdtemp(prefix='wmt_', suffix='.d'),
                         type=str,
                         help='specify directory for building wmt-client')
-    parser.add_argument('--execution-servers', default=EXECUTION_SERVERS,
+    parser.add_argument('--execution-servers',
+                        default=DEFAULT_EXECUTION_SERVERS,
                         type=str,
-                        help='list of hostnames of WMT execution servers')
-    parser.add_argument('--keep-build-directory', default=False,
+                        help='space-delimited hostnames of WMT EXE servers')
+    parser.add_argument('--keep-build-directory',
+                        default=False,
                         action='store_true',
                         help='don\'t delete build directory when finished')
 
@@ -206,6 +227,7 @@ if __name__ == '__main__':
         download_gwt()
         install_gwt()
         build_wmt_client()
+        update_config_file(args.api_url, args.execution_servers)
         install_wmt_client(args.prefix)
 
     if args.keep_build_directory is False:
