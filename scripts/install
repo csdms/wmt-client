@@ -165,16 +165,17 @@ def build_wmt_client(dest='.'):
     dest = os.path.abspath(dest)
     with cd(os.path.join(dest, 'wmt-client')):
         fetch_wmt_client()
-        system([which('ant'), 'war'])
+        system([which('ant'), 'build'])
+        system([which('ant'), 'buildclean'])
 
 
 def install_wmt_client(prefix):
-    prefix = os.path.abspath(prefix)
-    war_file = os.path.join('wmt-client', 'wmt.war')
+    src = os.path.join('wmt-client', 'war')
+    dest = os.path.join(os.path.abspath(prefix), 'wmt')
     try:
-        shutil.copy(war_file, prefix)
-    except IOError as err:
-        print err
+        shutil.copytree(src, dest)
+    except EnvironmentError as err:
+        status('Installing wmt-client failed with %s' % err)
 
 
 if __name__ == '__main__':
