@@ -40,11 +40,16 @@ public class ComponentInformationMenu extends PopupPanel {
     // Components are listed on the componentsPanel, situated on a ScrollPanel.
     componentsPanel = new VerticalPanel();
     ScrollPanel scroller = new ScrollPanel(componentsPanel);
-    scroller.setSize(Constants.MENU_WIDTH, Constants.MENU_HEIGHT);
     menu.add(scroller);
     
     // Populate the menu with the components.
     populateMenu();
+
+    // If the number of components in the componentSelectionPanel exceeds
+    // a threshold value, turn on the scrollPanel.
+    if (componentsPanel.getWidgetCount() >= Constants.SCROLL_THRESHOLD) {
+      scroller.setSize(Constants.MENU_WIDTH, Constants.MENU_HEIGHT);
+    }
   }
 
   /**
