@@ -56,6 +56,9 @@ public class FileCell extends HorizontalPanel {
     
     // Load the droplist. If the value of the incoming parameter isn't listed
     // in the component, append it to the end of the list and select it.
+    // If there's only one file in the list, and it's not the default, also
+    // display the default, in case the user wants to revert to the default.
+    // (This has been a troublesome code block.)
     Integer nFiles = this.parameter.getValue().getFiles().length();
     Integer selectedIndex = -1;
     for (int i = 0; i < nFiles; i++) {
@@ -64,13 +67,13 @@ public class FileCell extends HorizontalPanel {
         selectedIndex = i;
       }
     }
-    if (selectedIndex > 0) {
-      fileDroplist.setSelectedIndex(selectedIndex);
-    } else {
-      if (nFiles > 1) {
-        fileDroplist.addItem(parameter.getValue().getDefault());
-      }
+    if (selectedIndex == -1) {
+      fileDroplist.addItem(parameter.getValue().getDefault());
       fileDroplist.setSelectedIndex(fileDroplist.getItemCount() - 1);
+    } else if (selectedIndex == 0) {
+      fileDroplist.setSelectedIndex(fileDroplist.getItemCount() - 1);
+    } else {
+      fileDroplist.setSelectedIndex(selectedIndex);
     }
     fileDroplist.setVisibleItemCount(1);  // show one item -- a droplist
   }
