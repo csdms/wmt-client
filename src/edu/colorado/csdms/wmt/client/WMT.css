@@ -5,7 +5,7 @@
    http://www.gwtproject.org/doc/latest/DevGuideClientBundle.html#CssResource
 */
 
-/* Variables. */
+/* GWT-specific rules, using @def (see above reference) */
 
 /* A palette adapted from http://www.colourlovers.com/palette/292482/Terra. */
 /* @def colorDark rgb(3,22,52); */
@@ -211,10 +211,10 @@ body, table td, select, button {
    Rules for the ModelTree & TreeItems within.
 */
 .wmt-ModelTree {
-  margin-top: 14px;
+  margin-top: 15px;
 }
 .wmt-TreeItem {
-   margin-left: 90px !important;
+   margin-left: 75px !important;
 }
 
 /* Base style for a ComponentCell. */
@@ -251,7 +251,7 @@ body, table td, select, button {
 .wmt-ComponentCell-NameCell {
   font-size: fontMedium;  
   text-align: center;
-  width: 114px;
+  width: 120px;
   margin-left: 5px;
 }
 
