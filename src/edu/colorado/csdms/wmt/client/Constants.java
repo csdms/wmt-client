@@ -115,7 +115,7 @@ public class Constants {
 
   // The number of components displayed in a ComponentSelectionMenu before
   // the scrollbar appears. (aesthetic)
-  public static Integer SCROLL_THRESHOLD = 10;
+  public static Integer SCROLL_THRESHOLD = 25;
 
   // The default text displayed in the driver ComponentCell.
   public static String DRIVER = "driver";
@@ -125,7 +125,7 @@ public class Constants {
   public static Integer DEFAULT_MODEL_ID = -1;
 
   // The number of characters to display in a ComponentCell.
-  public static Integer TRIM = 10;
+  public static Integer TRIM = 12;
 
   // Unicode representation.
   public static String ELLIPSIS = "\u2026";

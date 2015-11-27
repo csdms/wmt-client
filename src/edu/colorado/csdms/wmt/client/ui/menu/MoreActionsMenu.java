@@ -47,7 +47,7 @@ public class MoreActionsMenu extends PopupPanel {
   private DataManager data;
   private VerticalPanel menu;
   private LabelsMenu labelsMenu;
-  private ComponentsMenu componentsMenu;
+  private ComponentInformationMenu componentInformationMenu;
   
   /**
    * Makes a new {@link MoreActionsMenu}.
@@ -116,17 +116,17 @@ public class MoreActionsMenu extends PopupPanel {
     componentsButton.setStyleName("wmt-PopupPanelItem");
     componentsButton.setTitle(Constants.COMPONENT_INFO_1);
     menu.add(componentsButton);
-    componentsMenu = new ComponentsMenu(data);
+    componentInformationMenu = new ComponentInformationMenu(data);
     componentsButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
-        componentsMenu.populateMenu();
-        componentsMenu.setPopupPositionAndShow(new PositionCallback() {
+        componentInformationMenu.populateMenu();
+        componentInformationMenu.setPopupPositionAndShow(new PositionCallback() {
           final Integer x = componentsButton.getElement().getAbsoluteRight();
           final Integer y = componentsButton.getAbsoluteTop();
           @Override
           public void setPosition(int offsetWidth, int offsetHeight) {
-            componentsMenu.setPopupPosition(x, y);
+            componentInformationMenu.setPopupPosition(x, y);
           }
         });
       }
