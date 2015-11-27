@@ -11,6 +11,7 @@
     <property name="war.class.dir" value="${war.dir}/WEB-INF/classes" />
 	<property name="lib.dir" value="lib"/>
     <property name="junit.jarfile" value="${lib.dir}/junit-4.11.jar"/>
+	<property name="docs.dir" value="docs" />
 	<property name="package.name" value="edu.colorado.csdms.wmt"/>
 
 	<path id="project.class.path">
@@ -155,10 +156,20 @@
 		<echo message="Warfile built." />
 	</target>
 
+	<target name="doc" description="Create javadoc documentation">
+		<javadoc packagenames="${package.name}.*" sourcepath="${src.dir}"
+		    destdir="${docs.dir}" author="true" version="true" use="true"
+		    overview="${src.dir}/overview.html"
+		    windowtitle="WMT-Client Documentation">
+		</javadoc>
+		<echo message="Docs done." />
+	</target>
+
 	<target name="clean" description="Cleans this project">
 		<delete dir="${war.class.dir}" failonerror="false" />
 		<delete dir="${war.dir}/wmt" failonerror="false" />
 		<delete file="${war.file}" failonerror="false" />
+		<delete dir="${doc.dir}" />
 		<echo message="Cleanup complete." />
 	</target>
 
