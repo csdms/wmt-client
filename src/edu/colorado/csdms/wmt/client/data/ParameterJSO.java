@@ -9,11 +9,14 @@ import com.google.gwt.core.client.JavaScriptObject;
  * component model, with "key", "name", "description" and "value" attributes.
  * Declares JSNI methods to access these attributes from a JSON and modify
  * them in memory.
+ * <p>
+ * For more on GWT JSO types, see <a href=
+ * "http://www.gwtproject.org/doc/latest/DevGuideCodingBasicsOverlay.html"
+ * >DevGuideCodingBasicsOverlay</a> and <a
+ * href="http://www.gwtproject.org/doc/latest/DevGuideCodingBasicsJSNI.html"
+ * >DevGuideCodingBasicsJSNI</a>.
  * 
- * @see <a
- *      href="http://www.gwtproject.org/doc/latest/DevGuideCodingBasicsOverlay.html">http://www.gwtproject.org/doc/latest/DevGuideCodingBasicsOverlay.html</a>
  * @author Mark Piper (mark.piper@colorado.edu)
- * 
  */
 public class ParameterJSO extends JavaScriptObject {
 

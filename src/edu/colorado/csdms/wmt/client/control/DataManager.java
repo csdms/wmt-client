@@ -1,26 +1,3 @@
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 mcflugen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package edu.colorado.csdms.wmt.client.control;
 
 import java.util.ArrayList;
@@ -56,21 +33,21 @@ public class DataManager {
   // The initial sign-in screen. Either this or the Perspective are always
   // attached to the RootLayoutPanel of the application.
   private SignInScreen signInScreen;
-  
-  // Get the state of UI elements through the Perspective. 
+
+  // Get the state of UI elements through the Perspective.
   private Perspective perspective;
 
   private List<ComponentJSO> components; // "class" components
   private List<ComponentJSO> modelComponents; // "instance" components
   private ComponentCell componentShowingParameters;
-  
+
   private ModelJSO model;
   private ModelMetadataJSO metadata;
   private Boolean modelIsSaved = false;
   private String modelString; // stringified JSON
-  
+
   private String simulationId; // the uuid of a submitted run
-  
+
   // Experiment with public members, for convenience.
   public Security security;
   public ConfigurationJSO config;
@@ -117,7 +94,7 @@ public class DataManager {
   public void showWaitCursor() {
     perspective.getElement().getStyle().setCursor(Cursor.WAIT);
   }
-  
+
   /**
    * Shows the default cursor.
    */
@@ -150,8 +127,8 @@ public class DataManager {
   }
 
   /**
-   * A convenience method that returns the {@link ComponentJSO} object
-   * matching the given component id.
+   * A convenience method that returns the {@link ComponentJSO} object matching
+   * the given component id.
    * 
    * @param componentId the id of the desired component, a String
    */
@@ -204,8 +181,8 @@ public class DataManager {
   }
 
   /**
-   * A convenience method that returns the {@link ComponentJSO} object
-   * matching the given model component id, or null if no match is found.
+   * A convenience method that returns the {@link ComponentJSO} object matching
+   * the given model component id, or null if no match is found.
    * <p>
    * Compare with {@link #getComponent(String)} for "class" components.
    * 
@@ -267,7 +244,8 @@ public class DataManager {
 
   /**
    * Replaces <em>all</em> of the model components with copies of the (class)
-   * components using {@link DataTransfer#copy()}.
+   * components using
+   * {@link DataTransfer#copy(com.google.gwt.core.client.JavaScriptObject)}.
    */
   public void resetModelComponents() {
     for (int i = 0; i < modelComponents.size(); i++) {
@@ -290,7 +268,7 @@ public class DataManager {
    * Sets an ArrayList of ComponentJSOs representing <em>all</em> the model
    * components.
    * 
-   * @param components all your components are belong to us
+   * @param modelComponents all your components are belong to us
    */
   public void setModelComponents(List<ComponentJSO> modelComponents) {
     this.modelComponents = modelComponents;
@@ -314,8 +292,7 @@ public class DataManager {
   }
 
   /**
-   * Returns the ModelMetadataJSO object used to store the metadata for a
-   * model.
+   * Returns the ModelMetadataJSO object used to store the metadata for a model.
    */
   public ModelMetadataJSO getMetadata() {
     return metadata;
@@ -389,7 +366,7 @@ public class DataManager {
     modelIsSaved(state);
     perspective.setModelPanelTitle();
   }
-  
+
   /**
    * Gets the stringified model JSON created by {@link #serialize()}.
    */
@@ -423,7 +400,7 @@ public class DataManager {
   }
 
   /**
-   * Returns the {@link ComponentCell} that's currently displaying its 
+   * Returns the {@link ComponentCell} that's currently displaying its
    * parameters in the Parameters view.
    */
   public ComponentCell getShowingParameters() {
@@ -431,7 +408,7 @@ public class DataManager {
   }
 
   /**
-   * Sets the {@link ComponentCell} that's showing its parameters in the 
+   * Sets the {@link ComponentCell} that's showing its parameters in the
    * Parameters view.
    * 
    * @param componentShowingParameters
@@ -442,10 +419,10 @@ public class DataManager {
   }
 
   /**
-   * Translates the model displayed in WMT into a {@link ModelJSO} object,
-   * which completely describes the state of the model. This object is
-   * converted to a string (with {@link DataTransfer#stringify()}) which can
-   * be uploaded to a server.
+   * Translates the model displayed in WMT into a {@link ModelJSO} object, which
+   * completely describes the state of the model. This object is converted to a
+   * string (with {@link DataTransfer#stringify(Object)}) which can be uploaded
+   * to a server.
    */
   public void serialize() {
     ModelSerializer serializer = new ModelSerializer(this);
@@ -454,9 +431,9 @@ public class DataManager {
   }
 
   /**
-   * Extracts the information contained in the {@link ModelJSO} object
-   * returned from opening a model (model menu > "Open Model...") and uses it
-   * to populate the {@link ModelTree}.
+   * Extracts the information contained in the {@link ModelJSO} object returned
+   * from opening a model (model menu > "Open Model...") and uses it to populate
+   * the {@link ModelTree}.
    */
   public void deserialize() {
     perspective.setModelPanelTitle();

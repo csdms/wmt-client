@@ -1,26 +1,3 @@
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 mcflugen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package edu.colorado.csdms.wmt.client.data;
 
 import java.util.Vector;
@@ -29,15 +6,18 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayString;
 
 /**
- * A GWT JavaScript overlay (JSO) type that describes the values of a
- * parameter for a WMT component model, with "type", "default", "units",
- * "range" and "choices" attributes. Declares JSNI methods to access these
- * attributes from a JSON and modify them in memory.
+ * A GWT JavaScript overlay (JSO) type that describes the values of a parameter
+ * for a WMT component model, with "type", "default", "units", "range" and
+ * "choices" attributes. Declares JSNI methods to access these attributes from a
+ * JSON and modify them in memory.
+ * <p>
+ * For more on GWT JSO types, see <a href=
+ * "http://www.gwtproject.org/doc/latest/DevGuideCodingBasicsOverlay.html"
+ * >DevGuideCodingBasicsOverlay</a> and <a
+ * href="http://www.gwtproject.org/doc/latest/DevGuideCodingBasicsJSNI.html"
+ * >DevGuideCodingBasicsJSNI</a>.
  * 
- * @see <a
- *      href="http://www.gwtproject.org/doc/latest/DevGuideCodingBasicsOverlay.html">http://www.gwtproject.org/doc/latest/DevGuideCodingBasicsOverlay.html</a>
  * @author Mark Piper (mark.piper@colorado.edu)
- * 
  */
 public class ValueJSO extends JavaScriptObject {
 
@@ -58,7 +38,7 @@ public class ValueJSO extends JavaScriptObject {
    * present. Coerce result to string.
    */
   public final native String getDefault() /*-{
-    // "default" is reserved in JavaScript; use hash notation to access.
+		// "default" is reserved in JavaScript; use hash notation to access.
 		return this["default"].toString();
   }-*/;
 
@@ -68,10 +48,10 @@ public class ValueJSO extends JavaScriptObject {
    * @param value the value to set, of type String, Integer or Double
    */
   public final native <T> void setDefault(T value) /*-{
-    // "default" is reserved in JavaScript; use hash notation to access.
-    this["default"] = value;
+		// "default" is reserved in JavaScript; use hash notation to access.
+		this["default"] = value;
   }-*/;
-  
+
   /**
    * A JSNI method to access the "units" attribute of a ValueJSO. May not be
    * present, though ignored without an exception; is a string.
@@ -84,8 +64,6 @@ public class ValueJSO extends JavaScriptObject {
    * JSNI method to access the "range.min" attribute of a ValueJSO. May not be
    * present. The undefined check on "range" attribute is necessary. I'm
    * choosing to cast value to string, because long integers aren't supported.
-   * 
-   * @see http://www.gwtproject.org/doc/latest/DevGuideCodingBasicsJSNI.html
    */
   public final native String getMin() /*-{
 		if (typeof this.range == 'undefined') {
@@ -99,8 +77,6 @@ public class ValueJSO extends JavaScriptObject {
    * JSNI method to access the "range.max" attribute of a ValueJSO. May not be
    * present. The undefined check on "range" attribute is necessary. I'm
    * choosing to cast value to string, because long integers aren't supported.
-   * 
-   * @see http://www.gwtproject.org/doc/latest/DevGuideCodingBasicsJSNI.html
    */
   public final native String getMax() /*-{
 		if (typeof this.range == 'undefined') {

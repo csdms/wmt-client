@@ -71,10 +71,11 @@ public class DataTransfer {
 
   /**
    * A JSNI method for creating a String from a JavaScriptObject.
+   * <p>
+   * See <a href=
+   * "http://stackoverflow.com/questions/4872770/excluding-gwt-objectid-from-json-stringifyjso-in-devmode"
+   * >this</a> discussion of '__gwt_ObjectId'.
    * 
-   * @see <a
-   *      href="http://stackoverflow.com/questions/4872770/excluding-gwt-objectid-from-json-stringifyjso-in-devmode">this</a>
-   *      discussion of '__gwt_ObjectId'
    * @param jso a JavaScriptObject
    * @return a String representation of the JavaScriptObject
    */
@@ -90,13 +91,12 @@ public class DataTransfer {
   /**
    * A JSNI method for evaluating JSONs. This is a generic method. It returns a
    * JavaScript object of the type denoted by the type parameter T.
-   * 
-   * @see <a
-   *      href="http://docs.oracle.com/javase/tutorial/extra/generics/methods.html">Generic
-   *      Methods</a>
-   * @see <a
-   *      href="http://stackoverflow.com/questions/1843343/json-parse-vs-eval">JSON.parse
-   *      vs. eval()</a>
+   * <p>
+   * See <a
+   * href="http://docs.oracle.com/javase/tutorial/extra/generics/methods.html"
+   * >Generic Methods</a> and <a
+   * href="http://stackoverflow.com/questions/1843343/json-parse-vs-eval"
+   * >JSON.parse vs. eval()</a>.
    * 
    * @param jsonStr a trusted String
    * @return a JavaScriptObject that can be cast to an overlay type
@@ -122,12 +122,13 @@ public class DataTransfer {
    * A recursive JSNI method for making a deep copy of an input
    * JavaScriptObject. This is the private implementation of
    * {@link #copy(JavaScriptObject)}.
+   * <p>
+   * See <a
+   * href="http://stackoverflow.com/questions/4730463/gwt-overlay-deep-copy"
+   * >This</a> example code was very helpful (thanks to the author, <a
+   * href="http://stackoverflow.com/users/247462/javier-ferrero">Javier
+   * Ferrero</a>!)
    * 
-   * @see <a
-   *      href="http://stackoverflow.com/questions/4730463/gwt-overlay-deep-copy"
-   *      >This</a> example code was very helpful (thanks to the author, <a
-   *      href="http://stackoverflow.com/users/247462/javier-ferrero">Javier
-   *      Ferrero</a>!)
    * @param obj
    */
   private static native JavaScriptObject copyImpl(JavaScriptObject obj) /*-{
@@ -205,12 +206,12 @@ public class DataTransfer {
               GWT.log(rtxt);
               ConfigurationJSO jso = parse(rtxt);
               data.config = jso;
-              
-              // Once the location of the API has been determined, retrieve 
+
+              // Once the location of the API has been determined, retrieve
               // (asynchronously) and store the list of available components
-              // and models. Note that when #getComponentList completes, it 
+              // and models. Note that when #getComponentList completes, it
               // immediately starts pulling component data from the server with
-              // calls to #getComponent. Asynchronous requests are cool!              
+              // calls to #getComponent. Asynchronous requests are cool!
               getComponentList(data);
               getModelList(data);
             }
@@ -224,7 +225,7 @@ public class DataTransfer {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
   }
-  
+
   /**
    * Makes an asynchronous HTTPS POST request to create a new user login to WMT.
    * 
@@ -744,7 +745,7 @@ public class DataTransfer {
     entries.put("model", modelId.toString()); // type="text" in API
     entries.put("tag", labelId.toString());
     String queryString = buildQueryString(entries);
-    
+
     try {
       builder.setHeader("Content-Type", "application/x-www-form-urlencoded");
       @SuppressWarnings("unused")
@@ -755,7 +756,7 @@ public class DataTransfer {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
   }
-  
+
   /**
    * Makes an asynchronous HTTPS GET request to query what models use the given
    * labels, input as an List of Integer ids.
@@ -791,11 +792,11 @@ public class DataTransfer {
   }
 
   /**
-   * Makes an asynchronous HTTPS GET request to query what models use the given
-   * labels, input as an List of Integer ids.
+   * Makes an asynchronous HTTPS GET request to query what labels the models 
+   * has, given the model identifier. 
    * 
    * @param data the DataManager object for the WMT session
-   * @param labelIds a List of Integer label ids
+   * @param modelId the id of the model
    */
   public static void getModelLabels(DataManager data, Integer modelId) {
 
@@ -845,7 +846,7 @@ public class DataTransfer {
       // Replace the sign-in screen with the WMT GUI.
       RootLayoutPanel.get().remove(data.getSignInScreen());
       RootLayoutPanel.get().add(data.getPerspective());
-      
+
       // Trap browser reload and close events (they're indistinguishable), and
       // present a message to the user. Store this handler in the Perspective.
       HandlerRegistration handler;
@@ -858,7 +859,7 @@ public class DataTransfer {
         }
       });
       data.getPerspective().setWindowCloseHandler(handler);
-      
+
       // Get all labels belonging to the user, as well as all public labels.
       listLabels(data);
 
@@ -885,7 +886,7 @@ public class DataTransfer {
       RootLayoutPanel.get().add(data.getSignInScreen());
 
       // Remove window close handler; reset the Perspective.
-      data.getPerspective().getWindowCloseHandler().removeHandler();      
+      data.getPerspective().getWindowCloseHandler().removeHandler();
       data.getPerspective().reset();
 
       // Clear any user-owned labels from list. Locate first, then remove.
@@ -943,7 +944,8 @@ public class DataTransfer {
       } else if (Response.SC_UNAUTHORIZED == response.getStatusCode()) {
 
         // Display message if email address is valid, but password is not.
-        data.getSignInScreen().getErrorMessage().setHTML(Constants.PASSWORD_ERR);
+        data.getSignInScreen().getErrorMessage()
+            .setHTML(Constants.PASSWORD_ERR);
 
       } else {
         String msg =
@@ -951,7 +953,7 @@ public class DataTransfer {
                 + "Response code: " + response.getStatusCode();
         Window.alert(msg);
       }
-      
+
       data.showDefaultCursor();
     }
 
@@ -1100,7 +1102,7 @@ public class DataTransfer {
         GWT.log(rtxt);
         ModelListJSO jso = parse(rtxt);
         data.modelList = jso;
-        
+
       } else {
         String msg =
             "The URL '" + url + "' did not give an 'OK' response. "
@@ -1165,7 +1167,7 @@ public class DataTransfer {
     }
 
     /*
-     * A helper for attaching all selected labels to (and detaching all 
+     * A helper for attaching all selected labels to (and detaching all
      * unselected labels from) a model.
      */
     private void updateSelectedLabels(Integer modelId) {
@@ -1340,7 +1342,7 @@ public class DataTransfer {
       ListBox droplist =
           data.getPerspective().getOpenDialogBox().getDroplistPanel()
               .getDroplist();
-      
+
       // Populate the droplist with the restricted list of models.
       droplist.clear();
       for (int i = 0; i < jso.getIds().length(); i++) {
@@ -1350,11 +1352,12 @@ public class DataTransfer {
       }
 
       // Show metadata for the first model in the droplist.
-      String selectedModelName = droplist.getItemText(droplist.getSelectedIndex());
-      data.getPerspective().getOpenDialogBox().getMetadataPanel()
-          .setOwner(data.findModel(selectedModelName).getOwner());
-      data.getPerspective().getOpenDialogBox().getMetadataPanel()
-          .setDate(data.findModel(selectedModelName).getDate());
+      String selectedModelName =
+          droplist.getItemText(droplist.getSelectedIndex());
+      data.getPerspective().getOpenDialogBox().getMetadataPanel().setOwner(
+          data.findModel(selectedModelName).getOwner());
+      data.getPerspective().getOpenDialogBox().getMetadataPanel().setDate(
+          data.findModel(selectedModelName).getDate());
     }
 
     /*
@@ -1366,8 +1369,9 @@ public class DataTransfer {
         for (int i = 0; i < jso.getIds().length(); i++) {
 
           GWT.log("Entry : " + entry.getValue().getId());
-          GWT.log("JSO : " + jso.getIds().get(i)); // fails in dev mode, see LabelQueryJSOTest#testGetIds
-          
+          GWT.log("JSO : " + jso.getIds().get(i)); // fails in dev mode, see
+// LabelQueryJSOTest#testGetIds
+
           if (entry.getValue().getId() == jso.getIds().get(i)) {
             entry.getValue().isSelected(true);
           }
