@@ -159,7 +159,8 @@
 	<target name="doc" description="Create javadoc documentation">
 		<javadoc packagenames="${package.name}.*" sourcepath="${src.dir}"
 		    destdir="${docs.dir}" author="true" version="true" use="true"
-		    overview="${src.dir}/overview.html"
+		    classpathref="project.class.path"
+			overview="${src.dir}/overview.html"
 		    windowtitle="WMT-Client Documentation">
 		</javadoc>
 		<echo message="Docs done." />
