@@ -32,7 +32,7 @@ public class ParameterTable extends FlexTable {
 
   /**
    * Initializes a table of parameters for a single WMT model component. The
-   * table is empty until {@link #loadTable()} is called.
+   * table is empty until {@link #loadTable(String)} is called.
    * 
    * @param data the DataManager instance for the WMT session
    */
@@ -45,10 +45,10 @@ public class ParameterTable extends FlexTable {
 
   /**
    * A worker that loads the ParameterTable with parameter values for the
-   * selected model component. Displays a {@link ViewInputFilesPanel} at the
-   * bottom of the table.
+   * selected model component.
    * 
-   * @param the id of the component whose parameters are to be displayed
+   * @param componentId the id of the component whose parameters are to be
+   *  displayed
    */
   public void loadTable(String componentId) {
 

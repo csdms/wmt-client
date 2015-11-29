@@ -16,7 +16,7 @@ import edu.colorado.csdms.wmt.client.ui.dialog.SaveDialogBox;
 /**
  * Handles click on the "Save" or "Save As..." buttons in the ModelActionPanel.
  * Saves a not-previously-saved model or a new model displayed in WMT to the
- * server with a call to {@link DataTransfer#postModel(DataManager)}.
+ * server with a call to {@link DataTransfer#postModel(DataManager, String)}.
  */
 public class ModelActionPanelSaveHandler implements ClickHandler {
 
