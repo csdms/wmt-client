@@ -121,7 +121,7 @@ public class ParameterTable extends FlexTable {
 
     if (parameter.isGroupLeader()) {
       ArrayList<Integer> groupRows = new ArrayList<Integer>();
-      for (int i = 0; i < parameter.nGroupMembers(); i++) {
+      for (int i = 0; i < (parameter.nGroupMembers() - 1); i++) {
         groupRows.add(tableRowIndex + i + 1);
       }
       descriptionCell.setGroupRows(groupRows);
