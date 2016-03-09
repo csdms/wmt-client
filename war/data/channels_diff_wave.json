@@ -50,268 +50,688 @@
   ],
   "parameters":[
     {
-      "key":"separator",
-      "name":"Run Parameters",
-      "description":"Run",
       "value":{
-        "type":"string",
-        "default":""
-      }
+        "default":"",
+        "type":"string"
+      },
+      "name":"Run",
+      "key":"separator",
+      "description":"Run"
     },
     {
+      "value":{
+        "default":3600,
+        "units":"s",
+        "range":{
+          "max":3153600000,
+          "min":0
+        },
+        "type":"int"
+      },
+      "visible":true,
+      "name":"Simulation run time",
       "key":"run_duration",
-      "name":"Run duration",
-      "description":"Simulation run time",
+      "description":"Simulation run time"
+    },
+    {
       "value":{
-        "type":"int",
-        "default":1,
+        "default":600.0,
+        "units":"s",
         "range":{
-          "min":0,
-          "max":1000000
+          "max":31536000.0,
+          "min":1.0
         },
-        "units":"d"
-      }
+        "type":"float"
+      },
+      "visible":true,
+      "name":"Model time step",
+      "key":"dt",
+      "description":"Model time step"
     },
     {
-      "key":"site_prefix",
-      "name":"Site prefix",
-      "description":"File prefix for the study site",
       "value":{
-        "type":"string",
-        "default":"Treynor",
-        "units":"-"
-      }
+        "default":600,
+        "range":{
+          "max":1000000,
+          "min":1
+        },
+        "type":"int"
+      },
+      "visible":true,
+      "name":"Number of time steps between port updates",
+      "key":"update_time_step",
+      "description":"Number of time steps between port updates"
     },
     {
-      "key":"case_prefix",
-      "name":"Case prefix",
-      "description":"File prefix for the model scenario",
       "value":{
-        "type":"string",
-        "default":"Case5",
-        "units":"-"
-      }
+        "default":600,
+        "range":{
+          "max":1000000,
+          "min":1
+        },
+        "type":"int"
+      },
+      "visible":true,
+      "name":"Number of time steps between output files",
+      "key":"output_interval",
+      "description":"Number of time steps between output files"
     },
     {
-      "key":"separator",
+      "value":{
+        "default":"netcdf",
+        "type":"choice",
+        "choices":[
+          "netcdf",
+          "vtk"
+        ]
+      },
+      "visible":true,
+      "name":"File format for output files",
+      "key":"output_format",
+      "description":"File format for output files"
+    },
+    {
+      "value":{
+        "default":"",
+        "type":"string"
+      },
       "name":"Input",
-      "description":"Input",
-      "value":{
-        "type":"string",
-        "default":""
-      }
+      "key":"separator",
+      "description":"Input"
     },
     {
+      "value":{
+        "default":"site.rti",
+        "files":[
+          "site.rti"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "name":"RiverTools info file",
+      "key":"rti_file",
+      "description":"RiverTools info file"
+    },
+    {
+      "value":{
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "name":"Monitored pixel/grid file",
+      "key":"pixel_file",
+      "description":"Monitored pixel/grid file"
+    },
+    {
+      "value":{
+        "default":"site_flow.rtg",
+        "files":[
+          "site_flow.rtg"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "name":"RiverTools grid file of D8 flow codes",
       "key":"code_file",
-      "name":"D8 flow code file",
-      "description":"Grid of d8 flow codes in binary file (jenson 84)",
-      "value":{
-        "type":"string",
-        "default":"[site_prefix]_flow.rtg",
-        "units":"-"
-      }
+      "description":"RiverTools grid file of D8 flow codes"
     },
     {
+      "value":{
+        "default":"site_slope.rtg",
+        "files":[
+          "site_slope.rtg"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "name":"RiverTools grid file of D8 slopes",
       "key":"slope_file",
-      "name":"D8 slope file",
-      "description":"Grid of d8 slopes in binary file",
-      "value":{
-        "type":"string",
-        "default":"[site_prefix]_slope.rtg",
-        "units":"m/m"
-      }
+      "description":"RiverTools grid file of D8 slopes"
     },
     {
-      "key":"MANNING",
-      "name":"Manning flag",
-      "description":"Option to use manning's n for roughness",
       "value":{
-        "type":"int",
-        "default":"1",
+        "default":"Manning's formula",
+        "type":"choice",
+        "choices":[
+          "Manning's formula",
+          "Law of the wall"
+        ]
+      },
+      "visible":true,
+      "name":"Roughness option",
+      "key":"roughness_option",
+      "description":"Roughness option"
+    },
+    {
+      "group":{
+        "name":"roughness_group",
+        "members":3,
+        "leader":true
+      },
+      "name":"Roughness value (Manning's <em>n</em> or roughness length <em>z<sub>0</sub></em>)",
+      "value":{
+        "default":"Scalar",
+        "units":"m-(1/3) s or m",
+        "type":"choice",
+        "choices":[
+          "Scalar",
+          "Grid",
+          "Time_Series",
+          "Grid_Sequence"
+        ]
+      },
+      "visible":true,
+      "key":"roughness_ptype",
+      "description":"Roughness value (Manning's <em>n</em> or roughness length <em>z<sub>0</sub></em>)"
+    },
+    {
+      "group":{
+        "name":"roughness_group",
+        "members":3,
+        "leader":false
+      },
+      "name":"Scalar value",
+      "value":{
+        "default":0.1,
         "range":{
-          "min":"0",
-          "max":"1"
+          "max":5.0,
+          "min":0.0
         },
-        "units":"-"
-      }
+        "type":"float"
+      },
+      "visible":true,
+      "key":"roughness",
+      "description":"Scalar value"
     },
     {
-      "key":"LAW_OF_WALL",
-      "name":"Law of Wall flag",
-      "description":"Option to use law of wall for roughness",
+      "group":{
+        "name":"roughness_group",
+        "members":3,
+        "leader":false
+      },
+      "name":"Grid, time series, or grid sequence file",
       "value":{
-        "type":"int",
-        "default":"0",
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "key":"roughness_file",
+      "description":"Grid, time series, or grid sequence file"
+    },
+    {
+      "group":{
+        "name":"width_group",
+        "members":3,
+        "leader":true
+      },
+      "name":"Bed width of trapezoid cross-section",
+      "value":{
+        "default":"Scalar",
+        "units":"m",
+        "type":"choice",
+        "choices":[
+          "Scalar",
+          "Grid",
+          "Time_Series",
+          "Grid_Sequence"
+        ]
+      },
+      "visible":true,
+      "key":"width_ptype",
+      "description":"Bed width of trapezoid cross-section"
+    },
+    {
+      "group":{
+        "name":"width_group",
+        "members":3,
+        "leader":false
+      },
+      "name":"Scalar value",
+      "value":{
+        "default":10.0,
         "range":{
-          "min":"0",
-          "max":"1"
+          "max":"1E4",
+          "min":0.0
         },
-        "units":"-"
-      }
-    },
-    {
-      "key":"nval_type",
-      "name":"Manning N type",
-      "description":"Allowed input types",
-      "value":{
-        "type":"choice",
-        "default":"Grid",
-        "choices":[
-          "Scalar",
-          "Grid",
-          "Time_Series",
-          "Grid_Sequence"
-        ],
-        "units":"-"
-      }
-    },
-    {
-      "key":"nval",
-      "name":"Manning N",
-      "description":"Manning's n values",
-      "value":{
-        "type":"string",
-        "default":"[site_prefix]_chan-n.rtg",
-        "units":"s/m^(1/3)"
-      }
-    },
-    {
-      "key":"z0val_type",
-      "name":"Roughness z0 type",
-      "description":"Allowed input types",
-      "value":{
-        "type":"choice",
-        "default":"Grid",
-        "choices":[
-          "Scalar",
-          "Grid",
-          "Time_Series",
-          "Grid_Sequence"
-        ],
-        "units":"-"
-      }
-    },
-    {
-      "key":"z0val",
-      "name":"Roughness z0",
-      "description":"Law-of-wall roughness values",
-      "value":{
-        "type":"string",
-        "default":"[site_prefix]_chan-z0.rtg",
-        "units":"m"
-      }
-    },
-    {
-      "key":"width_type",
-      "name":"Bed width type",
-      "description":"Allowed input types",
-      "value":{
-        "type":"choice",
-        "default":"Grid",
-        "choices":[
-          "Scalar",
-          "Grid",
-          "Time_Series",
-          "Grid_Sequence"
-        ],
-        "units":"-"
-      }
-    },
-    {
+        "type":"float"
+      },
+      "visible":true,
       "key":"width",
-      "name":"Bed width",
-      "description":"Bottom width of trapezoid cross-section",
-      "value":{
-        "type":"string",
-        "default":"[site_prefix]_chan-w.rtg",
-        "units":"m"
-      }
+      "description":"Scalar value"
     },
     {
-      "key":"angle_type",
-      "name":"Bank angle type",
-      "description":"Allowed input types",
+      "group":{
+        "name":"width_group",
+        "members":3,
+        "leader":false
+      },
+      "name":"Grid, time series, or grid sequence file",
       "value":{
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "key":"width_file",
+      "description":"Grid, time series, or grid sequence file"
+    },
+    {
+      "group":{
+        "name":"angle_group",
+        "members":3,
+        "leader":true
+      },
+      "name":"Bank angle of trapezoid cross-section",
+      "value":{
+        "default":"Scalar",
+        "units":"deg",
         "type":"choice",
-        "default":"Grid",
         "choices":[
           "Scalar",
           "Grid",
           "Time_Series",
           "Grid_Sequence"
-        ],
-        "units":"-"
-      }
+        ]
+      },
+      "visible":true,
+      "key":"angle_ptype",
+      "description":"Bank angle of trapezoid cross-section"
     },
     {
+      "group":{
+        "name":"angle_group",
+        "members":3,
+        "leader":false
+      },
+      "name":"Scalar value",
+      "value":{
+        "default":1.0,
+        "range":{
+          "max":360.0,
+          "min":0.0
+        },
+        "type":"float"
+      },
+      "visible":true,
       "key":"angle",
-      "name":"Bank angle",
-      "description":"Bank angle of trapezoid cross-section",
-      "value":{
-        "type":"string",
-        "default":"[site_prefix]_chan-a.rtg",
-        "units":"deg"
-      }
+      "description":"Scalar value"
     },
     {
-      "key":"d0_type",
-      "name":"Init. depth type",
-      "description":"Allowed input types",
+      "group":{
+        "name":"angle_group",
+        "members":3,
+        "leader":false
+      },
+      "name":"Grid, time series, or grid sequence file",
       "value":{
-        "type":"choice",
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "key":"angle_file",
+      "description":"Grid, time series, or grid sequence file"
+    },
+    {
+      "group":{
+        "name":"d0_group",
+        "members":3,
+        "leader":true
+      },
+      "name":"Initial flow depth",
+      "value":{
         "default":"Scalar",
+        "units":"m",
+        "type":"choice",
         "choices":[
           "Scalar",
           "Grid",
           "Time_Series",
           "Grid_Sequence"
-        ],
-        "units":"-"
-      }
+        ]
+      },
+      "visible":true,
+      "key":"d0_ptype",
+      "description":"Initial flow depth"
     },
     {
+      "group":{
+        "name":"d0_group",
+        "members":3,
+        "leader":false
+      },
+      "name":"Scalar value",
+      "value":{
+        "default":0.0,
+        "range":{
+          "max":0.0,
+          "min":0.0
+        },
+        "type":"float"
+      },
+      "visible":true,
       "key":"d0",
-      "name":"Init. depth",
-      "description":"Initial flow depth (if scalar, use 0.0!)",
-      "value":{
-        "type":"float",
-        "default":"0.00000000",
-        "range":{
-          "min":"0.0",
-          "max":"0.1"
-        },
-        "units":"m"
-      }
+      "description":"Scalar value"
     },
     {
-      "key":"sinu_type",
-      "name":"Sinuosity type",
-      "description":"Allowed input types",
+      "group":{
+        "name":"d0_group",
+        "members":3,
+        "leader":false
+      },
+      "name":"Grid, time series, or grid sequence file",
       "value":{
-        "type":"choice",
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "key":"d0_file",
+      "description":"Grid, time series, or grid sequence file"
+    },
+    {
+      "group":{
+        "name":"sinu_group",
+        "members":3,
+        "leader":true
+      },
+      "name":"Absolute channel sinuosity",
+      "value":{
         "default":"Scalar",
+        "units":"m m-1",
+        "type":"choice",
         "choices":[
           "Scalar",
           "Grid",
           "Time_Series",
           "Grid_Sequence"
-        ],
-        "units":"-"
-      }
+        ]
+      },
+      "visible":true,
+      "key":"sinu_ptype",
+      "description":"Absolute channel sinuosity"
     },
     {
-      "key":"sinu",
-      "name":"Sinuosity",
-      "description":"Absolute channel sinuosity",
+      "group":{
+        "name":"sinu_group",
+        "members":3,
+        "leader":false
+      },
+      "name":"Scalar value",
       "value":{
-        "type":"float",
-        "default":"1.00000000",
+        "default":1.0,
         "range":{
-          "min":"0.0",
-          "max":"3.0"
+          "max":3.0,
+          "min":0.0
         },
-        "units":"m/m"
-      }
+        "type":"float"
+      },
+      "visible":true,
+      "key":"sinu",
+      "description":"Scalar value"
+    },
+    {
+      "group":{
+        "name":"sinu_group",
+        "members":3,
+        "leader":false
+      },
+      "name":"Grid, time series, or grid sequence file",
+      "value":{
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "key":"sinu_file",
+      "description":"Grid, time series, or grid sequence file"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Bank angle of trapezoid cross-section data type",
+      "key":"angle_dtype",
+      "description":"Bank angle of trapezoid cross-section data type"
+    },
+    {
+      "value":{
+        "default":"case",
+        "units":"-",
+        "type":"string"
+      },
+      "visible":false,
+      "name":"File prefix for the model scenario",
+      "key":"case_prefix",
+      "description":"File prefix for the model scenario"
+    },
+    {
+      "value":{
+        "default":0.1,
+        "units":"m",
+        "range":{
+          "max":5.0,
+          "min":0.0
+        },
+        "type":"float"
+      },
+      "visible":false,
+      "name":"Law-of-wall roughness value",
+      "key":"z0val",
+      "description":"Law-of-wall roughness value"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Absolute channel sinuosity data type",
+      "key":"sinu_dtype",
+      "description":"Absolute channel sinuosity data type"
+    },
+    {
+      "value":{
+        "default":"Scalar",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "Scalar",
+          "Grid",
+          "Time_Series",
+          "Grid_Sequence"
+        ]
+      },
+      "visible":false,
+      "name":"Law-of-wall roughness values",
+      "key":"z0val_ptype",
+      "description":"Law-of-wall roughness values"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Manning's n value data type",
+      "key":"nval_dtype",
+      "description":"Manning's n value data type"
+    },
+    {
+      "value":{
+        "default":0,
+        "units":"-",
+        "range":{
+          "max":1,
+          "min":0
+        },
+        "type":"int"
+      },
+      "visible":false,
+      "name":"Option to use mannings n for roughness",
+      "key":"MANNING",
+      "description":"Option to use mannings n for roughness"
+    },
+    {
+      "value":{
+        "default":"site",
+        "units":"-",
+        "type":"string"
+      },
+      "visible":false,
+      "name":"File prefix for the study site",
+      "key":"site_prefix",
+      "description":"File prefix for the study site"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Initial flow depth data type",
+      "key":"d0_dtype",
+      "description":"Initial flow depth data type"
+    },
+    {
+      "value":{
+        "default":0.1,
+        "units":"s/m^(1/3)",
+        "range":{
+          "max":5.0,
+          "min":0.0
+        },
+        "type":"float"
+      },
+      "visible":false,
+      "name":"Mannings n value",
+      "key":"nval",
+      "description":"Mannings n value"
+    },
+    {
+      "value":{
+        "default":"Scalar",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "Scalar",
+          "Grid",
+          "Time_Series",
+          "Grid_Sequence"
+        ]
+      },
+      "visible":false,
+      "name":"Mannings n value",
+      "key":"nval_ptype",
+      "description":"Mannings n value"
+    },
+    {
+      "value":{
+        "default":3600,
+        "units":"-",
+        "range":{
+          "max":3153600000,
+          "min":1
+        },
+        "type":"int"
+      },
+      "visible":false,
+      "name":"Number of time steps",
+      "key":"n_steps",
+      "description":"Number of time steps"
+    },
+    {
+      "value":{
+        "default":0,
+        "units":"-",
+        "range":{
+          "max":1,
+          "min":0
+        },
+        "type":"int"
+      },
+      "visible":false,
+      "name":"Option to use law of wall for roughness",
+      "key":"LAW_OF_WALL",
+      "description":"Option to use law of wall for roughness"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Law-of-wall roughness value data type",
+      "key":"z0val_dtype",
+      "description":"Law-of-wall roughness value data type"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Bed width of trapezoid cross-section data type",
+      "key":"width_dtype",
+      "description":"Bed width of trapezoid cross-section data type"
     }
   ]
 }
