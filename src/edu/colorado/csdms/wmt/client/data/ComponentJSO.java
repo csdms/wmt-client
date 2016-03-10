@@ -138,11 +138,6 @@ public class ComponentJSO extends JavaScriptObject {
   public final native JsArray<PortJSO> getProvidesPorts() /*-{
 		return this.provides;
   }-*/;
-  
-  @Deprecated
-  public final native JsArray<PortJSO> getPortsProvided() /*-{
-		return this.provides;
-  }-*/;
 
   /**
    * A convenience method that returns the number of CCA uses ports a
@@ -162,11 +157,6 @@ public class ComponentJSO extends JavaScriptObject {
    * it may be empty.
    */
   public final native JsArray<PortJSO> getUsesPorts() /*-{
-		return this.uses;
-  }-*/;
-
-  @Deprecated
-  public final native JsArray<PortJSO> getPortsUsed() /*-{
 		return this.uses;
   }-*/;
 
@@ -203,12 +193,12 @@ public class ComponentJSO extends JavaScriptObject {
     retVal.add("id: " + getId());
     retVal.add("name: " + getName());
     retVal.add("url: " + getURL());
-    for (int i = 0; i < getPortsProvided().length(); i++) {
+    for (int i = 0; i < getProvidesPorts().length(); i++) {
       retVal.add("provides: "
-          + getPortsProvided().get(i).toStringVector().toString());
+          + getProvidesPorts().get(i).toStringVector().toString());
     }
-    for (int i = 0; i < getPortsUsed().length(); i++) {
-      retVal.add("uses: " + getPortsUsed().get(i).toStringVector().toString());
+    for (int i = 0; i < getUsesPorts().length(); i++) {
+      retVal.add("uses: " + getUsesPorts().get(i).toStringVector().toString());
     }
     return retVal;
   }
