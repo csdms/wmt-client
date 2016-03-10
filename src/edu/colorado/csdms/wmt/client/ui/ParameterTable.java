@@ -9,7 +9,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
 import edu.colorado.csdms.wmt.client.ui.cell.DescriptionCell;
@@ -109,9 +108,11 @@ public class ParameterTable extends FlexTable {
       return;
     }
 
-    final DescriptionCell descriptionCell = new DescriptionCell(parameter);
+    // Set up the description and value of the parameter.
+    DescriptionCell descriptionCell = new DescriptionCell(parameter);
+    ValueCell valueCell = new ValueCell(parameter);
     this.setWidget(tableRowIndex, 0, descriptionCell);
-    this.setWidget(tableRowIndex, 1, new ValueCell(parameter));
+    this.setWidget(tableRowIndex, 1, valueCell);
     this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
         HasHorizontalAlignment.ALIGN_RIGHT);
 
@@ -125,21 +126,7 @@ public class ParameterTable extends FlexTable {
         groupRows.add(tableRowIndex + i + 1);
       }
       descriptionCell.setGroupRows(groupRows);
-
-      descriptionCell.addDomHandler(new ClickHandler() {
-        @Override
-        public void onClick(ClickEvent event) {
-          RowFormatter rowFormatter = ParameterTable.this.getRowFormatter();
-          ArrayList<Integer> theRows = descriptionCell.getGroupRows();
-          for (Integer row : theRows) {
-            rowFormatter.setVisible(row, !rowFormatter.isVisible(row));
-          }
-          descriptionCell.areGroupRowsVisible(!descriptionCell
-              .areGroupRowsVisible());
-          descriptionCell.setStyleDependentName("groupLeader-open",
-              descriptionCell.areGroupRowsVisible());
-        }
-      }, ClickEvent.getType());
+      descriptionCell.addClickHandler(new GroupVisibilityHandler());
     }
 
     tableRowIndex++;
@@ -197,5 +184,26 @@ public class ParameterTable extends FlexTable {
    */
   public void setComponentId(String componentId) {
     this.componentId = componentId;
+  }
+
+  /**
+   * Handles a click on the DescriptionCell of a parameter group. Toggles the
+   * visibility of the parameters in the group.
+   */
+  public class GroupVisibilityHandler implements ClickHandler {
+
+    @Override
+    public void onClick(ClickEvent event) {
+      DescriptionCell descriptionCell = (DescriptionCell) event.getSource();
+      RowFormatter rowFormatter = ParameterTable.this.getRowFormatter();
+      ArrayList<Integer> theRows = descriptionCell.getGroupRows();
+      for (Integer row : theRows) {
+        rowFormatter.setVisible(row, !rowFormatter.isVisible(row));
+      }
+      descriptionCell.areGroupRowsVisible(!descriptionCell.areGroupRowsVisible());
+      descriptionCell.setStyleDependentName("groupLeader-open",
+              descriptionCell.areGroupRowsVisible());
+    }
+
   }
 }
