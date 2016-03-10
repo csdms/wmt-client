@@ -161,6 +161,19 @@ public class ComponentJSO extends JavaScriptObject {
   }-*/;
 
   /**
+   * Counts the parameters of a component.
+   * 
+   * @return the number of parameters as an int
+   */
+  public final native int nParameters() /*-{
+    var n = 0;
+		if (typeof this.parameters != 'undefined') {
+			n = Object.keys(this.parameters).length;
+		}
+    return n;
+  }-*/;
+
+  /**
    * A JSNI method that returns the JsArray of component parameters.
    */
   public final native JsArray<ParameterJSO> getParameters() /*-{
