@@ -94,10 +94,51 @@ public class ParameterJSO extends JavaScriptObject {
 
   /**
    * A JSNI method to get the number of members in a group, a JS int. If the
-   * group or the members atribute doesn't exist, 0 is returned.
+   * group or the members attribute doesn't exist, 0 is returned.
    */
   public final native int nGroupMembers() /*-{
 		return this.group && this.group.members || 0;
+  }-*/;
+
+  /**
+   * A JSNI method for checking whether a ParameterJSO has a "selection"
+   * attribute. A JS boolean is returned.
+   */
+  public final native boolean hasSelection() /*-{
+		return 'selection' in this;
+  }-*/;
+
+  /**
+   * A JSNI method to get the "name" attribute of a selection, a String. If the
+   * selection or the name doesn't exist, null is returned.
+   */
+  public final native String getSelectionName() /*-{
+		return this.selection && this.selection.name || null;
+  }-*/;
+
+  /**
+   * A JSNI method to get the "selector" attribute of a group, a JS boolean. If
+   * the selection or the leader doesn't exist, false is returned.
+   */
+  public final native boolean isSelector() /*-{
+		return this.selection && this.selection.selector || false;
+  }-*/;
+
+  /**
+   * A JSNI method to get the number of members in a selection, a JS int. If the
+   * selection or the members attribute doesn't exist, 0 is returned.
+   */
+  public final native int nSelectionMembers() /*-{
+		return this.selection && this.selection.selections || 0;
+  }-*/;
+
+  /**
+   * A JSNI method to get the mapping of a choice in the selector to the
+   * appropriate member in the selection. Both the input choice and the output
+   * mapping are Strings.
+   */
+  public final native String getSelectionMapping(String choice) /*-{
+		return this.selection.mapping[choice];
   }-*/;
 
   /**
