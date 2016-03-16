@@ -383,10 +383,16 @@
       "description":"Grid, time series, or grid sequence file"
     },
     {
-      "group":{
-        "name":"d0_group",
+      "selection":{
+        "name":"d0_selection",
         "members":3,
-        "leader":true
+        "selector":true,
+        "mapping":{
+          "Scalar":"d0",
+          "Time_Series":"d0_file",
+          "Grid":"d0_file",
+          "Grid_Sequence":"d0_file"
+        }
       },
       "name":"Initial flow depth",
       "value":{
@@ -405,16 +411,16 @@
       "description":"Initial flow depth"
     },
     {
-      "group":{
-        "name":"d0_group",
+      "selection":{
+        "name":"d0_selection",
         "members":3,
-        "leader":false
+        "selector":false
       },
       "name":"Scalar value",
       "value":{
         "default":0.0,
         "range":{
-          "max":0.0,
+          "max":10.0,
           "min":0.0
         },
         "type":"float"
@@ -424,10 +430,10 @@
       "description":"Scalar value"
     },
     {
-      "group":{
-        "name":"d0_group",
+      "selection":{
+        "name":"d0_selection",
         "members":3,
-        "leader":false
+        "selector":false
       },
       "name":"Grid, time series, or grid sequence file",
       "value":{
