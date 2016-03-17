@@ -79,6 +79,7 @@ public class ParameterTable extends FlexTable {
     Integer nParameters = data.getModelComponent(componentId).nParameters();
     while (parameterIndex < nParameters) {
       addTableEntry();
+      parameterIndex++;
     }
   }
 
@@ -99,8 +100,8 @@ public class ParameterTable extends FlexTable {
    * XXX Refactor. Extract ParameterTableEntry as a class?
    */
   private void addTableEntry() {
-    ParameterJSO parameter = data.getModelComponent(componentId).getParameters().get(parameterIndex);
-    parameterIndex++;
+    ParameterJSO parameter =
+        data.getModelComponent(componentId).getParameters().get(parameterIndex);
 
     // Short-circuit if the parameter isn't visible.
     if (!parameter.isVisible()) {
@@ -115,15 +116,19 @@ public class ParameterTable extends FlexTable {
       return;
     }
 
-    // Every parameter has a description.
+    // The basic setup: display the parameter's description and value.
     DescriptionCell descriptionCell = new DescriptionCell(parameter);
+    ValueCell valueCell = new ValueCell(parameter);
     this.setWidget(tableRowIndex, 0, descriptionCell);
+    this.setWidget(tableRowIndex, 2, valueCell);
+    this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 2,
+        HasHorizontalAlignment.ALIGN_RIGHT);
 
+    // Some parameters may be grouped. Keep track of the group leader and its
+    // members.
     if ((parameter.hasGroup()) && (!parameter.isGroupLeader())) {
       this.getRowFormatter().setVisible(tableRowIndex, false);
     }
-
-    // Some parameters may be members of a group.
     if (parameter.isGroupLeader()) {
       ArrayList<Integer> groupRows = new ArrayList<Integer>();
       for (int i = 0; i < (parameter.nGroupMembers() - 1); i++) {
@@ -133,32 +138,20 @@ public class ParameterTable extends FlexTable {
       descriptionCell.addClickHandler(new GroupVisibilityHandler());
     }
 
-    // Other parameters may be members of a selection.
-    if (!parameter.hasSelection()) {
-      ValueCell valueCell = new ValueCell(parameter);
-      this.setWidget(tableRowIndex, 2, valueCell);
-      this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 2,
-          HasHorizontalAlignment.ALIGN_RIGHT);
-    } else {
-
-      ValueCell selectionCell = new ValueCell(parameter);
-      this.setWidget(tableRowIndex, 1, selectionCell);
-
+    // Other parameters may belong to a selection group. Selections display
+    // *two* parameters per table entry. Keep track of the selector and its
+    // members.
+    if (parameter.hasSelection()) {
       ArrayList<ValueCell> selections = new ArrayList<ValueCell>();
       for (int i = 0; i < parameter.nSelectionMembers() - 1; i++) {
-        parameter = data.getModelComponent(componentId).getParameters().get(parameterIndex);
-        selections.add(new ValueCell(parameter));
         parameterIndex++;
+        selections.add(new ValueCell(data.getModelComponent(componentId)
+            .getParameters().get(parameterIndex)));
       }
-
+      this.setWidget(tableRowIndex, 1, valueCell);
       this.setWidget(tableRowIndex, 2, selections.get(0));
-      this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 2,
-          HasHorizontalAlignment.ALIGN_RIGHT);
-
-      selectionCell.addDomHandler(new SelectionChangeHandler(tableRowIndex, selections), ChangeEvent.getType());
-
-      tableRowIndex++;
-      return;
+      valueCell.addDomHandler(new SelectionChangeHandler(tableRowIndex,
+          selections), ChangeEvent.getType());
     }
 
     tableRowIndex++;
@@ -240,8 +233,9 @@ public class ParameterTable extends FlexTable {
   }
 
   /**
-   * Handles a click on a ValueCell that's part of a selection. Applies the
-   * mapping of the selected value to display a target ValueCell.
+   * Handles a click on a ValueCell that's the selector parameter of a selection
+   * group. Applies the mapping of the selected value to display a target
+   * ValueCell.
    */
   public class SelectionChangeHandler implements ChangeHandler {
 
@@ -255,10 +249,10 @@ public class ParameterTable extends FlexTable {
 
     @Override
     public void onChange(ChangeEvent event) {
-      ValueCell selectionCell = (ValueCell) event.getSource();
-      ChoiceCell cell = (ChoiceCell) selectionCell.getWidget(0);
+      ValueCell selector = (ValueCell) event.getSource();
+      ChoiceCell cell = (ChoiceCell) selector.getWidget(0);
       String value = cell.getValue(cell.getSelectedIndex());
-      String mappedKey = selectionCell.getParameter().getSelectionMapping(value);
+      String mappedKey = selector.getParameter().getSelectionMapping(value);
 
       for (ValueCell target : selections) {
         if (mappedKey.equalsIgnoreCase(target.getParameter().getKey())) {
