@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
+import edu.colorado.csdms.wmt.client.ui.cell.ChoiceCell;
 import edu.colorado.csdms.wmt.client.ui.cell.DescriptionCell;
 import edu.colorado.csdms.wmt.client.ui.cell.SeparatorCell;
 import edu.colorado.csdms.wmt.client.ui.cell.ValueCell;
@@ -28,6 +32,7 @@ public class ParameterTable extends FlexTable {
   private String componentId; // the id of the displayed component
   private ParameterActionPanel actionPanel;
   private Integer tableRowIndex; // where we are in table
+  private Integer parameterIndex; // where we are in list of parameters
 
   /**
    * Initializes a table of parameters for a single WMT model component. The
@@ -39,6 +44,7 @@ public class ParameterTable extends FlexTable {
 
     this.data = data;
     this.tableRowIndex = 0;
+    this.parameterIndex = 0;
     this.setWidth("100%");
   }
 
@@ -70,10 +76,9 @@ public class ParameterTable extends FlexTable {
     addActionPanel();
 
     // Build the parameter table.
-    Integer nParameters =
-        data.getModelComponent(componentId).getParameters().length();
-    for (int i = 0; i < nParameters; i++) {
-      addTableEntry(data.getModelComponent(componentId).getParameters().get(i));
+    Integer nParameters = data.getModelComponent(componentId).nParameters();
+    while (parameterIndex < nParameters) {
+      addTableEntry();
     }
   }
 
@@ -89,11 +94,13 @@ public class ParameterTable extends FlexTable {
   }
 
   /**
-   * Adds an entry into the {@link ParameterTable}.
+   * Adds an entry (a heading or a parameter) into the {@link ParameterTable}.
    * 
-   * @param parameter the ParameterJSO object for the parameter
+   * XXX Refactor. Extract ParameterTableEntry as a class?
    */
-  private void addTableEntry(ParameterJSO parameter) {
+  private void addTableEntry() {
+    ParameterJSO parameter = data.getModelComponent(componentId).getParameters().get(parameterIndex);
+    parameterIndex++;
 
     // Short-circuit if the parameter isn't visible.
     if (!parameter.isVisible()) {
@@ -103,23 +110,20 @@ public class ParameterTable extends FlexTable {
     // Short circuit if the parameter is a separator.
     if (parameter.getKey().matches("separator")) {
       this.setWidget(tableRowIndex, 0, new SeparatorCell(parameter));
-      this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 2);
+      this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 3);
       tableRowIndex++;
       return;
     }
 
-    // Set up the description and value of the parameter.
+    // Every parameter has a description.
     DescriptionCell descriptionCell = new DescriptionCell(parameter);
-    ValueCell valueCell = new ValueCell(parameter);
     this.setWidget(tableRowIndex, 0, descriptionCell);
-    this.setWidget(tableRowIndex, 1, valueCell);
-    this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
-        HasHorizontalAlignment.ALIGN_RIGHT);
 
     if ((parameter.hasGroup()) && (!parameter.isGroupLeader())) {
       this.getRowFormatter().setVisible(tableRowIndex, false);
     }
 
+    // Some parameters may be members of a group.
     if (parameter.isGroupLeader()) {
       ArrayList<Integer> groupRows = new ArrayList<Integer>();
       for (int i = 0; i < (parameter.nGroupMembers() - 1); i++) {
@@ -127,6 +131,34 @@ public class ParameterTable extends FlexTable {
       }
       descriptionCell.setGroupRows(groupRows);
       descriptionCell.addClickHandler(new GroupVisibilityHandler());
+    }
+
+    // Other parameters may be members of a selection.
+    if (!parameter.hasSelection()) {
+      ValueCell valueCell = new ValueCell(parameter);
+      this.setWidget(tableRowIndex, 2, valueCell);
+      this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 2,
+          HasHorizontalAlignment.ALIGN_RIGHT);
+    } else {
+
+      ValueCell selectionCell = new ValueCell(parameter);
+      this.setWidget(tableRowIndex, 1, selectionCell);
+
+      ArrayList<ValueCell> selections = new ArrayList<ValueCell>();
+      for (int i = 0; i < parameter.nSelectionMembers() - 1; i++) {
+        parameter = data.getModelComponent(componentId).getParameters().get(parameterIndex);
+        selections.add(new ValueCell(parameter));
+        parameterIndex++;
+      }
+
+      this.setWidget(tableRowIndex, 2, selections.get(0));
+      this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 2,
+          HasHorizontalAlignment.ALIGN_RIGHT);
+
+      selectionCell.addDomHandler(new SelectionChangeHandler(tableRowIndex, selections), ChangeEvent.getType());
+
+      tableRowIndex++;
+      return;
     }
 
     tableRowIndex++;
@@ -164,6 +196,7 @@ public class ParameterTable extends FlexTable {
     this.setComponentId(null);
     data.getPerspective().setParameterPanelTitle(null);
     this.tableRowIndex = 0;
+    this.parameterIndex = 0;
     this.removeAllRows();
     this.clear(true);
   }
@@ -204,6 +237,34 @@ public class ParameterTable extends FlexTable {
       descriptionCell.setStyleDependentName("groupLeader-open",
               descriptionCell.areGroupRowsVisible());
     }
+  }
 
+  /**
+   * Handles a click on a ValueCell that's part of a selection. Applies the
+   * mapping of the selected value to display a target ValueCell.
+   */
+  public class SelectionChangeHandler implements ChangeHandler {
+
+    private Integer rowIndex;
+    private ArrayList<ValueCell> selections;
+
+    public SelectionChangeHandler(Integer rowIndex, ArrayList<ValueCell> selections) {
+      this.rowIndex = rowIndex;
+      this.selections = selections;
+    }
+
+    @Override
+    public void onChange(ChangeEvent event) {
+      ValueCell selectionCell = (ValueCell) event.getSource();
+      ChoiceCell cell = (ChoiceCell) selectionCell.getWidget(0);
+      String value = cell.getValue(cell.getSelectedIndex());
+      String mappedKey = selectionCell.getParameter().getSelectionMapping(value);
+
+      for (ValueCell target : selections) {
+        if (mappedKey.equalsIgnoreCase(target.getParameter().getKey())) {
+          ParameterTable.this.setWidget(rowIndex, 2, target);
+        }
+      }
+    }
   }
 }
