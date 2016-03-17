@@ -129,7 +129,7 @@ public class ParameterJSO extends JavaScriptObject {
    * selection or the members attribute doesn't exist, 0 is returned.
    */
   public final native int nSelectionMembers() /*-{
-		return this.selection && this.selection.selections || 0;
+		return this.selection && this.selection.members || 0;
   }-*/;
 
   /**
