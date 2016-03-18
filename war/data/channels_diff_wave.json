@@ -206,10 +206,16 @@
       "description":"Roughness option"
     },
     {
-      "group":{
+      "selection":{
         "name":"roughness_group",
         "members":3,
-        "leader":true
+        "selector":true,
+        "mapping":{
+          "Scalar":"roughness",
+          "Time_Series":"roughness_file",
+          "Grid":"roughness_file",
+          "Grid_Sequence":"roughness_file"
+        }
       },
       "name":"Roughness value (Manning's <em>n</em> or roughness length <em>z<sub>0</sub></em>)",
       "value":{
@@ -228,10 +234,10 @@
       "description":"Roughness value (Manning's <em>n</em> or roughness length <em>z<sub>0</sub></em>)"
     },
     {
-      "group":{
+      "selection":{
         "name":"roughness_group",
         "members":3,
-        "leader":false
+        "selector":false
       },
       "name":"Scalar value",
       "value":{
@@ -247,10 +253,10 @@
       "description":"Scalar value"
     },
     {
-      "group":{
+      "selection":{
         "name":"roughness_group",
         "members":3,
-        "leader":false
+        "selector":false
       },
       "name":"Grid, time series, or grid sequence file",
       "value":{
@@ -265,10 +271,16 @@
       "description":"Grid, time series, or grid sequence file"
     },
     {
-      "group":{
+      "selection":{
         "name":"width_group",
         "members":3,
-        "leader":true
+        "selector":true,
+        "mapping":{
+          "Scalar":"width",
+          "Time_Series":"width_file",
+          "Grid":"width_file",
+          "Grid_Sequence":"width_file"
+        }
       },
       "name":"Bed width of trapezoid cross-section",
       "value":{
@@ -287,10 +299,10 @@
       "description":"Bed width of trapezoid cross-section"
     },
     {
-      "group":{
+      "selection":{
         "name":"width_group",
         "members":3,
-        "leader":false
+        "selector":false
       },
       "name":"Scalar value",
       "value":{
@@ -306,10 +318,10 @@
       "description":"Scalar value"
     },
     {
-      "group":{
+      "selection":{
         "name":"width_group",
         "members":3,
-        "leader":false
+        "selector":false
       },
       "name":"Grid, time series, or grid sequence file",
       "value":{
@@ -324,10 +336,16 @@
       "description":"Grid, time series, or grid sequence file"
     },
     {
-      "group":{
+      "selection":{
         "name":"angle_group",
         "members":3,
-        "leader":true
+        "selector":true,
+        "mapping":{
+          "Scalar":"angle",
+          "Time_Series":"angle_file",
+          "Grid":"angle_file",
+          "Grid_Sequence":"angle_file"
+        }
       },
       "name":"Bank angle of trapezoid cross-section",
       "value":{
@@ -346,10 +364,10 @@
       "description":"Bank angle of trapezoid cross-section"
     },
     {
-      "group":{
+      "selection":{
         "name":"angle_group",
         "members":3,
-        "leader":false
+        "selector":false
       },
       "name":"Scalar value",
       "value":{
@@ -365,10 +383,10 @@
       "description":"Scalar value"
     },
     {
-      "group":{
+      "selection":{
         "name":"angle_group",
         "members":3,
-        "leader":false
+        "selector":false
       },
       "name":"Grid, time series, or grid sequence file",
       "value":{
@@ -384,7 +402,7 @@
     },
     {
       "selection":{
-        "name":"d0_selection",
+        "name":"d0_group",
         "members":3,
         "selector":true,
         "mapping":{
@@ -412,7 +430,7 @@
     },
     {
       "selection":{
-        "name":"d0_selection",
+        "name":"d0_group",
         "members":3,
         "selector":false
       },
@@ -431,7 +449,7 @@
     },
     {
       "selection":{
-        "name":"d0_selection",
+        "name":"d0_group",
         "members":3,
         "selector":false
       },
@@ -448,10 +466,16 @@
       "description":"Grid, time series, or grid sequence file"
     },
     {
-      "group":{
+      "selection":{
         "name":"sinu_group",
         "members":3,
-        "leader":true
+        "selector":true,
+        "mapping":{
+          "Scalar":"sinu",
+          "Time_Series":"sinu_file",
+          "Grid":"sinu_file",
+          "Grid_Sequence":"sinu_file"
+        }
       },
       "name":"Absolute channel sinuosity",
       "value":{
@@ -470,10 +494,10 @@
       "description":"Absolute channel sinuosity"
     },
     {
-      "group":{
+      "selection":{
         "name":"sinu_group",
         "members":3,
-        "leader":false
+        "selector":false
       },
       "name":"Scalar value",
       "value":{
@@ -489,10 +513,10 @@
       "description":"Scalar value"
     },
     {
-      "group":{
+      "selection":{
         "name":"sinu_group",
         "members":3,
-        "leader":false
+        "selector":false
       },
       "name":"Grid, time series, or grid sequence file",
       "value":{
