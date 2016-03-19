@@ -25,6 +25,7 @@ public class ParameterJSOTest extends GWTTestCase {
 
   private ParameterJSO basicParam;
   private ParameterJSO groupParam;
+  private ParameterJSO selectionParam;
   private String key;
   private String name;
   private String description;
@@ -32,6 +33,9 @@ public class ParameterJSOTest extends GWTTestCase {
   private String groupName;
   private Boolean groupLeader;
   private Integer groupMembers;
+  private String selectionName;
+  private Boolean selectionSelector;
+  private Integer selectionMembers;
   private ValueJSO value;
 
   // The module that sources this class. Must be present.
@@ -76,6 +80,26 @@ public class ParameterJSOTest extends GWTTestCase {
   }-*/;
 
   /**
+   * A JSNI method that defines a fixture for testing. Returns a
+   * {@link ParameterJSO} object with a group.
+   */
+  private native ParameterJSO testSelectionParameterJSO(String key, String name,
+      String description, String selectionName, Boolean selectionSelector,
+      Integer selectionMembers, ValueJSO value) /*-{
+		return {
+			"key" : key,
+			"name" : name,
+			"description" : description,
+			"selection" : {
+				"name" : selectionName,
+				"selector" : selectionSelector,
+				"members" : selectionMembers
+			},
+			"value" : value
+		};
+  }-*/;
+
+  /**
    * A JSNI method that defines a fixture for the tests. Returns a
    * {@link ValueJSO} object for testing.
    */
@@ -96,15 +120,21 @@ public class ParameterJSOTest extends GWTTestCase {
     key = "number_of_rows";
     name = "Number of rows";
     description = "Number of rows in the computational grid";
-    groupName = "parameter1";
+    groupName = "group_parameter";
     groupLeader = true;
     groupMembers = 3;
+    selectionName = "selection_parameter";
+    selectionSelector = true;
+    selectionMembers = 9467;
     visible = true;
     value = testValueJSO();
     basicParam = testBasicParameterJSO(key, name, description, visible, value);
     groupParam =
         testGroupParameterJSO(key, name, description, groupName, groupLeader,
             groupMembers, value);
+    selectionParam =
+        testSelectionParameterJSO(key, name, description, selectionName,
+            selectionSelector, selectionMembers, value);
   }
 
   @After
@@ -145,6 +175,26 @@ public class ParameterJSOTest extends GWTTestCase {
   @Test
   public void testNGroupMembers() {
     assertEquals(groupMembers, (Integer) groupParam.nGroupMembers());
+  }
+
+  @Test
+  public void testHasSelection() {
+    assertTrue(selectionParam.hasSelection());
+  }
+
+  @Test
+  public void testGetSelectionName() {
+    assertEquals(selectionName, selectionParam.getSelectionName());
+  }
+
+  @Test
+  public void testIsSelector() {
+    assertEquals(selectionSelector, (Boolean) selectionParam.isSelector());
+  }
+
+  @Test
+  public void testNSelectionMembers() {
+    assertEquals(selectionMembers, (Integer) selectionParam.nSelectionMembers());
   }
 
   @Test
