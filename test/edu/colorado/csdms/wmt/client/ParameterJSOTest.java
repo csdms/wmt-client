@@ -13,13 +13,18 @@ import edu.colorado.csdms.wmt.client.data.ValueJSO;
  * Tests for {@link ParameterJSO}. JUnit integration is provided by extending
  * {@link GWTTestCase}.
  * 
- * @see http://www.gwtproject.org/doc/latest/DevGuideTesting.html
- * @see http://www.gwtproject.org/doc/latest/tutorial/JUnit.html
+ * For more information, see
+ * <a href="http://www.gwtproject.org/doc/latest/DevGuideTesting.html">
+ * DevGuideTesting</a> and
+ * <a href="http://www.gwtproject.org/doc/latest/tutorial/JUnit.html">
+ * JUnit</a>.
+ * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
 public class ParameterJSOTest extends GWTTestCase {
 
-  private ParameterJSO jso;
+  private ParameterJSO basicParam;
+  private ParameterJSO groupParam;
   private String key;
   private String name;
   private String description;
@@ -29,21 +34,34 @@ public class ParameterJSOTest extends GWTTestCase {
   private Integer groupMembers;
   private ValueJSO value;
 
-  /**
-   * The module that sources this class. Must be present.
-   */
+  // The module that sources this class. Must be present.
   @Override
   public String getModuleName() {
      return "edu.colorado.csdms.wmt.WMT";
   }
 
   /**
-   * A JSNI method that defines a fixture for the tests. Returns a
-   * {@link ParameterJSO} object for testing.
+   * A JSNI method that defines a fixture for testing. Returns a basic
+   * {@link ParameterJSO} object.
    */
-  private native ParameterJSO testParameterJSO(String key, String name,
+  private native ParameterJSO testBasicParameterJSO(String key, String name,
+      String description, Boolean visible, ValueJSO value) /*-{
+		return {
+			"key" : key,
+			"name" : name,
+			"description" : description,
+			"visible" : visible,
+			"value" : value
+		};
+  }-*/;
+
+  /**
+   * A JSNI method that defines a fixture for testing. Returns a
+   * {@link ParameterJSO} object with a group.
+   */
+  private native ParameterJSO testGroupParameterJSO(String key, String name,
       String description, String groupName, Boolean groupLeader,
-      Integer groupMembers, Boolean visible, ValueJSO value) /*-{
+      Integer groupMembers, ValueJSO value) /*-{
 		return {
 			"key" : key,
 			"name" : name,
@@ -53,7 +71,6 @@ public class ParameterJSOTest extends GWTTestCase {
 				"leader" : groupLeader,
 				"members" : groupMembers
 			},
-			"visible" : visible,
 			"value" : value
 		};
   }-*/;
@@ -84,9 +101,10 @@ public class ParameterJSOTest extends GWTTestCase {
     groupMembers = 3;
     visible = true;
     value = testValueJSO();
-    jso =
-        testParameterJSO(key, name, description, groupName, groupLeader,
-            groupMembers, visible, value);
+    basicParam = testBasicParameterJSO(key, name, description, visible, value);
+    groupParam =
+        testGroupParameterJSO(key, name, description, groupName, groupLeader,
+            groupMembers, value);
   }
 
   @After
@@ -96,52 +114,52 @@ public class ParameterJSOTest extends GWTTestCase {
 
   @Test
   public void testGetKey() {
-    assertEquals(key, jso.getKey());
+    assertEquals(key, basicParam.getKey());
   }
 
   @Test
   public void testGetName() {
-    assertEquals(name, jso.getName());
+    assertEquals(name, basicParam.getName());
   }
 
   @Test
   public void testGetDescription() {
-    assertEquals(description, jso.getDescription());
+    assertEquals(description, basicParam.getDescription());
   }
 
   @Test
   public void testHasGroup() {
-    assertTrue(jso.hasGroup());
+    assertTrue(groupParam.hasGroup());
   }
 
   @Test
   public void testGetGroupName() {
-    assertEquals(groupName, jso.getGroupName());
+    assertEquals(groupName, groupParam.getGroupName());
   }
 
   @Test
   public void testIsGroupLeader() {
-    assertEquals(groupLeader, (Boolean) jso.isGroupLeader());
+    assertEquals(groupLeader, (Boolean) groupParam.isGroupLeader());
   }
 
   @Test
   public void testNGroupMembers() {
-    assertEquals(groupMembers, (Integer) jso.nGroupMembers());
+    assertEquals(groupMembers, (Integer) groupParam.nGroupMembers());
   }
 
   @Test
   public void testGetIsVisible() {
-    assertTrue(jso.isVisible());
+    assertTrue(basicParam.isVisible());
   }
 
   @Test
   public void testSetIsVisible() {
-    jso.isVisible(false);
-    assertFalse(jso.isVisible());
+    basicParam.isVisible(false);
+    assertFalse(basicParam.isVisible());
   }
 
   @Test
   public void testGetValue() {
-    assertSame(value, jso.getValue());
+    assertSame(value, basicParam.getValue());
   }
 }
