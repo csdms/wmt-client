@@ -138,11 +138,6 @@ public class ComponentJSO extends JavaScriptObject {
   public final native JsArray<PortJSO> getProvidesPorts() /*-{
 		return this.provides;
   }-*/;
-  
-  @Deprecated
-  public final native JsArray<PortJSO> getPortsProvided() /*-{
-		return this.provides;
-  }-*/;
 
   /**
    * A convenience method that returns the number of CCA uses ports a
@@ -165,9 +160,17 @@ public class ComponentJSO extends JavaScriptObject {
 		return this.uses;
   }-*/;
 
-  @Deprecated
-  public final native JsArray<PortJSO> getPortsUsed() /*-{
-		return this.uses;
+  /**
+   * Counts the parameters of a component.
+   * 
+   * @return the number of parameters as an int
+   */
+  public final native int nParameters() /*-{
+    var n = 0;
+		if (typeof this.parameters != 'undefined') {
+			n = Object.keys(this.parameters).length;
+		}
+    return n;
   }-*/;
 
   /**
@@ -203,12 +206,12 @@ public class ComponentJSO extends JavaScriptObject {
     retVal.add("id: " + getId());
     retVal.add("name: " + getName());
     retVal.add("url: " + getURL());
-    for (int i = 0; i < getPortsProvided().length(); i++) {
+    for (int i = 0; i < getProvidesPorts().length(); i++) {
       retVal.add("provides: "
-          + getPortsProvided().get(i).toStringVector().toString());
+          + getProvidesPorts().get(i).toStringVector().toString());
     }
-    for (int i = 0; i < getPortsUsed().length(); i++) {
-      retVal.add("uses: " + getPortsUsed().get(i).toStringVector().toString());
+    for (int i = 0; i < getUsesPorts().length(); i++) {
+      retVal.add("uses: " + getUsesPorts().get(i).toStringVector().toString());
     }
     return retVal;
   }

@@ -1,26 +1,3 @@
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 mcflugen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package edu.colorado.csdms.wmt.client;
 
 import org.junit.After;
@@ -45,7 +22,8 @@ public class ComponentJSOTest extends GWTTestCase {
   private ComponentJSO componentJSO;
   private String id;
   private String componentClass;
-  private String name;  
+  private String name;
+  private Integer nParameters;
   
   /**
    * The module that sources this class. Must be present.
@@ -68,7 +46,15 @@ public class ComponentJSOTest extends GWTTestCase {
 		return {
 			"id" : id,
 			"class" : componentClass,
-			"name" : name
+			"name" : name,
+			"parameters" : [
+			  {
+			    "key":"separator"
+			  },
+			  {
+			    "key":"run_duration"
+			  }
+			]
 		}
   }-*/;  
   
@@ -78,6 +64,7 @@ public class ComponentJSOTest extends GWTTestCase {
     id = "child";
     componentClass = "Child";
     name = "Child_0";
+    nParameters = 2;
     componentJSO = testComponentJSO(id, componentClass, name);
   }
 
@@ -99,5 +86,11 @@ public class ComponentJSOTest extends GWTTestCase {
   @Test
   public void testGetName() {
     assertEquals(name, componentJSO.getName());
+  }
+
+  @Test
+  public void testNParameters() {
+    Integer actual = componentJSO.nParameters();
+    assertEquals(nParameters, actual);
   }
 }

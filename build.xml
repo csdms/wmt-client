@@ -148,7 +148,15 @@
 		<delete dir="${war.dir}/save" failonerror="false" />
 	</target>
 
-	<target name="build" depends="gwtc" description="Build this project" />
+	<target name="build_id" description="Save the latest commit id of this build">
+		<exec executable="git" output="${war.dir}/build_id">
+			<arg value="rev-parse"/>
+			<arg value="--short"/>
+			<arg value="HEAD"/>
+		</exec>
+	</target>
+
+	<target name="build" depends="gwtc, build_id" description="Build this project"/>
 
 	<target name="war" depends="build" description="Create a war file">
 		<zip destfile="${war.file}" basedir="${war.dir}"

@@ -9,6 +9,7 @@
 /war/edu.colorado.csdms.wmt.WMT.JUnit
 /war/WEB-INF/classes
 /war/WEB-INF/deploy
+/war/build_id
 
 *.jar
 

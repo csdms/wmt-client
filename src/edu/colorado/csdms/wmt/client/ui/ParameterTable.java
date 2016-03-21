@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -12,6 +14,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
+import edu.colorado.csdms.wmt.client.ui.cell.ChoiceCell;
 import edu.colorado.csdms.wmt.client.ui.cell.DescriptionCell;
 import edu.colorado.csdms.wmt.client.ui.cell.SeparatorCell;
 import edu.colorado.csdms.wmt.client.ui.cell.ValueCell;
@@ -29,6 +32,7 @@ public class ParameterTable extends FlexTable {
   private String componentId; // the id of the displayed component
   private ParameterActionPanel actionPanel;
   private Integer tableRowIndex; // where we are in table
+  private Integer parameterIndex; // where we are in list of parameters
 
   /**
    * Initializes a table of parameters for a single WMT model component. The
@@ -40,6 +44,7 @@ public class ParameterTable extends FlexTable {
 
     this.data = data;
     this.tableRowIndex = 0;
+    this.parameterIndex = 0;
     this.setWidth("100%");
   }
 
@@ -71,10 +76,10 @@ public class ParameterTable extends FlexTable {
     addActionPanel();
 
     // Build the parameter table.
-    Integer nParameters =
-        data.getModelComponent(componentId).getParameters().length();
-    for (int i = 0; i < nParameters; i++) {
-      addTableEntry(data.getModelComponent(componentId).getParameters().get(i));
+    Integer nParameters = data.getModelComponent(componentId).nParameters();
+    while (parameterIndex < nParameters) {
+      addTableEntry();
+      parameterIndex++;
     }
   }
 
@@ -90,11 +95,13 @@ public class ParameterTable extends FlexTable {
   }
 
   /**
-   * Adds an entry into the {@link ParameterTable}.
+   * Adds an entry (a heading or a parameter) into the {@link ParameterTable}.
    * 
-   * @param parameter the ParameterJSO object for the parameter
+   * XXX Refactor. Extract ParameterTableEntry as a class?
    */
-  private void addTableEntry(ParameterJSO parameter) {
+  private void addTableEntry() {
+    ParameterJSO parameter =
+        data.getModelComponent(componentId).getParameters().get(parameterIndex);
 
     // Short-circuit if the parameter isn't visible.
     if (!parameter.isVisible()) {
@@ -104,42 +111,47 @@ public class ParameterTable extends FlexTable {
     // Short circuit if the parameter is a separator.
     if (parameter.getKey().matches("separator")) {
       this.setWidget(tableRowIndex, 0, new SeparatorCell(parameter));
-      this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 2);
+      this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 3);
       tableRowIndex++;
       return;
     }
 
-    final DescriptionCell descriptionCell = new DescriptionCell(parameter);
+    // The basic setup: display the parameter's description and value.
+    DescriptionCell descriptionCell = new DescriptionCell(parameter);
+    ValueCell valueCell = new ValueCell(parameter);
     this.setWidget(tableRowIndex, 0, descriptionCell);
-    this.setWidget(tableRowIndex, 1, new ValueCell(parameter));
-    this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
+    this.setWidget(tableRowIndex, 2, valueCell);
+    this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 2,
         HasHorizontalAlignment.ALIGN_RIGHT);
 
+    // Some parameters may be grouped. Keep track of the group leader and its
+    // members.
     if ((parameter.hasGroup()) && (!parameter.isGroupLeader())) {
       this.getRowFormatter().setVisible(tableRowIndex, false);
     }
-
     if (parameter.isGroupLeader()) {
       ArrayList<Integer> groupRows = new ArrayList<Integer>();
-      for (int i = 0; i < parameter.nGroupMembers(); i++) {
+      for (int i = 0; i < (parameter.nGroupMembers() - 1); i++) {
         groupRows.add(tableRowIndex + i + 1);
       }
       descriptionCell.setGroupRows(groupRows);
+      descriptionCell.addClickHandler(new GroupVisibilityHandler());
+    }
 
-      descriptionCell.addDomHandler(new ClickHandler() {
-        @Override
-        public void onClick(ClickEvent event) {
-          RowFormatter rowFormatter = ParameterTable.this.getRowFormatter();
-          ArrayList<Integer> theRows = descriptionCell.getGroupRows();
-          for (Integer row : theRows) {
-            rowFormatter.setVisible(row, !rowFormatter.isVisible(row));
-          }
-          descriptionCell.areGroupRowsVisible(!descriptionCell
-              .areGroupRowsVisible());
-          descriptionCell.setStyleDependentName("groupLeader-open",
-              descriptionCell.areGroupRowsVisible());
-        }
-      }, ClickEvent.getType());
+    // Other parameters may belong to a selection group. Selections display
+    // *two* parameters per table entry. Keep track of the selector and its
+    // members.
+    if (parameter.hasSelection()) {
+      ArrayList<ValueCell> selections = new ArrayList<ValueCell>();
+      for (int i = 0; i < parameter.nSelectionMembers() - 1; i++) {
+        parameterIndex++;
+        selections.add(new ValueCell(data.getModelComponent(componentId)
+            .getParameters().get(parameterIndex)));
+      }
+      this.setWidget(tableRowIndex, 1, valueCell);
+      this.setWidget(tableRowIndex, 2, selections.get(0));
+      valueCell.addDomHandler(new SelectionChangeHandler(tableRowIndex,
+          selections), ChangeEvent.getType());
     }
 
     tableRowIndex++;
@@ -177,6 +189,7 @@ public class ParameterTable extends FlexTable {
     this.setComponentId(null);
     data.getPerspective().setParameterPanelTitle(null);
     this.tableRowIndex = 0;
+    this.parameterIndex = 0;
     this.removeAllRows();
     this.clear(true);
   }
@@ -197,5 +210,55 @@ public class ParameterTable extends FlexTable {
    */
   public void setComponentId(String componentId) {
     this.componentId = componentId;
+  }
+
+  /**
+   * Handles a click on the DescriptionCell of a parameter group. Toggles the
+   * visibility of the parameters in the group.
+   */
+  public class GroupVisibilityHandler implements ClickHandler {
+
+    @Override
+    public void onClick(ClickEvent event) {
+      DescriptionCell descriptionCell = (DescriptionCell) event.getSource();
+      RowFormatter rowFormatter = ParameterTable.this.getRowFormatter();
+      ArrayList<Integer> theRows = descriptionCell.getGroupRows();
+      for (Integer row : theRows) {
+        rowFormatter.setVisible(row, !rowFormatter.isVisible(row));
+      }
+      descriptionCell.areGroupRowsVisible(!descriptionCell.areGroupRowsVisible());
+      descriptionCell.setStyleDependentName("groupLeader-open",
+              descriptionCell.areGroupRowsVisible());
+    }
+  }
+
+  /**
+   * Handles a click on a ValueCell that's the selector parameter of a selection
+   * group. Applies the mapping of the selected value to display a target
+   * ValueCell.
+   */
+  public class SelectionChangeHandler implements ChangeHandler {
+
+    private Integer rowIndex;
+    private ArrayList<ValueCell> selections;
+
+    public SelectionChangeHandler(Integer rowIndex, ArrayList<ValueCell> selections) {
+      this.rowIndex = rowIndex;
+      this.selections = selections;
+    }
+
+    @Override
+    public void onChange(ChangeEvent event) {
+      ValueCell selector = (ValueCell) event.getSource();
+      ChoiceCell cell = (ChoiceCell) selector.getWidget(0);
+      String value = cell.getValue(cell.getSelectedIndex());
+      String mappedKey = selector.getParameter().getSelectionMapping(value);
+
+      for (ValueCell target : selections) {
+        if (mappedKey.equalsIgnoreCase(target.getParameter().getKey())) {
+          ParameterTable.this.setWidget(rowIndex, 2, target);
+        }
+      }
+    }
   }
 }

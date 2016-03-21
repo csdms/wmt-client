@@ -16,6 +16,7 @@ import edu.colorado.csdms.wmt.client.ui.ParameterTable;
 public class ValueCell extends HorizontalPanel {
 
   private ParameterJSO parameter;
+  private String cellType;
 
   /**
    * Makes a ValueCell from the information contained in the input
@@ -26,17 +27,17 @@ public class ValueCell extends HorizontalPanel {
   public ValueCell(ParameterJSO parameter) {
 
     this.parameter = parameter;
+    this.cellType = this.parameter.getValue().getType();
     this.setStyleName("wmt-ValueCell");
 
     // Add a cell to match the parameter type.
-    String type = this.parameter.getValue().getType();
-    if (type.matches("choice")) {
+    if (isChoice()) {
       this.add(new ChoiceCell(this));
-    } else if (type.matches("file")) {
+    } else if (isFile()) {
       this.add(new FileCell(this));
-    } else if (type.matches("int")) {
+    } else if (isInt()) {
       this.add(new IntegerCell(this));
-    } else if (type.matches("float")) {
+    } else if (isFloat()) {
       this.add(new DoubleCell(this));
     } else {
       this.add(new TextCell(this));
@@ -62,5 +63,41 @@ public class ValueCell extends HorizontalPanel {
   public void setParameterValue(String value) {
     ParameterTable pt = (ParameterTable) ValueCell.this.getParent();
     pt.setValue(parameter, value);
+  }
+
+  /**
+   * States whether parameter is of type "choice".
+   * 
+   * @return true if the parameter type is "choice"
+   */
+  public Boolean isChoice() {
+    return cellType.matches("choice");
+  }
+
+  /**
+   * States whether parameter is of type "file".
+   * 
+   * @return true if the parameter type is "file"
+   */
+  public Boolean isFile() {
+    return cellType.matches("file");
+  }
+
+  /**
+   * States whether parameter is of type "int".
+   * 
+   * @return true if the parameter type is "int"
+   */
+  public Boolean isInt() {
+    return cellType.matches("int");
+  }
+
+  /**
+   * States whether parameter is of type "float".
+   * 
+   * @return true if the parameter type is "float"
+   */
+  public Boolean isFloat() {
+    return cellType.matches("float");
   }
 }
