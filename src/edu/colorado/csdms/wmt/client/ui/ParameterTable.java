@@ -148,6 +148,7 @@ public class ParameterTable extends FlexTable {
         selections.add(new ValueCell(data.getModelComponent(componentId)
             .getParameters().get(parameterIndex)));
       }
+      valueCell.getWidget(0).addStyleDependentName("upload");
       this.setWidget(tableRowIndex, 1, valueCell);
       this.setWidget(tableRowIndex, 2, selections.get(0));
       valueCell.addDomHandler(new SelectionChangeHandler(tableRowIndex,
