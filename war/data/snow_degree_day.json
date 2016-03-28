@@ -1,0 +1,592 @@
+{
+  "id":"snow_degree_day",
+  "files":[
+    
+  ],
+  "doi":"10.1594/IEDA/100174",
+  "name":"SnowDegreeDay",
+  "license":"Apache",
+  "author":"Scott Peckham",
+  "url":"http://csdms.colorado.edu/wiki/Model_help:TopoFlow-Snowmelt-Degree-Day",
+  "argv":[
+    
+  ],
+  "summary":"This process component is part of a spatially-distributed hydrologic model called TopoFlow, but it can now be used as a stand-alone model.",
+  "version":"3.1",
+  "uses":[
+    {
+      "required":false,
+      "id":"meteorology"
+    }
+  ],
+  "provides":[
+    {
+      "id":"snow"
+    }
+  ],
+  "parameters":[
+    {
+      "value":{
+        "default":"",
+        "type":"string"
+      },
+      "name":"Run",
+      "key":"separator",
+      "description":"Run"
+    },
+    {
+      "value":{
+        "default":3600,
+        "units":"s",
+        "range":{
+          "max":3153600000,
+          "min":0
+        },
+        "type":"int"
+      },
+      "visible":true,
+      "name":"Simulation run time",
+      "key":"run_duration",
+      "description":"Simulation run time"
+    },
+    {
+      "value":{
+        "default":600,
+        "units":"s",
+        "range":{
+          "max":31536000,
+          "min":1
+        },
+        "type":"float"
+      },
+      "visible":true,
+      "name":"Model time step",
+      "key":"dt",
+      "description":"Model time step"
+    },
+    {
+      "value":{
+        "default":600,
+        "range":{
+          "max":1000000,
+          "min":1
+        },
+        "type":"int"
+      },
+      "visible":true,
+      "name":"Number of time steps between port updates",
+      "key":"update_time_step",
+      "description":"Number of time steps between port updates"
+    },
+    {
+      "value":{
+        "default":600,
+        "range":{
+          "max":1000000,
+          "min":1
+        },
+        "type":"int"
+      },
+      "visible":true,
+      "name":"Number of time steps between output files",
+      "key":"output_interval",
+      "description":"Number of time steps between output files"
+    },
+    {
+      "value":{
+        "default":"netcdf",
+        "type":"choice",
+        "choices":[
+          "netcdf",
+          "vtk"
+        ]
+      },
+      "visible":true,
+      "name":"File format for output files",
+      "key":"output_format",
+      "description":"File format for output files"
+    },
+    {
+      "value":{
+        "default":"",
+        "type":"string"
+      },
+      "name":"Input",
+      "key":"separator",
+      "description":"Input"
+    },
+    {
+      "value":{
+        "default":"site.rti",
+        "files":[
+          "site.rti"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "name":"RiverTools info file",
+      "key":"rti_file",
+      "description":"RiverTools info file"
+    },
+    {
+      "value":{
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "name":"Monitored pixel/grid file (outlets)",
+      "key":"pixel_file",
+      "description":"Monitored pixel/grid file (outlets)"
+    },
+    {
+      "selection":{
+        "mapping":{
+          "Scalar":"rho_snow",
+          "Time_Series":"rho_snow_file",
+          "Grid":"rho_snow_file",
+          "Grid_Sequence":"rho_snow_file"
+        },
+        "name":"rho_snow_mapper",
+        "members":3,
+        "selector":true
+      },
+      "name":"Density of snow",
+      "value":{
+        "default":"Scalar",
+        "units":"kg m-3",
+        "type":"choice",
+        "choices":[
+          "Scalar",
+          "Grid",
+          "Time_Series",
+          "Grid_Sequence"
+        ]
+      },
+      "visible":true,
+      "key":"rho_snow_ptype",
+      "description":"Density of snow"
+    },
+    {
+      "selection":{
+        "name":"rho_snow_mapper",
+        "members":3,
+        "selector":false
+      },
+      "name":"Scalar value",
+      "value":{
+        "default":300.0,
+        "range":{
+          "max":"1e3",
+          "min":0.0
+        },
+        "type":"float"
+      },
+      "visible":true,
+      "key":"rho_snow",
+      "description":"Scalar value"
+    },
+    {
+      "selection":{
+        "name":"rho_snow_mapper",
+        "members":3,
+        "selector":false
+      },
+      "name":"Grid, time series, or grid sequence file",
+      "value":{
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "key":"rho_snow_file",
+      "description":"Grid, time series, or grid sequence file"
+    },
+    {
+      "selection":{
+        "mapping":{
+          "Scalar":"c0",
+          "Time_Series":"c0_file",
+          "Grid":"c0_file",
+          "Grid_Sequence":"c0_file"
+        },
+        "name":"c0_mapper",
+        "members":3,
+        "selector":true
+      },
+      "name":"Degree day coefficient",
+      "value":{
+        "default":"Scalar",
+        "units":"mm d-1 degC-1",
+        "type":"choice",
+        "choices":[
+          "Scalar",
+          "Grid",
+          "Time_Series",
+          "Grid_Sequence"
+        ]
+      },
+      "visible":true,
+      "key":"c0_ptype",
+      "description":"Degree day coefficient"
+    },
+    {
+      "selection":{
+        "name":"c0_mapper",
+        "members":3,
+        "selector":false
+      },
+      "name":"Scalar value",
+      "value":{
+        "default":2.7,
+        "range":{
+          "max":"1e2",
+          "min":0.0
+        },
+        "type":"float"
+      },
+      "visible":true,
+      "key":"c0",
+      "description":"Scalar value"
+    },
+    {
+      "selection":{
+        "name":"c0_mapper",
+        "members":3,
+        "selector":false
+      },
+      "name":"Grid, time series, or grid sequence file",
+      "value":{
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "key":"c0_file",
+      "description":"Grid, time series, or grid sequence file"
+    },
+    {
+      "selection":{
+        "mapping":{
+          "Scalar":"T0",
+          "Time_Series":"T0_file",
+          "Grid":"T0_file",
+          "Grid_Sequence":"T0_file"
+        },
+        "name":"T0_mapper",
+        "members":3,
+        "selector":true
+      },
+      "name":"Reference temperature",
+      "value":{
+        "default":"Scalar",
+        "units":"degC",
+        "type":"choice",
+        "choices":[
+          "Scalar",
+          "Grid",
+          "Time_Series",
+          "Grid_Sequence"
+        ]
+      },
+      "visible":true,
+      "key":"T0_ptype",
+      "description":"Reference temperature"
+    },
+    {
+      "selection":{
+        "name":"T0_mapper",
+        "members":3,
+        "selector":false
+      },
+      "name":"Scalar value",
+      "value":{
+        "default":-0.2,
+        "range":{
+          "max":100,
+          "min":-100.0
+        },
+        "type":"float"
+      },
+      "visible":true,
+      "key":"T0",
+      "description":"Scalar value"
+    },
+    {
+      "selection":{
+        "name":"T0_mapper",
+        "members":3,
+        "selector":false
+      },
+      "name":"Grid, time series, or grid sequence file",
+      "value":{
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "key":"T0_file",
+      "description":"Grid, time series, or grid sequence file"
+    },
+    {
+      "selection":{
+        "mapping":{
+          "Scalar":"h0_snow",
+          "Time_Series":"h0_snow_file",
+          "Grid":"h0_snow_file",
+          "Grid_Sequence":"h0_snow_file"
+        },
+        "name":"h0_snow_mapper",
+        "members":3,
+        "selector":true
+      },
+      "name":"Depth of snow",
+      "value":{
+        "default":"Scalar",
+        "units":"m",
+        "type":"choice",
+        "choices":[
+          "Scalar",
+          "Grid",
+          "Time_Series",
+          "Grid_Sequence"
+        ]
+      },
+      "visible":true,
+      "key":"h0_snow_ptype",
+      "description":"Depth of snow"
+    },
+    {
+      "selection":{
+        "name":"h0_snow_mapper",
+        "members":3,
+        "selector":false
+      },
+      "name":"Scalar value",
+      "value":{
+        "default":0.5,
+        "range":{
+          "max":20.0,
+          "min":0.0
+        },
+        "type":"float"
+      },
+      "visible":true,
+      "key":"h0_snow",
+      "description":"Scalar value"
+    },
+    {
+      "selection":{
+        "name":"h0_snow_mapper",
+        "members":3,
+        "selector":false
+      },
+      "name":"Grid, time series, or grid sequence file",
+      "value":{
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "key":"h0_snow_file",
+      "description":"Grid, time series, or grid sequence file"
+    },
+    {
+      "selection":{
+        "mapping":{
+          "Scalar":"h0_swe",
+          "Time_Series":"h0_swe_file",
+          "Grid":"h0_swe_file",
+          "Grid_Sequence":"h0_swe_file"
+        },
+        "name":"h0_swe_mapper",
+        "members":3,
+        "selector":true
+      },
+      "name":"Depth of snow water equivalent (SWE)",
+      "value":{
+        "default":"Scalar",
+        "units":"m",
+        "type":"choice",
+        "choices":[
+          "Scalar",
+          "Grid",
+          "Time_Series",
+          "Grid_Sequence"
+        ]
+      },
+      "visible":true,
+      "key":"h0_swe_ptype",
+      "description":"Depth of snow water equivalent (SWE)"
+    },
+    {
+      "selection":{
+        "name":"h0_swe_mapper",
+        "members":3,
+        "selector":false
+      },
+      "name":"Scalar value",
+      "value":{
+        "default":0.15,
+        "range":{
+          "max":20.0,
+          "min":0.0
+        },
+        "type":"float"
+      },
+      "visible":true,
+      "key":"h0_swe",
+      "description":"Scalar value"
+    },
+    {
+      "selection":{
+        "name":"h0_swe_mapper",
+        "members":3,
+        "selector":false
+      },
+      "name":"Grid, time series, or grid sequence file",
+      "value":{
+        "default":"off",
+        "files":[
+          "off"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "key":"h0_swe_file",
+      "description":"Grid, time series, or grid sequence file"
+    },
+    {
+      "value":{
+        "default":"case",
+        "units":"-",
+        "type":"string"
+      },
+      "visible":false,
+      "name":"File prefix for the model scenario",
+      "key":"case_prefix",
+      "description":"File prefix for the model scenario"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Reference temperature data type",
+      "key":"T0_dtype",
+      "description":"Reference temperature data type"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Depth of snow data type",
+      "key":"h0_snow_dtype",
+      "description":"Depth of snow data type"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Degree day coefficient data type",
+      "key":"c0_dtype",
+      "description":"Degree day coefficient data type"
+    },
+    {
+      "value":{
+        "default":"site",
+        "units":"-",
+        "type":"string"
+      },
+      "visible":false,
+      "name":"File prefix for the study site",
+      "key":"site_prefix",
+      "description":"File prefix for the study site"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Depth of snow water equivalent (SWE) data type",
+      "key":"h0_swe_dtype",
+      "description":"Depth of snow water equivalent (SWE) data type"
+    },
+    {
+      "value":{
+        "default":100,
+        "units":"-",
+        "range":{
+          "max":100000,
+          "min":1
+        },
+        "type":"int"
+      },
+      "visible":false,
+      "name":"Number of time steps",
+      "key":"n_steps",
+      "description":"Number of time steps"
+    },
+    {
+      "value":{
+        "default":"float",
+        "units":"-",
+        "type":"choice",
+        "choices":[
+          "float",
+          "int",
+          "long",
+          "string"
+        ]
+      },
+      "visible":false,
+      "name":"Density of snow data type",
+      "key":"rho_snow_dtype",
+      "description":"Density of snow data type"
+    }
+  ]
+}
