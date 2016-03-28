@@ -36,10 +36,6 @@
     },
     {
       "required":false,
-      "id":"ice"
-    },
-    {
-      "required":false,
       "id":"diversions"
     }
   ],
