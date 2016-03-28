@@ -150,6 +150,14 @@ public class ParameterJSO extends JavaScriptObject {
   }-*/;
 
   /**
+   * A JSNI method to get the "global" attribute of a parameter, a JS boolean.
+   * If the attribute doesn't exist, false is returned.
+   */
+  public final native boolean isGlobal() /*-{
+    return this.global || false;
+  }-*/;
+
+  /**
    * A non-JSNI method for stringifying the attributes of a ParameterJSO. Must
    * be final.
    */

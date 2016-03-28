@@ -65,6 +65,7 @@
         "type":"int"
       },
       "visible":true,
+      "global":true,
       "name":"Simulation run time",
       "key":"run_duration",
       "description":"Simulation run time"
