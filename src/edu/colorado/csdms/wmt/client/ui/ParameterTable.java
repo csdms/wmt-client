@@ -15,14 +15,14 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
 import edu.colorado.csdms.wmt.client.ui.cell.ChoiceCell;
+import edu.colorado.csdms.wmt.client.ui.cell.ComponentCell;
 import edu.colorado.csdms.wmt.client.ui.cell.DescriptionCell;
 import edu.colorado.csdms.wmt.client.ui.cell.SeparatorCell;
 import edu.colorado.csdms.wmt.client.ui.cell.ValueCell;
 import edu.colorado.csdms.wmt.client.ui.panel.ParameterActionPanel;
 
 /**
- * Builds a table of parameters for a single WMT model component. The value of
- * the parameter is editable.
+ * Builds and displays a table of parameters for a single WMT model component.
  * 
  * @author Mark Piper (mark.piper@colorado.edu)
  */
@@ -30,13 +30,13 @@ public class ParameterTable extends FlexTable {
 
   public DataManager data;
   private String componentId; // the id of the displayed component
-  private ParameterActionPanel actionPanel;
+  private ComponentCell cell; // the corresponding cell in the ModelTree
   private Integer tableRowIndex; // where we are in table
   private Integer parameterIndex; // where we are in list of parameters
 
   /**
    * Initializes a table of parameters for a single WMT model component. The
-   * table is empty until {@link #loadTable(String)} is called.
+   * table is empty until {@link #loadTable(ComponentCell)} is called.
    * 
    * @param data the DataManager instance for the WMT session
    */
@@ -52,22 +52,22 @@ public class ParameterTable extends FlexTable {
    * A worker that loads the ParameterTable with parameter values for the
    * selected model component.
    * 
-   * @param componentId the id of the component whose parameters are to be
-   *  displayed
+   * @param cell the {@link ComponentCell} of the component whose parameters are
+   *          to be displayed
    */
-  public void loadTable(String componentId) {
+  public void loadTable(ComponentCell cell) {
 
     // Always clear the table before building it.
     this.clearTable();
+
+    this.cell = cell;
+    this.componentId = cell.getComponentId();
 
     // Return if the selected component doesn't have parameters.
     if (data.getModelComponent(componentId).getParameters() == null) {
       Window.alert("No parameters defined for this component.");
       return;
     }
-
-    // The component whose parameters are to be displayed.
-    this.setComponentId(componentId);
 
     // Set the component name on the tab holding the ParameterTable.
     data.getPerspective().setParameterPanelTitle(componentId);
@@ -88,7 +88,8 @@ public class ParameterTable extends FlexTable {
    * {@link ParameterTable}.
    */
   private void addActionPanel() {
-    actionPanel = new ParameterActionPanel(data, componentId);
+    ParameterActionPanel actionPanel =
+        new ParameterActionPanel(data, componentId);
     actionPanel.getElement().getStyle().setMarginTop(-3.0, Unit.PX);
     this.setWidget(tableRowIndex, 0, actionPanel);
     tableRowIndex++;
@@ -103,16 +104,21 @@ public class ParameterTable extends FlexTable {
     ParameterJSO parameter =
         data.getModelComponent(componentId).getParameters().get(parameterIndex);
 
-    // Short-circuit if the parameter isn't visible.
+    // Return if the parameter isn't visible.
     if (!parameter.isVisible()) {
       return;
     }
 
-    // Short circuit if the parameter is a separator.
+    // Return if the parameter is a separator.
     if (parameter.getKey().matches("separator")) {
       this.setWidget(tableRowIndex, 0, new SeparatorCell(parameter));
       this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 3);
       tableRowIndex++;
+      return;
+    }
+
+    // Return if the parameter is global and the component is not the driver.
+    if (parameter.isGlobal() && !cell.getPortId().matches("driver")) {
       return;
     }
 

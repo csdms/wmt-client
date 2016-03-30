@@ -7,9 +7,11 @@
   "child",
   "coastal_environment",
   "hydrotrend",
+  "meteorology",
   "plume",
   "sedflux2d",
   "sedflux3d",
+  "snow_degree_day",
   "vector_parameter_study",
   "waves"
 ]

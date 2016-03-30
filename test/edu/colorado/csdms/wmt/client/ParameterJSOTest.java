@@ -30,6 +30,7 @@ public class ParameterJSOTest extends GWTTestCase {
   private String name;
   private String description;
   private Boolean visible;
+  private Boolean global;
   private String groupName;
   private Boolean groupLeader;
   private Integer groupMembers;
@@ -49,12 +50,13 @@ public class ParameterJSOTest extends GWTTestCase {
    * {@link ParameterJSO} object.
    */
   private native ParameterJSO testBasicParameterJSO(String key, String name,
-      String description, Boolean visible, ValueJSO value) /*-{
+      String description, Boolean visible, Boolean global, ValueJSO value) /*-{
 		return {
 			"key" : key,
 			"name" : name,
 			"description" : description,
 			"visible" : visible,
+			"global" : global,
 			"value" : value
 		};
   }-*/;
@@ -127,8 +129,10 @@ public class ParameterJSOTest extends GWTTestCase {
     selectionSelector = true;
     selectionMembers = 9467;
     visible = true;
+    global = true;
     value = testValueJSO();
-    basicParam = testBasicParameterJSO(key, name, description, visible, value);
+    basicParam =
+        testBasicParameterJSO(key, name, description, visible, global, value);
     groupParam =
         testGroupParameterJSO(key, name, description, groupName, groupLeader,
             groupMembers, value);
@@ -206,6 +210,16 @@ public class ParameterJSOTest extends GWTTestCase {
   public void testSetIsVisible() {
     basicParam.isVisible(false);
     assertFalse(basicParam.isVisible());
+  }
+
+  @Test
+  public void testIsGlobal() {
+    assertTrue(basicParam.isGlobal());
+  }
+
+  @Test
+  public void testIsNotGlobal() {
+    assertFalse(groupParam.isGlobal());
   }
 
   @Test
