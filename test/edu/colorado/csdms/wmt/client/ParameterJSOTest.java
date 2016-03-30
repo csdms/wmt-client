@@ -218,6 +218,11 @@ public class ParameterJSOTest extends GWTTestCase {
   }
 
   @Test
+  public void testIsNotGlobal() {
+    assertFalse(groupParam.isGlobal());
+  }
+
+  @Test
   public void testGetValue() {
     assertSame(value, basicParam.getValue());
   }
