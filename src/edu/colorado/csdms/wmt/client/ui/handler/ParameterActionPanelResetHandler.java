@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.ui.cell.ComponentCell;
 import edu.colorado.csdms.wmt.client.ui.dialog.QuestionDialogBox;
 
 /**
@@ -42,7 +43,8 @@ public class ParameterActionPanelResetHandler implements ClickHandler {
             questionDialog.hide();
             data.replaceModelComponent(data.getComponent(componentId));
             data.getPerspective().getParameterTable().clearTable();
-            data.getPerspective().getParameterTable().loadTable(componentId);
+            ComponentCell cell = data.getShowingParameters();
+            data.getPerspective().getParameterTable().loadTable(cell);
             data.updateModelSaveState(false);
           }
         });
