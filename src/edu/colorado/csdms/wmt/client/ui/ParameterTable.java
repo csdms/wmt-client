@@ -31,7 +31,6 @@ public class ParameterTable extends FlexTable {
   public DataManager data;
   private String componentId; // the id of the displayed component
   private ComponentCell cell; // the corresponding cell in the ModelTree
-  private ParameterActionPanel actionPanel;
   private Integer tableRowIndex; // where we are in table
   private Integer parameterIndex; // where we are in list of parameters
 
@@ -89,7 +88,8 @@ public class ParameterTable extends FlexTable {
    * {@link ParameterTable}.
    */
   private void addActionPanel() {
-    actionPanel = new ParameterActionPanel(data, componentId);
+    ParameterActionPanel actionPanel =
+        new ParameterActionPanel(data, componentId);
     actionPanel.getElement().getStyle().setMarginTop(-3.0, Unit.PX);
     this.setWidget(tableRowIndex, 0, actionPanel);
     tableRowIndex++;
