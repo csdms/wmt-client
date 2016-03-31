@@ -28,6 +28,7 @@ import edu.colorado.csdms.wmt.client.ui.panel.ParameterActionPanel;
  */
 public class ParameterTable extends FlexTable {
 
+  private static final String CELL_WIDTH = "220px"; // fragile, should calculate
   public DataManager data;
   private String componentId; // the id of the displayed component
   private ComponentCell cell; // the corresponding cell in the ModelTree
@@ -157,6 +158,9 @@ public class ParameterTable extends FlexTable {
       valueCell.getWidget(0).addStyleDependentName("upload");
       this.setWidget(tableRowIndex, 1, valueCell);
       this.setWidget(tableRowIndex, 2, selections.get(0));
+      this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
+        HasHorizontalAlignment.ALIGN_RIGHT);
+      this.getFlexCellFormatter().setWidth(tableRowIndex, 2, CELL_WIDTH);
       valueCell.addDomHandler(new SelectionChangeHandler(tableRowIndex,
           selections), ChangeEvent.getType());
     }
