@@ -239,10 +239,9 @@ body, table td, select, button {
 /* A ComponentCell that displays a component's parameters. */
 .wmt-ComponentCell-showingParameters:after {
   position: absolute;
-  right: -20px;
+  right: -18px;
   top: 2px;
   font-family: "FontAwesome";
-  /* padding: 3px; */
   content: "\f0ad"; /* fa-wrench */
   color: colorDark;
 }
@@ -261,9 +260,11 @@ body, table td, select, button {
 }
 .wmt-ComponentCell-NameCell-alias:after {
    font-family: "FontAwesome";
-   padding: 3px;
+   position: absolute;
+   right: -18px;
+   bottom: 2px;
    content: "\f112"; /* fa-reply */
-   color: colorLight;
+   color: colorDark;
 }
 
 /* For the menuCell inside the ComponentCell. */
