@@ -49,6 +49,8 @@ public class ViewRunStatusMenu extends PopupPanel {
     // Current model run
     final HTML currentRunButton = new HTML("Current model run");
     currentRunButton.setStyleName("wmt-PopupPanelItem");
+    currentRunButton.setStyleDependentName("disabled",
+        (data.getSimulationId() == null));
     currentRunButton.addClickHandler(new RunStatusClickHandler("current"));
     menu.add(currentRunButton);
 
