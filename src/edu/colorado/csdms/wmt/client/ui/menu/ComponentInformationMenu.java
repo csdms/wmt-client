@@ -65,6 +65,8 @@ public class ComponentInformationMenu extends PopupPanel {
       item.addClickHandler(new ClickHandler() {
         @Override
         public void onClick(ClickEvent event) {
+          ComponentInformationMenu.this.hide();
+          data.getPerspective().getActionButtonPanel().getMoreMenu().hide();
           ComponentInfoDialogBox componentInfoDialogBox =
               data.getPerspective().getComponentInfoBox();
           componentInfoDialogBox.update(componentJSO);
