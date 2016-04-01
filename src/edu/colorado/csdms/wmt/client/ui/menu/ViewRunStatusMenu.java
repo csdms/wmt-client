@@ -77,7 +77,9 @@ public class ViewRunStatusMenu extends PopupPanel {
       ViewRunStatusMenu.this.hide();
       data.getPerspective().getActionButtonPanel().getMoreMenu().hide();
       if (type.matches("current")) {
-        Window.open(DataURL.showCurrentModelRun(data), "WMT_currentRun", null);
+        if (data.getSimulationId() != null) {
+          Window.open(DataURL.showCurrentModelRun(data), "WMT_currentRun", null);
+        }
       } else {
         Window.open(DataURL.showAllModelRuns(data), "WMT_allRuns", null);
       }
