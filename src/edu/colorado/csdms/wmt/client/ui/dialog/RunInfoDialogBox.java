@@ -67,7 +67,8 @@ public class RunInfoDialogBox extends DialogBox {
     contents.setWidth("30em");
     contents.getElement().getStyle().setMargin(1.0, Unit.EM);
 
-    String msg = "<h2>Success!</h2><p>You have submitted your model run.</p>";
+    String msg =
+        "<h2>Congratulations!</h2><p>You have submitted your model run.</p>";
     HTML msgHtml = new HTML(msg);
     contents.add(msgHtml);
 
@@ -91,7 +92,7 @@ public class RunInfoDialogBox extends DialogBox {
       @Override
       public void onClick(ClickEvent event) {
         RunInfoDialogBox.this.hide();
-        Window.open(DataURL.showModelRun(RunInfoDialogBox.this.data),
+        Window.open(DataURL.showCurrentModelRun(RunInfoDialogBox.this.data),
             "runInfoDialog", null);
       }
     };

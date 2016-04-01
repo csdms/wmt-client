@@ -384,13 +384,24 @@ public class DataURL {
   }
 
   /**
-   * Returns the URL for API page displaying the status of all current model
-   * runs on the server.
+   * Returns the URL for API page displaying the status of the all model runs on
+   * the server.
    * 
    * @param data the DataManager object for the WMT session
    */
-  public static String showModelRun(DataManager data) {
+  public static String showAllModelRuns(DataManager data) {
     return data.config.getApiUrl() + Constants.RUN_SHOW_PATH;
+  }
+
+  /**
+   * Returns the URL for API page displaying the status of the current model run
+   * on the server.
+   *
+   * @param data the DataManager object for the WMT session
+   */
+  public static String showCurrentModelRun(DataManager data) {
+    String runIdPath = "run/" + data.getSimulationId() + "/status";
+    return data.config.getApiUrl() + runIdPath;
   }
 
   /**
