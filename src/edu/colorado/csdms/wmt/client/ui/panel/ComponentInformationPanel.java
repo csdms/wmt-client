@@ -47,7 +47,10 @@ public class ComponentInformationPanel extends PopupPanel {
     populatePanel();
   }
 
-  public void populatePanel() {
+  /**
+   * A helper that loads the {@link ComponentInformationPanel}.
+   */
+  private void populatePanel() {
     String title = componentJSO.getName();
     if (componentJSO.getVersion() != null) {
       title += " v" + componentJSO.getVersion();
