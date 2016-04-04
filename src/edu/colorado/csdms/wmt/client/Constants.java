@@ -155,6 +155,8 @@ public class Constants {
   public static String FA_USER = "<i class='fa fa-user fa-fw'></i> ";
   public static String FA_BEER = "<i class='fa fa-beer'></i> ";
   public static String FA_RARROW = "<i class='fa fa-arrow-right'></i> ";
+  public static String FA_BOLT = "<i class='fa fa-bolt'></i> ";
+  public static String FA_LINK = "<i class='fa fa-external-link'></i> ";
 
   // Panel titles.
   public static String TITLE_TOP_PANEL = "The CSDMS Web Modeling Tool";

@@ -97,7 +97,6 @@ public class MoreActionsMenu extends PopupPanel {
     componentsButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
-        componentInformationMenu.populateMenu();
         componentInformationMenu.setPopupPositionAndShow(new PositionCallback() {
           final Integer x = componentsButton.getElement().getAbsoluteRight();
           final Integer y = componentsButton.getAbsoluteTop();

@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
-import edu.colorado.csdms.wmt.client.ui.dialog.ComponentInfoDialogBox;
+import edu.colorado.csdms.wmt.client.ui.panel.ComponentInformationPanel;
 
 /**
  * Encapsulates an alphabetized, scrollable list of components.
@@ -55,22 +55,26 @@ public class ComponentInformationMenu extends PopupPanel {
   /**
    * A helper that loads the {@link ComponentInformationMenu} with components.
    */
-  public void populateMenu() {
+  private void populateMenu() {
     componentsPanel.clear();    
     for (int i = 0; i < data.getComponents().size(); i++) {
       String componentId = data.componentIdList.get(i);
       final ComponentJSO componentJSO = data.getComponent(componentId);
-      HTML item = new HTML(componentJSO.getName());
+      final HTML item = new HTML(componentJSO.getName());
       item.setStyleName("wmt-ComponentSelectionMenuItem");
       item.addClickHandler(new ClickHandler() {
         @Override
         public void onClick(ClickEvent event) {
-          ComponentInformationMenu.this.hide();
-          data.getPerspective().getActionButtonPanel().getMoreMenu().hide();
-          ComponentInfoDialogBox componentInfoDialogBox =
-              data.getPerspective().getComponentInfoBox();
-          componentInfoDialogBox.update(componentJSO);
-          componentInfoDialogBox.center();
+          final ComponentInformationPanel panel =
+              new ComponentInformationPanel(componentJSO);
+          panel.setPopupPositionAndShow(new PositionCallback() {
+            final Integer x = item.getElement().getAbsoluteRight();
+            final Integer y = item.getAbsoluteTop();
+            @Override
+            public void setPosition(int offsetWidth, int offsetHeight) {
+              panel.setPopupPosition(x, y);
+            }
+          });
         }
       });
       componentsPanel.add(item);

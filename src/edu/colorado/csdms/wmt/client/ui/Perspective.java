@@ -19,7 +19,6 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.LabelJSO;
-import edu.colorado.csdms.wmt.client.ui.dialog.ComponentInfoDialogBox;
 import edu.colorado.csdms.wmt.client.ui.dialog.OpenDialogBox;
 import edu.colorado.csdms.wmt.client.ui.menu.ComponentSelectionMenu;
 import edu.colorado.csdms.wmt.client.ui.menu.LabelsMenu;
@@ -56,7 +55,6 @@ public class Perspective extends DockLayoutPanel {
   
   // Tertiary UI widgets!
   private UserPanel userPanel;
-  private ComponentInfoDialogBox componentInfoBox;
   private LabelsMenu labelsMenu;
   private OpenDialogBox openDialogBox;
   private HandlerRegistration windowCloseHandler;
@@ -96,9 +94,6 @@ public class Perspective extends DockLayoutPanel {
     splitter.addEast(viewEast, viewEastInitialWidth);
     viewWest = new ViewWest();
     splitter.add(viewWest); // must be last
-    
-    // The ComponentInfoDialogBox floats above the Perspective.
-    this.setComponentInfoBox(new ComponentInfoDialogBox());
   }
 
   /**
@@ -195,14 +190,6 @@ public class Perspective extends DockLayoutPanel {
       }
     }
     viewWest.setTabHTML(0, tabTitle);
-  }
-
-  public ComponentInfoDialogBox getComponentInfoBox() {
-    return componentInfoBox;
-  }
-
-  public void setComponentInfoBox(ComponentInfoDialogBox componentInfoBox) {
-    this.componentInfoBox = componentInfoBox;
   }
 
   /**
