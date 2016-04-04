@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.dialog.ComponentInfoDialogBox;
 import edu.colorado.csdms.wmt.client.ui.handler.ParameterActionPanelResetHandler;
 import edu.colorado.csdms.wmt.client.ui.menu.ViewInputFilesMenu;
 
@@ -66,17 +65,22 @@ public class ParameterActionPanel extends HorizontalPanel {
     });
 
     // Component help
-    Button helpButton = new Button(Constants.FA_HELP);
+    final Button helpButton = new Button(Constants.FA_HELP);
     helpButton.setTitle(Constants.COMPONENT_INFO);
     helpButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
-        ComponentInfoDialogBox componentInfoDialogBox =
-            ParameterActionPanel.this.data.getPerspective()
-                .getComponentInfoBox();
-        componentInfoDialogBox.update(ParameterActionPanel.this.data
-            .getComponent(ParameterActionPanel.this.componentId));
-        componentInfoDialogBox.center();
+        final ComponentInformationPanel panel =
+            new ComponentInformationPanel(ParameterActionPanel.this.data
+                .getComponent(ParameterActionPanel.this.componentId));
+        panel.setPopupPositionAndShow(new PositionCallback() {
+          final Integer x = helpButton.getElement().getAbsoluteLeft();
+          final Integer y = helpButton.getElement().getAbsoluteBottom();
+          @Override
+          public void setPosition(int offsetWidth, int offsetHeight) {
+            panel.setPopupPosition(x, y);
+          }
+        });
       }
     });
     this.add(helpButton);

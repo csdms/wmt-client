@@ -1,26 +1,3 @@
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 mcflugen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package edu.colorado.csdms.wmt.client.ui.menu;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -34,8 +11,8 @@ import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.ui.cell.ComponentCell;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentCloseCommand;
-import edu.colorado.csdms.wmt.client.ui.handler.ComponentGetInformationCommand;
 import edu.colorado.csdms.wmt.client.ui.handler.ComponentShowParametersCommand;
+import edu.colorado.csdms.wmt.client.ui.panel.ComponentInformationPanel;
 
 /**
  * A {@link PopupPanel} menu that defines actions that can be performed on a
@@ -73,8 +50,23 @@ public class ComponentActionMenu extends PopupPanel {
     showParameters.setTitle(Constants.COMPONENT_SHOW);
     menu.add(showParameters);
 
-    HTML getInformation = new HTML(Constants.FA_HELP + "Get information");
-    getInformation.addClickHandler(new ComponentActionHandler("info"));
+    final HTML getInformation = new HTML(Constants.FA_HELP + "Get information");
+    getInformation.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent event) {
+        final ComponentInformationPanel panel =
+            new ComponentInformationPanel(ComponentActionMenu.this.data
+                .getComponent(ComponentActionMenu.this.cell.getComponentId()));
+        panel.setPopupPositionAndShow(new PositionCallback() {
+          final Integer x = getInformation.getElement().getAbsoluteRight();
+          final Integer y = getInformation.getAbsoluteTop();
+          @Override
+          public void setPosition(int offsetWidth, int offsetHeight) {
+            panel.setPopupPosition(x, y);
+          }
+        });
+      }
+    });
     getInformation.setStyleName("wmt-PopupPanelItem");
     getInformation.setTitle(Constants.COMPONENT_INFO);
     menu.add(getInformation);
@@ -93,9 +85,9 @@ public class ComponentActionMenu extends PopupPanel {
   /**
    * Handles a click on a menu item in the {@link ComponentActionMenu}.
    * <p>
-   * <b>Note:</b> This class wraps {@link ComponentShowParametersCommand},
-   * {@link ComponentGetInformationCommand} and {@link ComponentCloseCommand}.
-   * It might be helpful to port the code from these classes to this handler.
+   * <b>Note:</b> This class wraps {@link ComponentShowParametersCommand} and
+   * {@link ComponentCloseCommand}. It might be helpful to port the code from
+   * these classes to this handler.
    */
   public class ComponentActionHandler implements ClickHandler {
 
@@ -104,12 +96,13 @@ public class ComponentActionMenu extends PopupPanel {
     /**
      * Makes a new {@link ComponentActionHandler}.
      * 
-     * @param type the type of action, "show", "info" or "delete"
+     * @param type the type of action, "show" or "close"
      */
     public ComponentActionHandler(String type) {
       this.type = type;
     }
-    
+
+    // TODO Continue refactoring to replace "commands" with event handlers.
     @Override
     public void onClick(ClickEvent event) {
       ComponentActionMenu.this.hide();
@@ -117,8 +110,6 @@ public class ComponentActionMenu extends PopupPanel {
       Command cmd = null;
       if (type.equalsIgnoreCase("show")) {
         cmd = new ComponentShowParametersCommand(data, cell);
-      } else if (type.equalsIgnoreCase("info")) {
-        cmd = new ComponentGetInformationCommand(data, cell);
       } else if (type.equalsIgnoreCase("close")) {
         cmd = new ComponentCloseCommand(data, cell);
       }
