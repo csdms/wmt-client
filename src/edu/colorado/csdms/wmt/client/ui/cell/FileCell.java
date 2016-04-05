@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 
+import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataURL;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
 import edu.colorado.csdms.wmt.client.ui.ParameterTable;
@@ -98,7 +99,11 @@ public class FileCell extends HorizontalPanel {
     public void onClick(ClickEvent event) {
 
       ParameterTable pt = (ParameterTable) parent.getParent();
-      if (!pt.data.modelIsSaved()) {
+
+      // Get the id of the model this file belongs to.
+      Integer modelId = pt.data.getMetadata().getId();
+
+      if (modelId == Constants.DEFAULT_MODEL_ID) {
         String msg =
             "The model must be saved to the server"
                 + " before files can be uploaded.";
@@ -108,10 +113,7 @@ public class FileCell extends HorizontalPanel {
 
       uploadBox = new UploadDialogBox();
       uploadBox.setText("Upload File...");
-
-      // Get the id of the model this file belongs to.
-      String modelId = ((Integer) pt.data.getMetadata().getId()).toString(); 
-      uploadBox.getHidden().setValue(modelId);
+      uploadBox.getHidden().setValue(modelId.toString());
 
       // Where the form is to be submitted.
       uploadBox.getForm().setAction(DataURL.uploadFile(pt.data));
