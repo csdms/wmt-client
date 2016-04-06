@@ -50,9 +50,10 @@
         "default":"",
         "type":"string"
       },
-      "name":"Run",
+      "global":true,
+      "name":"Globals",
       "key":"separator",
-      "description":"Run"
+      "description":"Globals"
     },
     {
       "value":{
@@ -72,6 +73,29 @@
     },
     {
       "value":{
+        "default":"site.rti",
+        "files":[
+          "site.rti"
+        ],
+        "type":"file"
+      },
+      "visible":true,
+      "global":true,
+      "name":"RiverTools info file",
+      "key":"rti_file",
+      "description":"RiverTools info file"
+    },
+    {
+      "value":{
+        "default":"",
+        "type":"string"
+      },
+      "name":"Run",
+      "key":"separator",
+      "description":"Run"
+    },
+    {
+      "value":{
         "default":600.0,
         "units":"s",
         "range":{
@@ -88,6 +112,7 @@
     {
       "value":{
         "default":600,
+        "units":"s",
         "range":{
           "max":1000000,
           "min":1
@@ -95,13 +120,13 @@
         "type":"int"
       },
       "visible":true,
-      "name":"Number of time steps between port updates",
+      "name":"Interval between port updates",
       "key":"update_time_step",
-      "description":"Number of time steps between port updates"
+      "description":"Interval between port updates"
     },
     {
       "value":{
-        "default":600,
+        "default":6,
         "range":{
           "max":1000000,
           "min":1
@@ -109,9 +134,9 @@
         "type":"int"
       },
       "visible":true,
-      "name":"Number of time steps between output files",
+      "name":"Number of output files",
       "key":"output_interval",
-      "description":"Number of time steps between output files"
+      "description":"Number of output files"
     },
     {
       "value":{
@@ -135,19 +160,6 @@
       "name":"Input",
       "key":"separator",
       "description":"Input"
-    },
-    {
-      "value":{
-        "default":"site.rti",
-        "files":[
-          "site.rti"
-        ],
-        "type":"file"
-      },
-      "visible":true,
-      "name":"RiverTools info file",
-      "key":"rti_file",
-      "description":"RiverTools info file"
     },
     {
       "value":{
