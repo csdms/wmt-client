@@ -110,16 +110,16 @@ public class ParameterTable extends FlexTable {
       return;
     }
 
-    // Return if the parameter is a separator.
+    // Return if the parameter is global and the component is not the driver.
+    if (parameter.isGlobal() && !cell.getPortId().matches("driver")) {
+      return;
+    }
+
+    // If the parameter is a separator, display it, then return.
     if (parameter.getKey().matches("separator")) {
       this.setWidget(tableRowIndex, 0, new SeparatorCell(parameter));
       this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 3);
       tableRowIndex++;
-      return;
-    }
-
-    // Return if the parameter is global and the component is not the driver.
-    if (parameter.isGlobal() && !cell.getPortId().matches("driver")) {
       return;
     }
 
