@@ -1,26 +1,3 @@
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 mcflugen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package edu.colorado.csdms.wmt.client.ui.dialog;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -78,9 +55,7 @@ public class OpenDialogBox extends DialogBox {
       @Override
       public void onChange(ChangeEvent event) {
         ListBox droplist = (ListBox) event.getSource();
-        String modelName = droplist.getItemText(droplist.getSelectedIndex());
-        metadataPanel.setOwner(OpenDialogBox.this.data.findModel(modelName).getOwner());
-        metadataPanel.setDate(OpenDialogBox.this.data.findModel(modelName).getDate());
+        populateMetadataPanel(droplist.getItemText(droplist.getSelectedIndex()));
       }
     });
 
@@ -130,6 +105,18 @@ public class OpenDialogBox extends DialogBox {
     DataTransfer.queryModelLabels(data, labelsMenu.getSelectedLabelIds());
   }
   
+  /**
+   * A helper that loads information into the MetadataPanel of the
+   * {@link OpenDialogBox}.
+   * 
+   * @param modelName the name of the saved model displayed in the dialog box.
+   */
+  public void populateMetadataPanel(String modelName) {
+    metadataPanel.setOwner(data.findModel(modelName).getOwner());
+    metadataPanel.setDate(data.findModel(modelName).getDate());
+    metadataPanel.setId(data.findModel(modelName).getId());
+  }
+
   public DroplistPanel getDroplistPanel() {
     return droplistPanel;
   }
