@@ -157,7 +157,7 @@ public class ParameterTable extends FlexTable {
       }
       valueCell.getWidget(0).addStyleDependentName("upload");
       this.setWidget(tableRowIndex, 1, valueCell);
-      this.setWidget(tableRowIndex, 2, selections.get(0));
+      setSelection(tableRowIndex, valueCell, selections);
       this.getFlexCellFormatter().setHorizontalAlignment(tableRowIndex, 1,
         HasHorizontalAlignment.ALIGN_RIGHT);
       this.getFlexCellFormatter().setWidth(tableRowIndex, 2, CELL_WIDTH);
@@ -166,6 +166,27 @@ public class ParameterTable extends FlexTable {
     }
 
     tableRowIndex++;
+  }
+
+  /**
+   * Sets the selection widget based on the mapped value of the selector widget.
+   * 
+   * @param rowIndex the current row in the table
+   * @param selector the selector widget, a {@link ChoiceCell}
+   * @param selections the {@link ArrayList} of selections, each a
+   *          {@link ValueCell}
+   */
+  private void setSelection(Integer rowIndex, ValueCell selector,
+      ArrayList<ValueCell> selections) {
+    ChoiceCell cell = (ChoiceCell) selector.getWidget(0);
+    String value = cell.getValue(cell.getSelectedIndex());
+    String mappedKey = selector.getParameter().getSelectionMapping(value);
+
+    for (ValueCell target : selections) {
+      if (mappedKey.equalsIgnoreCase(target.getParameter().getKey())) {
+        ParameterTable.this.setWidget(rowIndex, 2, target);
+      }
+    }
   }
 
   /**
@@ -261,15 +282,7 @@ public class ParameterTable extends FlexTable {
     @Override
     public void onChange(ChangeEvent event) {
       ValueCell selector = (ValueCell) event.getSource();
-      ChoiceCell cell = (ChoiceCell) selector.getWidget(0);
-      String value = cell.getValue(cell.getSelectedIndex());
-      String mappedKey = selector.getParameter().getSelectionMapping(value);
-
-      for (ValueCell target : selections) {
-        if (mappedKey.equalsIgnoreCase(target.getParameter().getKey())) {
-          ParameterTable.this.setWidget(rowIndex, 2, target);
-        }
-      }
+      setSelection(rowIndex, selector, selections);
     }
   }
 }
