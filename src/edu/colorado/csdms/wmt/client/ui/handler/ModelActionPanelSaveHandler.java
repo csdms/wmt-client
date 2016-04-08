@@ -60,7 +60,8 @@ public class ModelActionPanelSaveHandler implements ClickHandler {
             entry.getValue().isSelected(false);
           }
         }
-        showSaveDialogBox(Constants.MODELS_NEW_PATH);
+        data.getMetadata().setOwner(data.security.getWmtUsername());
+        showSaveDialogBox(Constants.MODELS_SAVEAS_PATH);
       }
     } else {
       if (isSaveAs) {
