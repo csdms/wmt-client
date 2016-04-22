@@ -70,7 +70,7 @@ public class ComponentActionMenu extends PopupPanel {
   /**
    * Removes a component, and anything beneath it, from the {@link ModelTree}.
    */
-  private void closeComponent() {
+  private void closeComponent(ComponentCell cell) {
     GWT.log("Delete: " + data.getComponent(cell.getComponentId()).getName());
 
     // For convenience, get the ModelTree reference and the reference to the
@@ -122,7 +122,7 @@ public class ComponentActionMenu extends PopupPanel {
         if (alias == null) {
           keepLooping = false;
         } else {
-          closeComponent(); // recursive
+          closeComponent(alias); // recursive
         }
       }
     }
@@ -184,7 +184,7 @@ public class ComponentActionMenu extends PopupPanel {
     @Override
     public void onClick(ClickEvent event) {
       ComponentActionMenu.this.hide();
-      closeComponent();
+      closeComponent(cell);
     }
   }
 }
