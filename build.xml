@@ -1,185 +1,184 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="WMT" default="build" basedir=".">
-	<property name="gwt.args" value="" />
-	<property environment="env" />
-	<property name="gwt.sdk" location="${env.GWT_HOME}" /> 	<!-- Path to GWT -->
-    <property name="src.dir" value="src" />
-    <property name="test.dir" value="test" />
-	<property name="war.dir" value="war" />
-	<property name="war.file" value="wmt.war" />
-	<property name="war.lib.dir" value="${war.dir}/WEB-INF/lib" />
-    <property name="war.class.dir" value="${war.dir}/WEB-INF/classes" />
-	<property name="lib.dir" value="lib"/>
-    <property name="junit.jarfile" value="${lib.dir}/junit-4.11.jar"/>
-	<property name="docs.dir" value="docs" />
-	<property name="package.name" value="edu.colorado.csdms.wmt"/>
+  <property name="gwt.args" value="" />
+  <property environment="env" />
+  <property name="gwt.sdk" location="${env.GWT_HOME}" /> 	<!-- Path to GWT -->
+  <property name="src.dir" value="src" />
+  <property name="test.dir" value="test" />
+  <property name="war.dir" value="war" />
+  <property name="war.file" value="wmt.war" />
+  <property name="war.lib.dir" value="${war.dir}/WEB-INF/lib" />
+  <property name="war.class.dir" value="${war.dir}/WEB-INF/classes" />
+  <property name="lib.dir" value="lib"/>
+  <property name="junit.jarfile" value="${lib.dir}/junit-4.11.jar"/>
+  <property name="docs.dir" value="docs" />
+  <property name="package.name" value="edu.colorado.csdms.wmt"/>
 
-	<path id="project.class.path">
-		<pathelement location="${war.class.dir}" />
-		<pathelement location="${gwt.sdk}/gwt-user.jar" />
-		<fileset dir="${gwt.sdk}" includes="gwt-dev*.jar" />
-		<fileset dir="${war.lib.dir}" includes="**/*.jar" />
-	</path>
+  <path id="project.class.path">
+    <pathelement location="${war.class.dir}" />
+    <pathelement location="${gwt.sdk}/gwt-user.jar" />
+    <fileset dir="${gwt.sdk}" includes="gwt-dev*.jar" />
+    <fileset dir="${war.lib.dir}" includes="**/*.jar" />
+  </path>
 
-	<target name="libs" description="Copy libs to WEB-INF/lib">
-		<mkdir dir="${war.lib.dir}" />
-		<copy todir="${war.lib.dir}" file="${gwt.sdk}/gwt-servlet.jar" />
-		<copy todir="${war.lib.dir}" file="${gwt.sdk}/gwt-servlet-deps.jar" />
-	</target>
+  <target name="libs" description="Copy libs to WEB-INF/lib">
+    <mkdir dir="${war.lib.dir}" />
+    <copy todir="${war.lib.dir}" file="${gwt.sdk}/gwt-servlet.jar" />
+    <copy todir="${war.lib.dir}" file="${gwt.sdk}/gwt-servlet-deps.jar" />
+  </target>
 
-	<target name="javac" depends="libs" description="Compile java source to bytecode">
-		<mkdir dir="${war.class.dir}" />
-		<javac srcdir="${src.dir}" destdir="${war.class.dir}"
-			includes="**" excludes="**/package-info.java"
-			encoding="utf-8"  source="1.5" target="1.5"
-			nowarn="true" debug="true" debuglevel="lines,vars,source"
-			includeantruntime="false">
-			<classpath refid="project.class.path" />
-		</javac>
-		<copy todir="${war.class.dir}">
-			<fileset dir="${src.dir}" excludes="**/*.java" />
-		</copy>
-		<echo message="Compile complete." />
-	</target>
+  <target name="javac" depends="libs" description="Compile java source to bytecode">
+    <mkdir dir="${war.class.dir}" />
+    <javac srcdir="${src.dir}" destdir="${war.class.dir}"
+	   includes="**" excludes="**/package-info.java"
+	   encoding="utf-8"  source="1.5" target="1.5"
+	   nowarn="true" debug="true" debuglevel="lines,vars,source"
+	   includeantruntime="false">
+      <classpath refid="project.class.path" />
+    </javac>
+    <copy todir="${war.class.dir}">
+      <fileset dir="${src.dir}" excludes="**/*.java" />
+    </copy>
+    <echo message="Compile complete." />
+  </target>
 
-	<target name="gwtc" depends="javac" description="GWT compile to JavaScript (production mode)">
-		<java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
-			<classpath>
-				<pathelement location="${src.dir}" />
-				<path refid="project.class.path" />
-				<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
-				<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
-			</classpath>
-			<!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
-			<jvmarg value="-Xmx256M" />
-			<arg line="-war" />
-			<arg value="war" />
-			<arg line="${gwt.args}" />
-			<arg value="${package.name}.WMT" />
-		</java>
-		<echo message="GWT compile complete." />
-	</target>
+  <target name="gwtc" depends="javac" description="GWT compile to JavaScript (production mode)">
+    <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+      <classpath>
+	<pathelement location="${src.dir}" />
+	<path refid="project.class.path" />
+	<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+	<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
+      </classpath>
+      <jvmarg value="-Xmx256M" />
+      <arg line="-war" />
+      <arg value="war" />
+      <arg line="${gwt.args}" />
+      <arg value="${package.name}.WMT" />
+    </java>
+    <echo message="GWT compile complete." />
+  </target>
+  
+  <target name="devmode" depends="javac" description="Run development mode">
+    <java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode">
+      <classpath>
+	<pathelement location="${src.dir}" />
+	<path refid="project.class.path" />
+	<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+	<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
+      </classpath>
+      <jvmarg value="-Xmx256M" />
+      <arg value="-startupUrl" />
+      <arg value="GWTWebApp.html" />
+      <arg line="-war" />
+      <arg value="war" />
+      <arg line="${gwt.args}" />
+      <arg value="${package.name}.WMT" />
+    </java>
+  </target>
 
-	<target name="devmode" depends="javac" description="Run development mode">
-		<java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode">
-			<classpath>
-				<pathelement location="${src.dir}" />
-				<path refid="project.class.path" />
-				<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
-				<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
-			</classpath>
-			<jvmarg value="-Xmx256M" />
-			<arg value="-startupUrl" />
-			<arg value="GWTWebApp.html" />
-			<arg line="-war" />
-			<arg value="war" />
-			<arg line="${gwt.args}" />
-			<arg value="${package.name}.WMT" />
-		</java>
-	</target>
+  <target name="javac.tests" depends="javac" description="Compiles test code">
+    <javac srcdir="${test.dir}" includes="**" encoding="utf-8" source="1.5"
+	   target="1.5" nowarn="true" destdir="${war.class.dir}"
+	   debug="true" debuglevel="lines,vars,source"
+	   includeantruntime="false">
+      <classpath location="${junit.jarfile}" />
+      <classpath refid="project.class.path" />
+    </javac>
+  </target>
 
-	<target name="javac.tests" depends="javac" description="Compiles test code">
-		<javac srcdir="${test.dir}" includes="**" encoding="utf-8" source="1.5"
-			target="1.5" nowarn="true" destdir="${war.class.dir}"
-			debug="true" debuglevel="lines,vars,source"
-			includeantruntime="false">
-			<classpath location="${junit.jarfile}" />
-			<classpath refid="project.class.path" />
-		</javac>
-	</target>
+  <target name="test.dev" depends="javac.tests" description="Run development mode tests">
+    <mkdir dir="reports/htmlunit.dev" />
+    <junit fork="yes" printsummary="yes" haltonfailure="yes">
+      <jvmarg line="-Xmx256m" />
+      <sysproperty key="gwt.args" value="-standardsMode -logLevel WARN" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+	<pathelement location="${src.dir}" />
+	<pathelement location="${test.dir}" />
+	<path refid="project.class.path" />
+	<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+	<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
+	<pathelement location="${junit.jarfile}" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.dev">
+	<fileset dir="${test.dir}">
+	  <include name="**/*Test.java" />
+	</fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+    <echo message="Devmode tests complete." />
+  </target>
 
-	<target name="test.dev" depends="javac.tests" description="Run development mode tests">
-		<mkdir dir="reports/htmlunit.dev" />
-		<junit fork="yes" printsummary="yes" haltonfailure="yes">
-			<jvmarg line="-Xmx256m" />
-			<sysproperty key="gwt.args" value="-standardsMode -logLevel WARN" />
-			<sysproperty key="java.awt.headless" value="true" />
-			<classpath>
-				<pathelement location="${src.dir}" />
-				<pathelement location="${test.dir}" />
-				<path refid="project.class.path" />
-				<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
-				<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
-				<pathelement location="${junit.jarfile}" />
-			</classpath>
-			<batchtest todir="reports/htmlunit.dev">
-				<fileset dir="${test.dir}">
-					<include name="**/*Test.java" />
-				</fileset>
-			</batchtest>
-			<formatter type="plain" />
-			<formatter type="xml" />
-		</junit>
-		<echo message="Devmode tests complete." />
-	</target>
+  <target name="test.prod" depends="javac.tests" description="Run production mode tests">
+    <mkdir dir="reports/htmlunit.prod" />
+    <junit fork="yes" printsummary="yes" haltonfailure="yes">
+      <jvmarg line="-Xmx256m" />
+      <sysproperty key="gwt.args" value="-prod -standardsMode -logLevel WARN -standardsMode -out www-test" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+	<pathelement location="${src.dir}" />
+	<pathelement location="${test.dir}" />
+	<path refid="project.class.path" />
+	<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+	<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
+	<pathelement location="${junit.jarfile}" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.prod">
+	<fileset dir="test">
+	  <include name="**/*Test.java" />
+	</fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+    <echo message="Production mode tests complete." />
+  </target>
 
-	<target name="test.prod" depends="javac.tests" description="Run production mode tests">
-		<mkdir dir="reports/htmlunit.prod" />
-		<junit fork="yes" printsummary="yes" haltonfailure="yes">
-			<jvmarg line="-Xmx256m" />
-			<sysproperty key="gwt.args" value="-prod -standardsMode -logLevel WARN -standardsMode -out www-test" />
-			<sysproperty key="java.awt.headless" value="true" />
-			<classpath>
-				<pathelement location="${src.dir}" />
-				<pathelement location="${test.dir}" />
-				<path refid="project.class.path" />
-				<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
-				<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
-				<pathelement location="${junit.jarfile}" />
-			</classpath>
-			<batchtest todir="reports/htmlunit.prod">
-				<fileset dir="test">
-					<include name="**/*Test.java" />
-				</fileset>
-			</batchtest>
-			<formatter type="plain" />
-			<formatter type="xml" />
-		</junit>
-		<echo message="Production mode tests complete." />
-	</target>
+  <target name="test" description="Run development and production mode tests">
+    <antcall target="test.dev" />
+    <antcall target="test.prod" />
+  </target>
 
-	<target name="test" description="Run development and production mode tests">
-		<antcall target="test.dev" />
-		<antcall target="test.prod" />
-	</target>
+  <target name="buildclean" description="Removes testing files from build of this project">
+    <delete dir="${war.dir}/data" failonerror="false" />
+    <delete dir="${war.dir}/save" failonerror="false" />
+  </target>
 
-	<target name="buildclean" description="Removes testing files from build of this project">
-		<delete dir="${war.dir}/data" failonerror="false" />
-		<delete dir="${war.dir}/save" failonerror="false" />
-	</target>
+  <target name="build_id" description="Save the latest commit id of this build">
+    <exec executable="git" output="${war.dir}/build_id">
+      <arg value="rev-parse"/>
+      <arg value="--short"/>
+      <arg value="HEAD"/>
+    </exec>
+  </target>
 
-	<target name="build_id" description="Save the latest commit id of this build">
-		<exec executable="git" output="${war.dir}/build_id">
-			<arg value="rev-parse"/>
-			<arg value="--short"/>
-			<arg value="HEAD"/>
-		</exec>
-	</target>
+  <target name="build" depends="gwtc, build_id" description="Build this project"/>
 
-	<target name="build" depends="gwtc, build_id" description="Build this project"/>
+  <target name="war" depends="build" description="Create a war file">
+    <zip destfile="${war.file}" basedir="${war.dir}"
+	 excludes="**/data/**, **/edu.colorado.csdms.wmt.WMT.JUnit/**, **/save/**" />
+    <echo message="Warfile built." />
+  </target>
 
-	<target name="war" depends="build" description="Create a war file">
-		<zip destfile="${war.file}" basedir="${war.dir}"
-			excludes="**/data/**, **/edu.colorado.csdms.wmt.WMT.JUnit/**, **/save/**" />
-		<echo message="Warfile built." />
-	</target>
+  <target name="doc" description="Create javadoc documentation">
+    <javadoc packagenames="${package.name}.*" sourcepath="${src.dir}"
+	     destdir="${docs.dir}" author="true" version="true" use="true"
+	     classpathref="project.class.path"
+	     overview="${src.dir}/overview.html"
+	     windowtitle="WMT-Client Documentation">
+    </javadoc>
+    <echo message="Docs done." />
+  </target>
 
-	<target name="doc" description="Create javadoc documentation">
-		<javadoc packagenames="${package.name}.*" sourcepath="${src.dir}"
-		    destdir="${docs.dir}" author="true" version="true" use="true"
-		    classpathref="project.class.path"
-			overview="${src.dir}/overview.html"
-		    windowtitle="WMT-Client Documentation">
-		</javadoc>
-		<echo message="Docs done." />
-	</target>
-
-	<target name="clean" description="Cleans this project">
-		<delete dir="${war.class.dir}" failonerror="false" />
-		<delete dir="${war.dir}/wmt" failonerror="false" />
-		<delete file="${war.file}" failonerror="false" />
-		<delete dir="${doc.dir}" />
-		<echo message="Cleanup complete." />
-	</target>
+  <target name="clean" description="Cleans this project">
+    <delete dir="${war.class.dir}" failonerror="false" />
+    <delete dir="${war.dir}/wmt" failonerror="false" />
+    <delete file="${war.file}" failonerror="false" />
+    <delete dir="${doc.dir}" />
+    <echo message="Cleanup complete." />
+  </target>
 
 </project>
