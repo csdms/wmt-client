@@ -86,6 +86,13 @@ public class ComponentSelectionMenu extends PopupPanel {
     }
   }
 
+  private void insertComponentMenuMessage() {
+//    HTML item = new HTML("No matching components");
+    HTML item = new HTML("No matches found");
+    item.setStyleName("wmt-EmptyComponentSelectionMenu");
+    componentSelectionPanel.insert(item, 0);
+  }
+
   /**
    * Loads the names of the components that match the uses port of the displayed
    * component into the {@link ComponentCell} menu.
@@ -113,6 +120,7 @@ public class ComponentSelectionMenu extends PopupPanel {
     }
 
     // Load only those components with provides ports matching the input portId.
+    Boolean hasMatch = false;
     for (int i = 0; i < data.componentIdList.size(); i++) {
       String componentId = data.componentIdList.get(i);
       Integer nProvidesPorts =
@@ -121,9 +129,16 @@ public class ComponentSelectionMenu extends PopupPanel {
         if (data.getComponent(componentId).getProvidesPorts().get(j).getId()
             .matches(portId)) {
           insertComponentMenuItem(componentId);
+          hasMatch = true;
         }
       }
     }
+    if (!hasMatch) {
+//      HTML item = new HTML("No matching components");
+//      componentSelectionPanel.add(item);
+      insertComponentMenuMessage();
+    }
+
   }
 
   /**
