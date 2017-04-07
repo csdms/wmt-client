@@ -125,7 +125,7 @@ public class Constants {
   public static Integer DEFAULT_MODEL_ID = -1;
 
   // The number of characters to display in a ComponentCell.
-  public static Integer TRIM = 14;
+  public static Integer TRIM = 13;
 
   // Unicode representation.
   public static String ELLIPSIS = "\u2026";
