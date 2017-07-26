@@ -311,6 +311,10 @@ public class ModelTree extends Tree {
             cellPortId =
                 data.getComponent(cell.getComponentId()).getProvidesPorts()
                     .get(0).getId();
+            // Don't allow driver's provides port to fill its uses port (#108).
+            if (cellPortId == portId) {
+              continue;
+            }
           }
         }
 
