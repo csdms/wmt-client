@@ -2,6 +2,7 @@ package edu.colorado.csdms.wmt.client.ui.menu;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -97,21 +98,21 @@ public class ComponentSelectionMenu extends PopupPanel {
    * Loads the names of the components that match the uses port of the displayed
    * component into the {@link ComponentCell} menu.
    * 
-   * @param portId the id of the uses port displayed in the ComponentCell
+   * @param usesId the id of the uses port displayed in the ComponentCell
    */
-  public void updateComponents(String portId) {
+  public void updateComponents(String usesId) {
 
     componentSelectionPanel.clear();
 
     // Display a wait message in the componentMenu.
-    if (portId.matches(Constants.DRIVER)) {
+    if (usesId.matches(Constants.DRIVER)) {
       HTML item = new HTML("Loading...");
       componentSelectionPanel.add(item);
       return;
     }
 
     // Load all available components into the componentMenu!
-    if (portId.matches(Constants.ALL_COMPONENTS)) {
+    if (usesId.matches(Constants.ALL_COMPONENTS)) {
       for (int i = 0; i < data.componentIdList.size(); i++) {
         String componentId = data.componentIdList.get(i);
         insertComponentMenuItem(componentId);
@@ -126,8 +127,9 @@ public class ComponentSelectionMenu extends PopupPanel {
       Integer nProvidesPorts =
           data.getComponent(componentId).getProvidesPorts().length();
       for (int j = 0; j < nProvidesPorts; j++) {
-        if (data.getComponent(componentId).getProvidesPorts().get(j).getId()
-            .matches(portId)) {
+        String providesId =
+            data.getComponent(componentId).getProvidesPorts().get(j).getId();
+        if (providesId.matches(usesId)) {
           insertComponentMenuItem(componentId);
           hasMatch = true;
         }
