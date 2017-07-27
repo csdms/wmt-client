@@ -160,7 +160,7 @@ public class ModelTree extends Tree {
       TreeItem newItem = addTreeItem(portId, target);
 
       // Check whether the component has a provides port with the same id.
-      if (isAlsoProvides(componentId, portId)) {
+      if (data.isAlsoProvides(componentId, portId)) {
         continue;
       }
 
@@ -325,30 +325,6 @@ public class ModelTree extends Tree {
       }
     }
     return null;
-  }
-
-  /**
-   * Checks whether a component with a given uses port also has provides
-   * port with the same id.
-   *
-   * @param componentId the id of the component
-   * @param usesPortId the id of the component's uses port
-   * @return true if provides port exists with same id
-   */
-  public boolean isAlsoProvides(String componentId, String usesPortId) {
-    Integer nProvidesPorts =
-        data.getComponent(componentId).getProvidesPorts().length();
-    if (nProvidesPorts == 0) {
-      return false;
-    }
-    for (int i = 0; i < nProvidesPorts; i++) {
-      String providesPortId =
-          data.getComponent(componentId).getProvidesPorts().get(i).getId();
-      if (providesPortId.matches(usesPortId)) {
-        return true;
-      }
-    }
-    return false;
   }
 
 }
