@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
@@ -158,6 +159,11 @@ public class ModelTree extends Tree {
       String portId =
           data.getComponent(componentId).getUsesPorts().get(i).getId();
       TreeItem newItem = addTreeItem(portId, target);
+
+      // Check whether the component has a provides port with the same id.
+      if (isAlsoProvides(componentId, portId)) {
+        continue;
+      }
 
       // If the new port has a connected component higher in the ModelTree,
       // create the component and set a link to it.
@@ -325,4 +331,30 @@ public class ModelTree extends Tree {
     }
     return null;
   }
+
+  /**
+   * Checks whether a component with a given uses port also has provides
+   * port with the same id.
+   *
+   * @param componentId the id of the component
+   * @param usesPortId the id of the component's uses port
+   * @return true if provides port exists with same id
+   */
+  public boolean isAlsoProvides(String componentId, String usesPortId) {
+    Integer nProvidesPorts =
+        data.getComponent(componentId).getProvidesPorts().length();
+    if (nProvidesPorts == 0) {
+      return false;
+    }
+    for (int i = 0; i < nProvidesPorts; i++) {
+      String providesPortId =
+          data.getComponent(componentId).getProvidesPorts().get(i).getId();
+      Window.alert(componentId + ": " + usesPortId + ", " + providesPortId);
+      if (providesPortId.matches(usesPortId)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }
