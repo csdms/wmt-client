@@ -159,6 +159,11 @@ public class ModelTree extends Tree {
           data.getComponent(componentId).getUsesPorts().get(i).getId();
       TreeItem newItem = addTreeItem(portId, target);
 
+      // Check whether the component has a provides port with the same id.
+      if (data.isAlsoProvides(componentId, portId)) {
+        continue;
+      }
+
       // If the new port has a connected component higher in the ModelTree,
       // create the component and set a link to it.
       String connectedId = isProvidesComponentADuplicate(portId);
@@ -321,4 +326,5 @@ public class ModelTree extends Tree {
     }
     return null;
   }
+
 }

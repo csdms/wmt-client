@@ -181,6 +181,30 @@ public class DataManager {
   }
 
   /**
+   * Checks whether a component with a given uses port also has a provides
+   * port with the same id.
+   *
+   * @param componentId the id of the component
+   * @param usesId the id of the component's uses port
+   * @return true if provides port exists with same id
+   */
+  public boolean isAlsoProvides(String componentId, String usesId) {
+    Integer nProvides =
+        getComponent(componentId).getProvidesPorts().length();
+    if (nProvides == 0) {
+      return false;
+    }
+    for (int i = 0; i < nProvides; i++) {
+      String providesId =
+          getComponent(componentId).getProvidesPorts().get(i).getId();
+      if (providesId.matches(usesId)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * A convenience method that returns the {@link ComponentJSO} object matching
    * the given model component id, or null if no match is found.
    * <p>
