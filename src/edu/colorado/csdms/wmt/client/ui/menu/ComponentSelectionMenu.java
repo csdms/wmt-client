@@ -2,9 +2,7 @@ package edu.colorado.csdms.wmt.client.ui.menu;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -27,7 +25,6 @@ public class ComponentSelectionMenu extends PopupPanel {
   private ComponentCell cell;
   private VerticalPanel componentSelectionPanel;
   private ScrollPanel scroller;
-  private MenuItem componentItem;
 
   /**
    * Makes a new {@link ComponentSelectionMenu}, which shows a list of
@@ -88,7 +85,6 @@ public class ComponentSelectionMenu extends PopupPanel {
   }
 
   private void insertComponentMenuMessage() {
-//    HTML item = new HTML("No matching components");
     HTML item = new HTML("No matches found");
     item.setStyleName("wmt-EmptyComponentSelectionMenu");
     componentSelectionPanel.insert(item, 0);
@@ -136,8 +132,6 @@ public class ComponentSelectionMenu extends PopupPanel {
       }
     }
     if (!hasMatch) {
-//      HTML item = new HTML("No matching components");
-//      componentSelectionPanel.add(item);
       insertComponentMenuMessage();
     }
 
@@ -186,14 +180,6 @@ public class ComponentSelectionMenu extends PopupPanel {
         return;
       }
     }
-  }
-
-  public MenuItem getComponentItem() {
-    return componentItem;
-  }
-
-  public void setComponentItem(MenuItem componentItem) {
-    this.componentItem = componentItem;
   }
 
   /**
