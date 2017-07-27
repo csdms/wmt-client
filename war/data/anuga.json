@@ -1,0 +1,53 @@
+{
+  "files":[
+    
+  ],
+  "parameters":[
+    {
+      "name":"Simulation run time",
+      "global":true,
+      "value":{
+        "default":3600,
+        "units":"s",
+        "range":{
+          "max":3153600000,
+          "min":1
+        },
+        "type":"int"
+      },
+      "visible":true,
+      "key":"_run_duration",
+      "description":"Simulation run time"
+    }
+  ],
+  "name":"AnugaSed",
+  "author":"Mariela Perignon",
+  "url":"https://github.com/mperignon/anuga_core",
+  "class":"AnugaSed",
+  "email":"perignon@colorado.edu",
+  "version":0.1,
+  "id":"anuga",
+  "initialize_args":"",
+  "uses":[
+    {
+      "id":"elevation"
+    },
+    {
+      "id":"surface_water"
+    },
+    {
+      "id":"vegetation"
+    }
+  ],
+  "provides":[
+    {
+      "id":"elevation"
+    },
+    {
+      "id":"surface_water"
+    },
+    {
+      "id":"vegetation"
+    }
+  ]
+}
