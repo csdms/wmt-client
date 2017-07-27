@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
@@ -349,7 +348,6 @@ public class ModelTree extends Tree {
     for (int i = 0; i < nProvidesPorts; i++) {
       String providesPortId =
           data.getComponent(componentId).getProvidesPorts().get(i).getId();
-      Window.alert(componentId + ": " + usesPortId + ", " + providesPortId);
       if (providesPortId.matches(usesPortId)) {
         return true;
       }
