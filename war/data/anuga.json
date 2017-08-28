@@ -18,6 +18,63 @@
       "visible":true,
       "key":"_run_duration",
       "description":"Simulation run time"
+    },
+    {
+      "key":"mstmip_heading",
+      "name":"MsTMIP_1",
+      "description":"MsTMIP models",
+      "value":{
+        "type":"subheading",
+        "default":""
+      }
+    },
+    {
+      "key":"starting_mean_annual_temperature",
+      "name":"Starting mean annual temperature",
+      "description":"Monthly mean annual temperature",
+      "group":{
+        "name":"mean_annual_temperature",
+        "leader":true,
+        "members":3
+      },
+      "value":{
+        "type":"subheading",
+        "default":""
+      }
+    },
+    {
+      "key":"january_temperature_mean",
+      "name":"Mean January temperature",
+      "description":"Mean temperature for January",
+      "group":{
+        "name":"mean_annual_temperature"
+      },
+      "value":{
+        "type":"float",
+        "default":19.14,
+        "range":{
+          "min":0.0,
+          "max":100.0
+        },
+        "units":"deg C"
+      }
+    },
+    {
+      "key":"february_temperature_mean",
+      "name":"Mean February temperature",
+      "description":"Mean temperature for February",
+      "group":{
+        "name":"mean_annual_temperature"
+      },
+      "value":{
+        "type":"float",
+        "default":18.85,
+        "range":{
+          "min":0.0,
+          "max":100.0
+        },
+        "units":"deg C"
+      }
     }
   ],
   "name":"AnugaSed",

@@ -39,6 +39,8 @@ public class ValueCell extends HorizontalPanel {
       this.add(new IntegerCell(this));
     } else if (isFloat()) {
       this.add(new DoubleCell(this));
+    } else if (isSubheading()) {
+      ;  // do nothing
     } else {
       this.add(new TextCell(this));
     }
@@ -99,5 +101,14 @@ public class ValueCell extends HorizontalPanel {
    */
   public Boolean isFloat() {
     return cellType.matches("float");
+  }
+
+  /**
+   * States whether parameter is of type "subheading".
+   *
+   * @return true if the parameter type is "subheading"
+   */
+  public Boolean isSubheading() {
+    return cellType.matches("subheading");
   }
 }

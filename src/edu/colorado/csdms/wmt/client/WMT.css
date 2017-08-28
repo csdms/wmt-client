@@ -353,6 +353,7 @@ body, table td, select, button {
 .wmt-ParameterDescription {
    margin: 0 1em 0 25px; /* top right bottom left */
    color: colorMediumDark;
+   min-height: 38px; /* accomodate subheading type */
 }
 .wmt-ParameterDescription-group {
    padding-left: 20px;
