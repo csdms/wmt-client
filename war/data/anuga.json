@@ -4,6 +4,24 @@
   ],
   "parameters":[
     {
+      "key":"separator",
+      "name":"foobar",
+      "description":"Globals",
+      "value":{
+        "type":"string",
+        "default":""
+      }
+    },
+    {
+      "key":"globals_overview",
+      "name":"foobar",
+      "description":"Select one or more <b>CMIP5-compatible</b> models for benchmarking with <a href='https://www.ilamb.org'>ILAMB</a>. This is a very long overview. I want to see how line spacing is handled. Also, is there a way to break an attribute of a JSON object over several lines? I mean, I am way out here.",
+      "value":{
+        "type":"overview",
+        "default":""
+      }
+    },
+    {
       "name":"Simulation run time",
       "global":true,
       "value":{
