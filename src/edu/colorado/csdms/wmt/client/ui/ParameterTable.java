@@ -123,6 +123,14 @@ public class ParameterTable extends FlexTable {
       return;
     }
 
+    // If the parameter is an overview, display it, then return.
+    if (parameter.getValue().getType().matches("overview")) {
+      this.setWidget(tableRowIndex, 0, new DescriptionCell(parameter));
+      this.getFlexCellFormatter().setColSpan(tableRowIndex, 0, 3);
+      tableRowIndex++;
+      return;
+    }
+
     // The basic setup: display the parameter's description and value.
     DescriptionCell descriptionCell = new DescriptionCell(parameter);
     ValueCell valueCell = new ValueCell(parameter);

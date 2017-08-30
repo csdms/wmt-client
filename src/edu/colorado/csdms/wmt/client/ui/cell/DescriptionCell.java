@@ -40,6 +40,9 @@ public class DescriptionCell extends HTML {
     if (parameter.isGroupLeader()) {
       this.addStyleDependentName("groupLeader");
     }
+    if (parameter.getValue().getType().matches("overview")) {
+      this.addStyleDependentName("overview");
+    }
   }
 
   public ArrayList<Integer> getGroupRows() {

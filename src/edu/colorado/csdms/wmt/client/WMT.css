@@ -355,6 +355,10 @@ body, table td, select, button {
    color: colorMediumDark;
    min-height: 38px; /* accomodate subheading type */
 }
+.wmt-ParameterDescription-overview {
+   margin-left: 0px;
+   margin-bottom: 5px;
+}
 .wmt-ParameterDescription-group {
    padding-left: 20px;
    vertical-align: middle;
