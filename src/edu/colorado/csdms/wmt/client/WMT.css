@@ -383,10 +383,11 @@ body, table td, select, button {
 /* Separates parameter groups in the ParameterTable. */
 .wmt-ParameterSeparator {
    font-style: oblique;
-   padding: 10px 0 5px 0;
+   padding: 10px 0 2px 0;
    color: colorMediumDark;
    border: solid colorMediumDark;
    border-width: 0 0 1px 0;
+   margin-bottom: 7px;
 }
 
 /* The ValueCell displays parameter values in the ParameterTable. */
