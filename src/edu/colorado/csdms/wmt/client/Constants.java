@@ -26,7 +26,7 @@ public class Constants {
   public static final String LOGOUT_PATH = "account/logout";
   public static final String USERNAME_PATH = "account/username";
   public static final String USERNAME_COOKIE = "__WMT_username";
-  public static final Long COOKIE_DURATION = (long) (1000 * 60 * 60 * 24 * 14); // 2 wks
+  public static final Long COOKIE_DURATION = (long) (1000 * 60 * 60 * 24 * 30); // 30 days
 
   // API URLs for labels.
   public static final String LABELS_LIST_PATH = "tag/list";
