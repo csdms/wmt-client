@@ -6,7 +6,7 @@ jdk:
 sudo: false
 
 install:
-  - wget http://csdms.colorado.edu/pub/tools/gwt/gwt-2.5.1.zip
+  - wget https://csdms.colorado.edu/pub/tools/gwt/gwt-2.5.1.zip
   - unzip -qq gwt-2.5.1.zip
   - export GWT_HOME=$PWD/gwt-2.5.1
   - export PATH=$PATH:$GWT_HOME
