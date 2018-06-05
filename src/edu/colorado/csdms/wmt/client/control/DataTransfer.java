@@ -21,7 +21,6 @@ import com.google.gwt.user.client.Window.ClosingEvent;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.web.bindery.event.shared.HandlerRegistration;
-
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
 import edu.colorado.csdms.wmt.client.data.ComponentListJSO;
@@ -351,6 +350,7 @@ public class DataTransfer {
 
     String url = DataURL.showComponent(data, componentId);
     GWT.log(url);
+    Boolean isReload = false;
 
     RequestBuilder builder =
         new RequestBuilder(RequestBuilder.GET, URL.encode(url));
@@ -359,7 +359,34 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder.sendRequest(null, new ComponentRequestCallback(data, url,
-              componentId));
+              componentId, isReload));
+    } catch (RequestException e) {
+      Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
+    }
+  }
+
+  /**
+   * Makes an asynchronous HTTP GET request to the server to retrieve the data
+   * for a single component.
+   * 
+   * @param data the DataManager object for the WMT session
+   * @param componentId the identifier of the component in the database, a
+   *          String
+   */
+  public static void reloadComponent(DataManager data, String componentId) {
+
+    String url = DataURL.showComponent(data, componentId);
+    GWT.log(url);
+    Boolean isReload = true;
+
+    RequestBuilder builder =
+        new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+
+    try {
+      @SuppressWarnings("unused")
+      Request request =
+          builder.sendRequest(null, new ComponentRequestCallback(data, url,
+              componentId, isReload));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -1009,12 +1036,14 @@ public class DataTransfer {
     private DataManager data;
     private String url;
     private String componentId;
+    private Boolean isReload;
 
     public ComponentRequestCallback(DataManager data, String url,
-        String componentId) {
+        String componentId, Boolean isReload) {
       this.data = data;
       this.url = url;
       this.componentId = componentId;
+      this.isReload = isReload;
     }
 
     @Override
@@ -1024,13 +1053,19 @@ public class DataTransfer {
         String rtxt = response.getText();
         GWT.log(rtxt);
         ComponentJSO jso = parse(rtxt);
-        data.addComponent(jso); // "class" component
-        data.addModelComponent(copy(jso)); // "instance" component, for model
 
-        // Replace the associated placeholder ComponentSelectionMenu item.
-        ((ComponentSelectionMenu) data.getPerspective().getModelTree()
-            .getDriverComponentCell().getComponentMenu()).replaceMenuItem(jso
+        if (!isReload) {
+          data.addComponent(jso); // "class" component
+          data.addModelComponent(copy(jso)); // "instance" component, for model
+
+          // Replace the associated placeholder ComponentSelectionMenu item.
+          ((ComponentSelectionMenu) data.getPerspective().getModelTree()
+              .getDriverComponentCell().getComponentMenu()).replaceMenuItem(jso
             .getId());
+        } else {
+          data.replaceComponent(jso);
+          data.replaceModelComponent(jso);
+        }
 
       } else {
 
