@@ -10,6 +10,7 @@ import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelDeleteHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelHelpHandler;
+import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelReloadHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelSaveHandler;
 
 /**
