@@ -163,6 +163,20 @@ public class DataManager {
   }
 
   /**
+   * Replaces a component in DataManager's stored ArrayList of components.
+   *
+   * @param component the replacement component, a {@link ComponentJSO}
+   */
+  public void replaceComponent(ComponentJSO component) {
+    for (int i = 0; i < components.size(); i++) {
+      if (components.get(i).getId().matches(component.getId())) {
+        components.set(i, component);
+        return;
+      }
+    }
+  }
+
+  /**
    * Returns the <em>all</em> the components in the ArrayList of
    * {@link ComponentJSO} objects.
    */
