@@ -157,6 +157,7 @@ public class Constants {
   public static String FA_RARROW = "<i class='fa fa-arrow-right'></i> ";
   public static String FA_BOLT = "<i class='fa fa-bolt'></i> ";
   public static String FA_LINK = "<i class='fa fa-external-link'></i> ";
+  public static String FA_RELOAD = "<i class='fa fa-refresh fa-fw'></i> ";
 
   // Panel titles.
   public static String TITLE_TOP_PANEL = "The CSDMS Web Modeling Tool";
@@ -179,6 +180,7 @@ public class Constants {
   public static String COMPONENT_INFO =
       "View information about this component.";
   public static String COMPONENT_INFO_1 = "View information about a component.";
+  public static String COMPONENT_RELOAD = "Reload components from the server.";
   public static String COMPONENT_CLOSE =
       "Remove this component (and its children, if any) from the model.";
   public static String PARAMETER_RESET = "Reset all parameters for this"

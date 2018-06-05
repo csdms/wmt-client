@@ -108,6 +108,13 @@ public class MoreActionsMenu extends PopupPanel {
       }
     });
 
+    // Reload components
+    HTML reloadButton = new HTML(Constants.FA_RELOAD + "Reload components");
+    reloadButton.setStyleName("wmt-PopupPanelItem");
+    reloadButton.setTitle(Constants.COMPONENT_RELOAD);
+    reloadButton.addClickHandler(new ModelActionPanelReloadHandler(data));
+    menu.add(reloadButton);
+
     // Run status
     final HTML statusButton = new HTML(Constants.FA_STATUS + "View run status");
     statusButton.setStyleName("wmt-PopupPanelItem");
