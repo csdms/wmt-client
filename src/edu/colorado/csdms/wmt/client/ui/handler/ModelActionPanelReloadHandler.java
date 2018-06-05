@@ -1,10 +1,13 @@
 package edu.colorado.csdms.wmt.client.ui.handler;
 
+import java.util.Iterator;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 
 import edu.colorado.csdms.wmt.client.control.DataManager;
+import edu.colorado.csdms.wmt.client.control.DataTransfer;
 
 /**
  * Handles click on the "Reload" button in the ModelActionPanel. It calls
@@ -32,6 +35,12 @@ public class ModelActionPanelReloadHandler implements ClickHandler {
     // Hide the MoreActionsMenu.
     data.getPerspective().getActionButtonPanel().getMoreMenu().hide();
 
-    Window.alert("Reload!");
+    // Reload each component from the original list.
+    for (String componentId : data.componentIdList) {
+      DataTransfer.reloadComponent(data, componentId);
+    }
+
+    // Not really, since the above is asynchronous.
+    Window.alert("Components reloaded.");
   }
 }
