@@ -40,6 +40,7 @@ public class Constants {
   // API URLs for components.
   public static final String COMPONENTS_LIST_PATH = "components/list";
   public static final String COMPONENTS_SHOW_PATH = "components/show/";
+  public static final String COMPONENTS_REFRESH_PATH = "components/refresh";
 
   // API URLs for models.
   public static final String MODELS_LIST_PATH = "models/list";

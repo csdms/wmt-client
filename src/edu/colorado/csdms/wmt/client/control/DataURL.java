@@ -228,6 +228,19 @@ public class DataURL {
   }
 
   /**
+   * Returns the URL to refresh all components on the server.
+   *
+   * @param data the DataManager object for the WMT session
+   */
+  public static String refreshComponents(DataManager data) {
+    if (data.isDevelopmentMode()) {
+      return LOCAL_URL + "data/components.json";
+    } else {
+      return data.config.getApiUrl() + Constants.COMPONENTS_REFRESH_PATH;
+    }
+  }
+
+  /**
    * Returns the URL to format the parameters of a component, given its id.
    * 
    * @param data the DataManager object for the WMT session
