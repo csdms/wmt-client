@@ -33,10 +33,8 @@ public class ModelActionPanelReloadHandler implements ClickHandler {
     // Hide the MoreActionsMenu.
     data.getPerspective().getActionButtonPanel().getMoreMenu().hide();
 
-    // Reload each component from the original list.
-    for (String componentId : data.componentIdList) {
-      DataTransfer.reloadComponent(data, componentId);
-    }
+    // Reload all components from the original list.
+    DataTransfer.reloadComponentList(data);
 
     // Not really, since the above is asynchronous.
     Window.alert("Components reloaded.");

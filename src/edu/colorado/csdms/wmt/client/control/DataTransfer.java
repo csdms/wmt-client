@@ -332,7 +332,37 @@ public class DataTransfer {
       @SuppressWarnings("unused")
       Request request =
           builder
-              .sendRequest(null, new ComponentListRequestCallback(data, url));
+              .sendRequest(null, new ComponentListRequestCallback(data, url,
+                  Constants.COMPONENTS_LIST_PATH));
+    } catch (RequestException e) {
+      Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
+    }
+  }
+
+  /**
+   * Makes an asynchronous HTTP GET request to refresh all of the components
+   * on the server with metadata from a canonical executor.
+   * <p>
+   * Note that on completion of the request,
+   * {@link #reloadComponent(DataManager, String)} starts pulling data for
+   * individual components from the server.
+   * 
+   * @param data the DataManager object for the WMT session
+   */
+  public static void reloadComponentList(DataManager data) {
+
+    String url = DataURL.refreshComponents(data);
+    GWT.log(url);
+
+    RequestBuilder builder =
+        new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+
+    try {
+      @SuppressWarnings("unused")
+      Request request =
+          builder
+              .sendRequest(null, new ComponentListRequestCallback(data, url,
+                  Constants.COMPONENTS_REFRESH_PATH));
     } catch (RequestException e) {
       Window.alert(Constants.REQUEST_ERR_MSG + e.getMessage());
     }
@@ -980,10 +1010,48 @@ public class DataTransfer {
 
     private DataManager data;
     private String url;
+    private String type;
 
-    public ComponentListRequestCallback(DataManager data, String url) {
+    public ComponentListRequestCallback(DataManager data, String url,
+        String type) {
       this.data = data;
       this.url = url;
+      this.type = type;
+    }
+
+    /*
+     * A helper for processing the return from components/list.
+     */
+    private void listActions(String rtxt) {
+      ComponentListJSO jso = parse(rtxt);
+
+      // Load the list of components into the DataManager. At the same time,
+      // start pulling down data for the components. Asynchronicity is cool!
+      for (int i = 0; i < jso.getComponents().length(); i++) {
+        String componentId = jso.getComponents().get(i);
+        data.componentIdList.add(componentId);
+        data.retryComponentLoad.put(componentId, 0);
+        getComponent(data, componentId);
+      }
+
+      // Show the list of components (id only) as placeholders in the
+      // ComponentSelectionMenu.
+      ((ComponentSelectionMenu) data.getPerspective().getModelTree()
+          .getDriverComponentCell().getComponentMenu())
+          .initializeComponents();
+    }
+
+    /*
+     * A helper for processing the return from components/reload.
+     */
+    private void reloadActions(String rtxt) {
+      ComponentListJSO jso = parse(rtxt);
+
+      // Start pulling data for the reloaded components.
+      for (int i = 0; i < jso.getComponents().length(); i++) {
+        String componentId = jso.getComponents().get(i);
+        reloadComponent(data, componentId);
+      }
     }
 
     @Override
@@ -992,22 +1060,14 @@ public class DataTransfer {
 
         String rtxt = response.getText();
         GWT.log(rtxt);
-        ComponentListJSO jso = parse(rtxt);
 
-        // Load the list of components into the DataManager. At the same time,
-        // start pulling down data for the components. Asynchronicity is cool!
-        for (int i = 0; i < jso.getComponents().length(); i++) {
-          String componentId = jso.getComponents().get(i);
-          data.componentIdList.add(componentId);
-          data.retryComponentLoad.put(componentId, 0);
-          getComponent(data, componentId);
+        if (type.matches(Constants.COMPONENTS_LIST_PATH)) {
+          listActions(rtxt);
+        } else if (type.matches(Constants.COMPONENTS_REFRESH_PATH)) {
+          reloadActions(rtxt);
+        } else {
+          Window.alert(Constants.RESPONSE_ERR_MSG);
         }
-
-        // Show the list of components (id only) as placeholders in the
-        // ComponentSelectionMenu.
-        ((ComponentSelectionMenu) data.getPerspective().getModelTree()
-            .getDriverComponentCell().getComponentMenu())
-            .initializeComponents();
 
       } else {
         String msg =
