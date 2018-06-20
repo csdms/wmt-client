@@ -10,6 +10,7 @@ import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelDeleteHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelHelpHandler;
+import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelReloadHandler;
 import edu.colorado.csdms.wmt.client.ui.handler.ModelActionPanelSaveHandler;
 
 /**
@@ -107,6 +108,13 @@ public class MoreActionsMenu extends PopupPanel {
         });
       }
     });
+
+    // Reload components
+    HTML reloadButton = new HTML(Constants.FA_RELOAD + "Reload components");
+    reloadButton.setStyleName("wmt-PopupPanelItem");
+    reloadButton.setTitle(Constants.COMPONENT_RELOAD);
+    reloadButton.addClickHandler(new ModelActionPanelReloadHandler(data));
+    menu.add(reloadButton);
 
     // Run status
     final HTML statusButton = new HTML(Constants.FA_STATUS + "View run status");
