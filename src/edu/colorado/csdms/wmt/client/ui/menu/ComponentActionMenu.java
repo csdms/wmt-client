@@ -50,7 +50,7 @@ public class ComponentActionMenu extends PopupPanel {
     showParameters.setTitle(Constants.COMPONENT_SHOW);
     menu.add(showParameters);
 
-    HTML getInformation = new HTML(Constants.FA_HELP + "Get information");
+    HTML getInformation = new HTML(Constants.FA_INFO + "Get information");
     getInformation.addClickHandler(new GetInformationHandler());
     getInformation.setStyleName("wmt-PopupPanelItem");
     getInformation.setTitle(Constants.COMPONENT_INFO);

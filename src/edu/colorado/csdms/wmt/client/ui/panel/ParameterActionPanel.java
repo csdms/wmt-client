@@ -65,7 +65,7 @@ public class ParameterActionPanel extends HorizontalPanel {
     });
 
     // Component help
-    final Button helpButton = new Button(Constants.FA_HELP);
+    final Button helpButton = new Button(Constants.FA_INFO);
     helpButton.setTitle(Constants.COMPONENT_INFO);
     helpButton.addClickHandler(new ClickHandler() {
       @Override
