@@ -70,9 +70,9 @@ public class Constants {
           + " asked to repeat your password.";
   public static String FORGOT_PASSWORD_INFO =
       "Please contact " + CSDMS_EMAIL_LINK + " for assistance.";
-  public static String SEE_VIDEO_INFO = "For an overview of WMT, and an example"
-      + " of its use, check out <a href='" + WMT_VIDEO + "'>this</a>"
-      + " short YouTube video.";
+  public static String SEE_DOCS = "To get started with the PBS, check out"
+      + " the <a href='https://csdms.colorado.edu/pbs/user'>user's guide</a>."
+      + " There's also documentation for <a href='https://csdms.colorado.edu/pbs/developer'>developers</a>.";
   public static String LOGIN_ERR = "Please sign in with an email address"
       + " and a password.";
   public static String PASSWORD_ERR = "This email address is registered,"
@@ -89,7 +89,7 @@ public class Constants {
           + " this model with the current user as the owner?";
 
   // Questions
-  public static String QUESTION_WMT = "What is WMT?";
+  public static String QUESTION_PBS = "What is the PBS?";
   public static String QUESTION_NEW_USER = "New User?";  
   public static String QUESTION_FORGOT_PASSWORD = "Forgot Password?";    
   public static final String QUESTION_START = "Are you sure you want to ";

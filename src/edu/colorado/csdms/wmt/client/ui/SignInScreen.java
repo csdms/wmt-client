@@ -37,7 +37,7 @@ public class SignInScreen extends HorizontalPanel {
   private PasswordTextBox passwordBox;
   private Button signInButton;
   private HTML errorMessage;
-  private SignInInfoPanel showVideoPanel;  
+  private SignInInfoPanel showDocsPanel;  
   private SignInInfoPanel newUserPanel;
   private SignInInfoPanel forgotPasswordPanel;
 
@@ -72,7 +72,7 @@ public class SignInScreen extends HorizontalPanel {
     this.add(contents);
 
     // The title's margin is used to offset content from the top of the window.
-    Label title = new Label("The CSDMS Web Modeling Tool");
+    Label title = new Label("The Permafrost Benchmark System (PBS)");
     title.setStyleName("wmt-SignInScreenTitle");
     title.getElement().getStyle().setMarginTop(contentOffset, Unit.PX);
 
@@ -100,9 +100,9 @@ public class SignInScreen extends HorizontalPanel {
     errorMessage = new HTML();
     errorMessage.setStyleName("wmt-SignInScreenError");
 
-    // What is WMT?
-    showVideoPanel =
-        new SignInInfoPanel(Constants.QUESTION_WMT, Constants.SEE_VIDEO_INFO);
+    // What is PBS?
+    showDocsPanel =
+        new SignInInfoPanel(Constants.QUESTION_PBS, Constants.SEE_DOCS);
 
     // Is this a new user?
     newUserPanel =
@@ -118,7 +118,7 @@ public class SignInScreen extends HorizontalPanel {
     VerticalPanel linksPanel = new VerticalPanel();
     linksPanel.setHorizontalAlignment(ALIGN_CENTER);
     linksPanel.setStyleName("wmt-SignInScreenLinksPanel");
-    linksPanel.add(showVideoPanel);
+    linksPanel.add(showDocsPanel);
     linksPanel.add(newUserPanel);
     linksPanel.add(forgotPasswordPanel);
 
@@ -161,7 +161,7 @@ public class SignInScreen extends HorizontalPanel {
   public void closeInfoPanels() {
     newUserPanel.getAnswerPanel().setVisible(false);
     forgotPasswordPanel.getAnswerPanel().setVisible(false);
-    showVideoPanel.getAnswerPanel().setVisible(false);    
+    showDocsPanel.getAnswerPanel().setVisible(false);    
   }
 
   public SuggestBox getEmailBox() {
