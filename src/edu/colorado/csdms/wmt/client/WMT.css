@@ -8,20 +8,20 @@
 /* GWT-specific rules, using @def (see above reference) */
 
 /* A palette adapted from http://www.colourlovers.com/palette/292482/Terra. */
-@def colorDark rgb(3,22,52);
-@def colorMediumDark rgb(3,54,73);
-@def colorMedium rgb(3,101,100);
-@def colorMediumLight rgb(205,179,128);
-@def colorLight rgb(232,221,203);
-@def colorWarning rgb(203,73,54);
+/* @def colorDark rgb(3,22,52); */
+/* @def colorMediumDark rgb(3,54,73); */
+/* @def colorMedium rgb(3,101,100); */
+/* @def colorMediumLight rgb(205,179,128); */
+/* @def colorLight rgb(232,221,203); */
+/* @def colorWarning rgb(203,73,54); */
 
 /* An icy blue palette. */
-/* @def colorDark rgb(26,51,81); */
-/* @def colorMediumDark rgb(88,67,62); */
-/* @def colorMedium rgb(109,99,97); */
-/* @def colorMediumLight rgb(198,217,234); */
-/* @def colorLight rgb(246,251,255); */
-/* @def colorWarning rgb(203,73,54); */
+@def colorDark rgb(26,51,81);
+@def colorMediumDark rgb(88,67,62);
+@def colorMedium rgb(109,99,97);
+@def colorMediumLight rgb(198,217,234);
+@def colorLight rgb(246,251,255);
+@def colorWarning rgb(203,73,54);
 
 @def fontFamily "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 @def fontSmall 13px;
