@@ -65,7 +65,7 @@ public class Constants {
       "Any unsaved model data will be lost if this page"
           + " is reloaded or closed.";
   public static String NEW_USER_INFO =
-      "Create a new sign-in to WMT with a preferred email"
+      "Create a new sign-in to the PBS with a preferred email"
           + " address and password. To authenticate your sign-in, you'll be"
           + " asked to repeat your password.";
   public static String FORGOT_PASSWORD_INFO =
@@ -162,7 +162,7 @@ public class Constants {
   public static String FA_RELOAD = "<i class='fa fa-refresh fa-fw'></i> ";
 
   // Panel titles.
-  public static String TITLE_TOP_PANEL = "The CSDMS Web Modeling Tool";
+  public static String TITLE_TOP_PANEL = "The Permafrost Benchmark System";
   public static String TITLE_MODEL_PANEL = Constants.FA_COGS + "Model/Tool";
   public static String TITLE_PARAMETERS_PANEL = Constants.FA_WRENCH + "Parameters";
 
