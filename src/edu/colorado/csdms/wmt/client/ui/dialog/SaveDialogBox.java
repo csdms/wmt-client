@@ -72,7 +72,7 @@ public class SaveDialogBox extends DialogBox {
 
     super(false); // autohide
     this.setModal(true);
-    this.setText("Save Model As...");
+    this.setText("Save Tool As...");
     this.setStyleName("wmt-DialogBox");
     this.data = data;
 

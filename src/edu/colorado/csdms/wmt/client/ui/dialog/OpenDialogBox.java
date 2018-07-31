@@ -46,7 +46,7 @@ public class OpenDialogBox extends DialogBox {
     super(false); // autohide
     this.setModal(true);
     this.setStyleName("wmt-DialogBox");
-    this.setText("Open Model...");
+    this.setText("Open Saved Tool...");
     this.data = data;
     data.getPerspective().setOpenDialogBox(this);
     

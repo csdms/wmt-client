@@ -54,7 +54,7 @@ public class DroplistPanel extends Composite {
    */
   public DroplistPanel(String[] items) {
 
-    dropLabel = new Label("Available models:");
+    dropLabel = new Label("Available tools:");
     droplist = new ListBox(false); // multiselect off
     if (items != null) {
       for (int i = 0; i < items.length; i++) {

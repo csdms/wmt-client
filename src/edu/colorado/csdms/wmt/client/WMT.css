@@ -226,7 +226,7 @@ body, table td, select, button {
   color: colorDark;
   background-color: colorLight;
   border: 2px solid colorMediumDark;
-  height: 70px;
+  height: 100px;
   cursor: pointer;
 }
 
@@ -252,7 +252,7 @@ body, table td, select, button {
 .wmt-ComponentCell-NameCell {
   font-size: fontMedium;  
   text-align: center;
-  width: 120px;
+  width: 170px;
   margin-left: 5px;
 }
 

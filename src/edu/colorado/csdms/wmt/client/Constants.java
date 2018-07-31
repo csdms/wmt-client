@@ -94,7 +94,7 @@ public class Constants {
   public static String QUESTION_FORGOT_PASSWORD = "Forgot Password?";    
   public static final String QUESTION_START = "Are you sure you want to ";
   public static String QUESTION_SIGN_OUT = QUESTION_START
-      + "sign out from WMT?";
+      + "sign out from the PBS?";
   public static String QUESTION_PARAMETER_RESET = QUESTION_START
       + "reset all parameters to their default values?";
   
@@ -119,14 +119,14 @@ public class Constants {
   public static Integer SCROLL_THRESHOLD = 25;
 
   // The default text displayed in the driver ComponentCell.
-  public static String DRIVER = "start";
+  public static String DRIVER = "select...";
 
   // The default model name and id.
   public static String DEFAULT_MODEL_NAME = "Tool 0";
   public static Integer DEFAULT_MODEL_ID = -1;
 
   // The number of characters to display in a ComponentCell.
-  public static Integer TRIM = 13;
+  public static Integer TRIM = 20;
 
   // Unicode representation.
   public static String ELLIPSIS = "\u2026";
@@ -162,7 +162,7 @@ public class Constants {
   public static String FA_RELOAD = "<i class='fa fa-refresh fa-fw'></i> ";
 
   // Panel titles.
-  public static String TITLE_TOP_PANEL = "The Permafrost Benchmark System";
+  public static String TITLE_TOP_PANEL = "Permafrost Benchmark System";
   public static String TITLE_MODEL_PANEL = Constants.FA_COGS + "Tool";
   public static String TITLE_PARAMETERS_PANEL = Constants.FA_WRENCH + "Parameters";
 
