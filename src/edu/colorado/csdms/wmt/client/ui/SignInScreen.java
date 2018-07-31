@@ -72,7 +72,7 @@ public class SignInScreen extends HorizontalPanel {
     this.add(contents);
 
     // The title's margin is used to offset content from the top of the window.
-    Label title = new Label("The Permafrost Benchmark System (PBS)");
+    Label title = new Label("The Permafrost Benchmark System");
     title.setStyleName("wmt-SignInScreenTitle");
     title.getElement().getStyle().setMarginTop(contentOffset, Unit.PX);
 

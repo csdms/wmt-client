@@ -31,7 +31,7 @@ public class NewUserDialogBox extends DialogBox {
     this.setText("New User");
     this.setStyleName("wmt-DialogBox");
     
-    String msg = "This email address is not registered with WMT."
+    String msg = "This email address is not registered with the PBS."
         + " If you would like to use this address as your sign in,"
         + " please reenter your password below and click \"New User\";"
         + " if not, click \"Cancel\".";
