@@ -19,7 +19,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
-import edu.colorado.csdms.wmt.client.ui.panel.SignInInfoPanel;
 
 /**
  * The {@link SignInScreen} is the first thing a user sees on loading WMT. It
@@ -38,9 +37,6 @@ public class SignInScreen extends HorizontalPanel {
   private Button signInButton;
   private HTML errorMessage;
   private HTML registerMessage;
-  private SignInInfoPanel showDocsPanel;  
-  private SignInInfoPanel newUserPanel;
-  private SignInInfoPanel forgotPasswordPanel;
 
   /**
    * Makes a new {@link SignInScreen} for a user to sign in to WMT.
