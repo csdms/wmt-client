@@ -54,13 +54,13 @@ public class AddNewUserHandler implements ClickHandler {
   
   @Override
   public void onClick(ClickEvent event) {
-    String initialPassword = data.security.getWmtPassword();
-    String reenteredPassword = box.getPasswordPanel().getField().getText();
-    if (reenteredPassword.equals(initialPassword)) {
-      DataTransfer.newUserLogin(data);
+    String initialEmail = data.security.getWmtUsername();
+    String reenteredEmail = box.getPasswordPanel().getField().getText();
+    if (reenteredEmail.equals(initialEmail)) {
       box.hide();
+      DataTransfer.newUserLogin(data);
     } else {
-      Window.alert("Passwords do not match.");
+      Window.alert("Email addresses do not match.");
       box.getPasswordPanel().getField().setText("");
     }
   }

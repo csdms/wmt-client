@@ -912,7 +912,6 @@ public class DataTransfer {
      */
     private void logoutActions() {
       data.security.isLoggedIn(false);
-      data.getSignInScreen().getPasswordBox().setText(null);
 
       // Replace the WMT GUI with the sign-in screen.
       RootLayoutPanel.get().remove(data.getPerspective());

@@ -60,7 +60,7 @@ public class AuthenticationHandler {
     String username = data.getSignInScreen().getEmailBox().getText();
     data.security.setWmtUsername(username);
     GWT.log("Email: " + data.security.getWmtUsername());
-    String password = data.getSignInScreen().getPasswordBox().getText();
+    String password = "foobar";
     data.security.setWmtPassword(password);
     GWT.log("Password: " + data.security.getWmtPassword());
 

@@ -33,7 +33,6 @@ public class SignInScreen extends HorizontalPanel {
   private VerticalPanel contents;
   private MultiWordSuggestOracle oracle;
   private SuggestBox emailBox;
-  private PasswordTextBox passwordBox;
   private Button signInButton;
   private HTML errorMessage;
   private HTML registerMessage;
@@ -85,9 +84,6 @@ public class SignInScreen extends HorizontalPanel {
     emailBox = new SuggestBox(oracle);
     emailBox.setStyleName("wmt-SignInScreenBox");
     emailBox.getElement().setAttribute("placeholder", "Email");
-    passwordBox = new PasswordTextBox();
-    passwordBox.setStyleName("wmt-SignInScreenBox");
-    passwordBox.getElement().setAttribute("placeholder", "Password");
 
     // Push the button. (Galvanize!)
     signInButton = new Button(Constants.SIGN_IN);
@@ -103,24 +99,10 @@ public class SignInScreen extends HorizontalPanel {
     // Load the contents of the SignInScreen.
     contents.add(title);
     contents.add(emailBox);
-    contents.add(passwordBox);
     contents.add(signInButton);
     contents.add(errorMessage);
     contents.add(registerMessage);
-    
-    /*
-     * Perform sign-in action if user hits <Enter> key in password box.
-     */
-    passwordBox.addKeyUpHandler(new KeyUpHandler() {
-      @Override
-      public void onKeyUp(KeyUpEvent event) {
-        Integer keyCode = event.getNativeKeyCode();
-          if (keyCode == KeyCodes.KEY_ENTER) {
-            SignInScreen.this.data.security.getAuthenticationHandler().signIn();
-          }
-      }
-    });
-    
+
     /*
      * Perform sign-in action if user hits the "Sign In" button.
      */
@@ -139,14 +121,6 @@ public class SignInScreen extends HorizontalPanel {
 
   public void setEmailBox(SuggestBox emailBox) {
     this.emailBox = emailBox;
-  }
-
-  public PasswordTextBox getPasswordBox() {
-    return passwordBox;
-  }
-
-  public void setPasswordBox(PasswordTextBox passwordBox) {
-    this.passwordBox = passwordBox;
   }
 
   public Button getSignInButton() {

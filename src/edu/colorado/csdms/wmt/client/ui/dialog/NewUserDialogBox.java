@@ -33,12 +33,12 @@ public class NewUserDialogBox extends DialogBox {
     
     String msg = "This email address is not registered with the PBS."
         + " If you would like to use this address as your sign in,"
-        + " please reenter your password below and click \"New User\";"
+        + " please reenter it below and click \"New User\";"
         + " if not, click \"Cancel\".";
     HTML msgHtml = new HTML(msg);
     
-    passwordPanel = new FieldPanel(true); // uses PasswordTextBox
-    passwordPanel.getLabel().setText("Reenter password:");
+    passwordPanel = new FieldPanel(false);
+    passwordPanel.getLabel().setText("Reenter email address:");
     
     choicePanel = new ChoicePanel();
     choicePanel.getOkButton().setHTML(Constants.FA_USER + "New User");
