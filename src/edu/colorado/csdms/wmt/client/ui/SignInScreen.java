@@ -37,6 +37,7 @@ public class SignInScreen extends HorizontalPanel {
   private PasswordTextBox passwordBox;
   private Button signInButton;
   private HTML errorMessage;
+  private HTML registerMessage;
   private SignInInfoPanel showDocsPanel;  
   private SignInInfoPanel newUserPanel;
   private SignInInfoPanel forgotPasswordPanel;
@@ -99,28 +100,9 @@ public class SignInScreen extends HorizontalPanel {
     // Display error messages here.
     errorMessage = new HTML();
     errorMessage.setStyleName("wmt-SignInScreenError");
-
-    // What is PBS?
-    showDocsPanel =
-        new SignInInfoPanel(Constants.QUESTION_PBS, Constants.SEE_DOCS);
-
-    // Is this a new user?
-    newUserPanel =
-        new SignInInfoPanel(Constants.QUESTION_NEW_USER,
-            Constants.NEW_USER_INFO);
-
-    // Has the user forgotten their password?
-    forgotPasswordPanel =
-        new SignInInfoPanel(Constants.QUESTION_FORGOT_PASSWORD,
-            Constants.FORGOT_PASSWORD_INFO);
     
-    // Add the question links above to a panel.
-    VerticalPanel linksPanel = new VerticalPanel();
-    linksPanel.setHorizontalAlignment(ALIGN_CENTER);
-    linksPanel.setStyleName("wmt-SignInScreenLinksPanel");
-    linksPanel.add(showDocsPanel);
-    linksPanel.add(newUserPanel);
-    linksPanel.add(forgotPasswordPanel);
+    registerMessage = new HTML("Please sign in with the email used for <a href='https://goo.gl/forms/soVkta4cjCXJFf3K2'>registration</a>.");
+    registerMessage.setStyleName("wmt-SignInScreenLinks");
 
     // Load the contents of the SignInScreen.
     contents.add(title);
@@ -128,7 +110,7 @@ public class SignInScreen extends HorizontalPanel {
     contents.add(passwordBox);
     contents.add(signInButton);
     contents.add(errorMessage);
-    contents.add(linksPanel);
+    contents.add(registerMessage);
     
     /*
      * Perform sign-in action if user hits <Enter> key in password box.
@@ -153,15 +135,6 @@ public class SignInScreen extends HorizontalPanel {
       }
     });
     
-  }
-
-  /**
-   * Closes "answer" text panels under the "Sign In" button.
-   */
-  public void closeInfoPanels() {
-    newUserPanel.getAnswerPanel().setVisible(false);
-    forgotPasswordPanel.getAnswerPanel().setVisible(false);
-    showDocsPanel.getAnswerPanel().setVisible(false);    
   }
 
   public SuggestBox getEmailBox() {

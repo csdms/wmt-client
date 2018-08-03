@@ -875,7 +875,6 @@ public class DataTransfer {
       data.getPerspective().getUserPanel().getLoginName().setText(
           data.security.getWmtUsername());
       data.getSignInScreen().getErrorMessage().setText(null);
-      data.getSignInScreen().closeInfoPanels();
 
       // Replace the sign-in screen with the WMT GUI.
       RootLayoutPanel.get().remove(data.getSignInScreen());
