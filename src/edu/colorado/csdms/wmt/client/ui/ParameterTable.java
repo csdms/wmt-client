@@ -12,6 +12,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 
+import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.control.DataManager;
 import edu.colorado.csdms.wmt.client.data.ParameterJSO;
 import edu.colorado.csdms.wmt.client.ui.cell.ChoiceCell;
@@ -111,7 +112,7 @@ public class ParameterTable extends FlexTable {
     }
 
     // Return if the parameter is global and the component is not the driver.
-    if (parameter.isGlobal() && !cell.getPortId().matches("driver")) {
+    if (parameter.isGlobal() && !cell.getPortId().matches(Constants.DRIVER)) {
       return;
     }
 

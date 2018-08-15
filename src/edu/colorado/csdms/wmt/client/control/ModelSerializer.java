@@ -8,6 +8,7 @@ import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.TreeItem;
 
+import edu.colorado.csdms.wmt.client.Constants;
 import edu.colorado.csdms.wmt.client.data.ComponentJSO;
 import edu.colorado.csdms.wmt.client.data.ModelComponentConnectionsJSO;
 import edu.colorado.csdms.wmt.client.data.ModelComponentJSO;
@@ -77,7 +78,7 @@ public class ModelSerializer {
       // Serialize this model component.
       ComponentJSO componentJso = data.getModelComponent(cell.getComponentId());
       ModelComponentJSO modelComponent = serializeComponent(componentJso);
-      if (cell.getPortId().matches("driver")) {
+      if (cell.getPortId().matches(Constants.DRIVER)) {
         modelComponent.setDriver();
       }
 
@@ -177,7 +178,7 @@ public class ModelSerializer {
     }
 
     // Locate and deserialize the driver.
-    ModelComponentJSO driver = deserializeComponent("driver", null);
+    ModelComponentJSO driver = deserializeComponent(Constants.DRIVER, null);
 
     // Deserialize the components connected to the driver.
     matchConnections(driver);
@@ -261,7 +262,7 @@ public class ModelSerializer {
     Iterator<ModelComponentJSO> iter = modelComponents.iterator();
     while (iter.hasNext()) {
       ModelComponentJSO modelComponent = (ModelComponentJSO) iter.next();
-      if ((componentId.matches("driver") && modelComponent.isDriver())
+      if ((componentId.matches(Constants.DRIVER) && modelComponent.isDriver())
           || modelComponent.getId().matches(componentId)) {
         return modelComponent;
       }
