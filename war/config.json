@@ -5,6 +5,6 @@
   "release_date":"2018-08-31",
   "api_url":"https://csdms.colorado.edu/wmt/api-pbs/",
   "execution_servers":[
-    "beach.colorado.edu"
+    "siwenna.colorado.edu"
   ]
 }
