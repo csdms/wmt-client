@@ -53,7 +53,7 @@ public class HelpDialogBox extends DialogBox {
     super(false); // autohide
     this.setModal(true);
     this.setStyleName("wmt-DialogBox");
-    this.setText("Help / About WMT");
+    this.setText("Help / About PBS");
     this.data = data;
 
     VerticalPanel contents = new VerticalPanel();
@@ -81,7 +81,7 @@ public class HelpDialogBox extends DialogBox {
         + " check out " + videoAnchor + " YouTube video.</p>";
 
     // The help text as HTML widgets.
-    String wmtTitle = "<h2>WMT</h2><p><b>The CSDMS Web Modeling Tool</b></br>"
+    String wmtTitle = "<h2>PBS</h2><p><b>The Permafrost Benchmark System</b></br>"
       + "Version: " + data.config.getVersion() 
       + " (" + data.config.getReleaseDate() + ")</p>";
     HTML titleHtml = new HTML(wmtTitle);
