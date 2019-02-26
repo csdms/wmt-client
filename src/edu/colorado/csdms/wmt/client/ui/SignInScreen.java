@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
-import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -36,6 +35,7 @@ public class SignInScreen extends HorizontalPanel {
   private Button signInButton;
   private HTML errorMessage;
   private HTML registerMessage;
+  private Boolean filterKeyUp;
 
   /**
    * Makes a new {@link SignInScreen} for a user to sign in to WMT.
@@ -46,6 +46,7 @@ public class SignInScreen extends HorizontalPanel {
 
     this.data = data;
     this.data.setSignInScreen(this);
+    this.filterKeyUp = false;
     
     // Determine offset of contents from top of browser window.
     Integer browserHeight = Window.getClientHeight();
@@ -112,7 +113,23 @@ public class SignInScreen extends HorizontalPanel {
         SignInScreen.this.data.security.getAuthenticationHandler().signIn();
       }
     });
-    
+
+    /*
+     * Perform sign-in action if user hits <Enter> key in email box.
+     */
+    emailBox.addKeyUpHandler(new KeyUpHandler() {
+      @Override
+      public void onKeyUp(KeyUpEvent event) {
+        Integer keyCode = event.getNativeKeyCode();
+        if (keyCode == KeyCodes.KEY_ENTER) {
+          if (!SignInScreen.this.filterKeyUp) {
+            SignInScreen.this.data.security.getAuthenticationHandler().signIn();
+          }
+          SignInScreen.this.filterKeyUp = !SignInScreen.this.filterKeyUp;
+        }
+      }
+    });
+
   }
 
   public SuggestBox getEmailBox() {
