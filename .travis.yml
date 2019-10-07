@@ -3,8 +3,6 @@ jdk:
   - oraclejdk8
   - openjdk7
 
-sudo: false
-
 install:
   - wget https://csdms.colorado.edu/pub/tools/gwt/gwt-2.5.1.zip
   - unzip -qq gwt-2.5.1.zip
