@@ -1,7 +1,7 @@
 language: java
 jdk:
-  - oraclejdk8
-  - openjdk7
+  - oraclejdk9
+  - openjdk9
 
 install:
   - wget https://csdms.colorado.edu/pub/tools/gwt/gwt-2.5.1.zip
